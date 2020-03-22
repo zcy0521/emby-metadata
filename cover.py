@@ -30,6 +30,9 @@ covers = {
     'CADV': 'https://pics.dmm.co.jp/digital/video/49cadv00{item}/49cadv00{item}ps.jpg',
     'ETQR': 'https://pics.dmm.co.jp/digital/video/h_1186etqr00{item}/h_1186etqr00{item}ps.jpg',
     'GENM': 'https://pics.dmm.co.jp/digital/video/genm00{item}/genm00{item}ps.jpg',
+    'HBAD': 'https://pics.dmm.co.jp/digital/video/1hbad00{item}/1hbad00{item}ps.jpg',
+    'IESM': 'https://pics.dmm.co.jp/digital/video/1iesm00046/1iesm00046ps.jpg',
+    'IESP': 'https://pics.dmm.co.jp/digital/video/1iesp00{item}/1iesp00{item}ps.jpg',
     'JUTN': 'https://pics.dmm.co.jp/digital/video/h_227jutn00{item}/h_227jutn00{item}ps.jpg',
     'MADM': 'https://pics.dmm.co.jp/digital/video/49madm00{item}/49madm00{item}ps.jpg',
     'MAKT': 'https://pics.dmm.co.jp/digital/video/h_1133makt00{item}/h_1133makt00{item}ps.jpg',
@@ -39,6 +42,7 @@ covers = {
     'SHM': 'https://pics.dmm.co.jp/digital/video/h_687shm00{item}/h_687shm00{item}ps.jpg',
     'T28': 'https://pics.dmm.co.jp/digital/video/55t2800{item}/55t2800{item}ps.jpg',
     'ZEX': 'https://pics.dmm.co.jp/digital/video/h_720zex00{item}/h_720zex00{item}ps.jpg',
+    'HOI': 'https://pics.dmm.co.jp/digital/amateur/hoi{item}/hoi{item}jp.jpg',
     'ORE': 'https://pics.dmm.co.jp/digital/amateur/ore{item}/ore{item}jp.jpg',
     'OREC': 'https://pics.dmm.co.jp/digital/amateur/orec{item}/orec{item}jp.jpg',
     'ORETD': 'https://pics.dmm.co.jp/digital/amateur/oretd{item}/oretd{item}jp.jpg',
@@ -50,6 +54,7 @@ covers = {
     'IPX': 'https://www.ideapocket.com/contents/works/ipx{item}/ipx{item}-ps.jpg',
     'IPZ': 'https://www.ideapocket.com/contents/works/ipz{item}/ipz{item}-ps.jpg',
     'SUPD': 'https://www.ideapocket.com/contents/works/supd{item}/supd{item}-ps.jpg',
+    # IE NERGY!
     # KANBi http://www.kanbi-av.com
     'DDT': 'https://www.prestige-av.com/images/corner/goods/kanbi/dtt/{item}/pf_p_dtt-{item}.jpg',
     'DTT': 'https://www.prestige-av.com/images/corner/goods/kanbi/dtt/{item}/pf_p_dtt-{item}.jpg',
@@ -60,6 +65,7 @@ covers = {
     'BLK': 'https://www.kirakira-av.com/contents/works/blk{item}/blk{item}-ps.jpg',
     # K.M.P https://www.km-produce.com
     'MDTM': 'https://www.km-produce.com/img/title0/mdtm-{item}.jpg',
+    'SUPA': 'https://www.km-produce.com/img/title0/supa-{item}.jpg',
     'XRW': 'https://www.km-produce.com/img/title0/xrw-{item}.jpg',
     # Madonna https://www.madonna-av.com
     'JUL': 'https://www.madonna-av.com/contents/works/jul{item}/jul{item}-ps.jpg',
@@ -75,6 +81,7 @@ covers = {
     '300MAAN': 'https://image.mgstage.com/images/prestigepremium/300maan/{item}/pf_o1_300maan-{item}.jpg',
     '300MIUM': 'https://image.mgstage.com/images/prestigepremium/300mium/{item}/pf_o1_300mium-{item}.jpg',
     '300NTK': 'https://image.mgstage.com/images/prestigepremium/300ntk/{item}/pf_o1_300ntk-{item}.jpg',
+    '326SPOR': 'https://image.mgstage.com/images/kurofune/326spor/{item}/pf_o1_326spor-{item}.jpg',
     '328HMDN': 'https://image.mgstage.com/images/hamedori2nd/328hmdn/{item}/pf_o1_328hmdn-{item}.jpg',
     '390JAC': 'https://image.mgstage.com/images/jackson/390jac/{item}/pf_o1_390jac-{item}.jpg',
     'SIRO': 'https://image.mgstage.com/images/shirouto/siro/{item}/pf_o1_siro-{item}.jpg',
@@ -106,6 +113,7 @@ covers = {
     # S1 NO.1 STYLE https://www.s1s1s1.com
     'OFJE': 'https://www.s1s1s1.com/contents/works/ofje{item}/ofje{item}-ps.jpg',
     'SSNI': 'https://www.s1s1s1.com/contents/works/ssni{item}/ssni{item}-ps.jpg',
+    # SOD https://www.sod.co.jp
     # WAAP GROUP http://www.waap.co.jp
     'CWM': 'http://www.waap.co.jp/hskhsk/itbig/CWM{item}.jpg',
     'DFDM': 'http://www.waap.co.jp/hskhsk/itbig/DFDM{item}.jpg',
