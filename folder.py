@@ -83,10 +83,10 @@ def is_video(file):
 
 if __name__ == '__main__':
     # 整理
-    format_folder('D:\Downloads')
+    format_folder('C:\Downloads')
 
     # 查找不存在的系列
-    result = series_not_in('D:\Downloads')
+    result = series_not_in('C:\Downloads')
     if result:
         print(result)
     else:

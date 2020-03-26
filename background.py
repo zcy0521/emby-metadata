@@ -1,6 +1,8 @@
 #!/usr/bin/envpython3
 # -*-coding:utf-8-*-
+import os
 from io import BytesIO
+from pathlib import Path
 
 from PIL import Image
 
@@ -160,5 +162,13 @@ def download_background(video_number, proxy_ip):
 
 
 if __name__ == '__main__':
-    image = Image.open(BytesIO(download_background('SKYHD-120', '192.168.2.254:1080')))
-    image.show()
+    background_bytes = download_background('SKYHD-120', '192.168.2.254:1080')
+    if background_bytes is not None:
+        image = Image.open(BytesIO(background_bytes))
+        image.show()
+
+        download_folder = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Downloads')
+        background_path = os.path.join(download_folder, 'background.jpg')
+        with open(background_path, 'wb') as f:
+            f.write(background_bytes)
+    print(Path.home())

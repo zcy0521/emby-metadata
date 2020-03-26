@@ -1,5 +1,6 @@
 #!/usr/bin/envpython3
 # -*-coding:utf-8-*-
+import os
 from io import BytesIO
 
 from PIL import Image
@@ -160,5 +161,12 @@ def download_cover(video_number, proxy_ip):
 
 
 if __name__ == '__main__':
-    image = Image.open(BytesIO(download_cover('SKYHD-120', '192.168.2.254:1080')))
-    image.show()
+    cover_bytes = download_cover('SKYHD-120', '192.168.2.254:1080')
+    if cover_bytes is not None:
+        image = Image.open(BytesIO(cover_bytes))
+        image.show()
+
+        download_folder = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Downloads')
+        cover_path = os.path.join(download_folder, 'cover.jpg')
+        with open(cover_path, 'wb') as f:
+            f.write(cover_bytes)
