@@ -2,7 +2,6 @@
 # -*-coding:utf-8-*-
 import os
 from io import BytesIO
-from pathlib import Path
 
 from PIL import Image
 
@@ -83,9 +82,12 @@ backgrounds = {
     '300MAAN': 'https://image.mgstage.com/images/prestigepremium/300maan/{item}/pb_e_300maan-{item}.jpg',
     '300MIUM': 'https://image.mgstage.com/images/prestigepremium/300mium/{item}/pb_e_300mium-{item}.jpg',
     '300NTK': 'https://image.mgstage.com/images/prestigepremium/300ntk/{item}/pb_e_300ntk-{item}.jpg',
+    '326MAG': 'https://image.mgstage.com/images/kurofune/326mag/{item}/pb_e_326mag-{item}.jpg',
     '326SPOR': 'https://image.mgstage.com/images/kurofune/326spor/{item}/pb_e_326spor-{item}.jpg',
+    '326URF': 'https://image.mgstage.com/images/kurofune/326urf/{item}/pb_e_326urf-{item}.jpg',
     '328HMDN': 'https://image.mgstage.com/images/hamedori2nd/328hmdn/{item}/pb_e_328hmdn-{item}.jpg',
     '390JAC': 'https://image.mgstage.com/images/jackson/390jac/{item}/pb_e_390jac-{item}.jpg',
+    '428SUKE': 'https://image.mgstage.com/images/sukekiyo/428suke/{item}/pb_e_428suke-{item}.jpg',
     'SIRO': 'https://image.mgstage.com/images/shirouto/siro/{item}/pb_e_siro-{item}.jpg',
     # MOODYZ https://www.moodyz.com
     'MIAA': 'https://www.moodyz.com/contents/works/miaa{item}/miaa{item}-pl.jpg',
@@ -171,4 +173,3 @@ if __name__ == '__main__':
         background_path = os.path.join(download_folder, 'background.jpg')
         with open(background_path, 'wb') as f:
             f.write(background_bytes)
-    print(Path.home())

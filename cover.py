@@ -82,9 +82,12 @@ covers = {
     '300MAAN': 'https://image.mgstage.com/images/prestigepremium/300maan/{item}/pf_o1_300maan-{item}.jpg',
     '300MIUM': 'https://image.mgstage.com/images/prestigepremium/300mium/{item}/pf_o1_300mium-{item}.jpg',
     '300NTK': 'https://image.mgstage.com/images/prestigepremium/300ntk/{item}/pf_o1_300ntk-{item}.jpg',
+    '326MAG': 'https://image.mgstage.com/images/kurofune/326mag/{item}/pf_o1_326mag-{item}.jpg',
     '326SPOR': 'https://image.mgstage.com/images/kurofune/326spor/{item}/pf_o1_326spor-{item}.jpg',
+    '326URF': 'https://image.mgstage.com/images/kurofune/326urf/{item}/pf_o1_326urf-{item}.jpg',
     '328HMDN': 'https://image.mgstage.com/images/hamedori2nd/328hmdn/{item}/pf_o1_328hmdn-{item}.jpg',
     '390JAC': 'https://image.mgstage.com/images/jackson/390jac/{item}/pf_o1_390jac-{item}.jpg',
+    '428SUKE': 'https://image.mgstage.com/images/sukekiyo/428suke/{item}/pf_o1_428suke-{item}.jpg',
     'SIRO': 'https://image.mgstage.com/images/shirouto/siro/{item}/pf_o1_siro-{item}.jpg',
     # MOODYZ https://www.moodyz.com
     'MIAA': 'https://www.moodyz.com/contents/works/miaa{item}/miaa{item}-ps.jpg',
