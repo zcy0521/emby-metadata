@@ -8,10 +8,13 @@ def download(url, proxy_ip):
         return None
 
     session = requests.Session()
-    session.proxies = {
-        "http": 'socks5://{proxy}'.format(proxy=proxy_ip),
-        "https": 'socks5://{proxy}'.format(proxy=proxy_ip)
-    }
+
+    # 设置代理
+    if proxy_ip is not None:
+        session.proxies = {
+            "http": 'socks5://{proxy}'.format(proxy=proxy_ip),
+            "https": 'socks5://{proxy}'.format(proxy=proxy_ip)
+        }
 
     response = session.get(url)
     if response is None:

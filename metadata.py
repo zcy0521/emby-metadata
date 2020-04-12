@@ -13,12 +13,12 @@ if __name__ == '__main__':
     proxy_ip = input("Press input the proxy ip: ")
 
     # 整理视频文件夹
-    # format_folder(folder_path)
+    format_folder(folder_path)
 
     # 查找不在的系列
-    # series = series_not_in(folder_path)
-    # if series:
-    #     print(series) and sys.exit()
+    series = series_not_in(folder_path)
+    if series:
+        print(series) and sys.exit()
 
     # metadata
     for (dirpath, dirnames, filenames) in os.walk(folder_path):
