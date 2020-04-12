@@ -9,8 +9,8 @@ from folder import format_folder, series_not_in, get_video_number
 
 if __name__ == '__main__':
     # 输入待整理文件夹与下载代理
-    folder_path = input("Press input the folder path: ")
-    proxy_ip = input("Press input the proxy ip: ")
+    folder_path = "C:\Downloads"
+    proxy_ip = None
 
     # 整理视频文件夹
     format_folder(folder_path)
