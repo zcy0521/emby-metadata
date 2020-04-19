@@ -105,8 +105,13 @@ covers = {
     'PRED': 'https://www.premium-beauty.com/contents/works/pred{item}/pred{item}-ps.jpg',
     # PRESTIGE https://www.prestige-av.com
     'ABP': 'https://www.prestige-av.com/images/corner/goods/prestige/abp/{item}/pf_p_abp-{item}.jpg',
+    'BLO': 'https://www.prestige-av.com/images/corner/goods/prestige/blo/{item}/pf_p_blo-{item}.jpg',
     'CHN': 'https://www.prestige-av.com/images/corner/goods/prestige/tktchn/{item}/pf_p_tktchn-{item}.jpg',
+    'EVO': 'https://www.prestige-av.com/images/corner/goods/prestige/evo/{item}/pf_p_evo-{item}.jpg',
     'GAH': 'https://www.prestige-av.com/images/corner/goods/gallop/gah/{item}/pf_p_gah-{item}.jpg',
+    'JBS': 'https://www.prestige-av.com/images/corner/goods/prestige/jbs/{item}/pf_p_jbs-{item}.jpg',
+    'JOB': 'https://www.prestige-av.com/images/corner/goods/prestige/job/{item}/pf_p_job-{item}.jpg',
+    'MEK': 'https://www.prestige-av.com/images/corner/goods/prestige/mek/{item}/pf_p_mek-{item}.jpg',
     'ONEZ': 'https://www.prestige-av.com/images/corner/goods/onemore/onez/{item}/pf_p_onez-{item}.jpg',
     'PPT': 'https://www.prestige-av.com/images/corner/goods/prestige/ppt/{item}/pf_p_ppt-{item}.jpg',
     'SGA': 'https://www.prestige-av.com/images/corner/goods/prestige/sga/{item}/pf_p_sga-{item}.jpg',
