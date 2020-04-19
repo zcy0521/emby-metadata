@@ -9,7 +9,7 @@ from folder import format_folder, series_not_in, get_video_number
 
 if __name__ == '__main__':
     # 输入待整理文件夹与下载代理
-    folder_path = "D:\Downloads\職女。"
+    folder_path = "D:\Downloads"
     proxy_ip = None
 
     # 整理视频文件夹
