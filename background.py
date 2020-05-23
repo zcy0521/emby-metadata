@@ -59,11 +59,6 @@ backgrounds = {
     'IPX': 'https://www.ideapocket.com/contents/works/ipx{item}/ipx{item}-pl.jpg',
     'IPZ': 'https://www.ideapocket.com/contents/works/ipz{item}/ipz{item}-pl.jpg',
     'SUPD': 'https://www.ideapocket.com/contents/works/supd{item}/supd{item}-pl.jpg',
-    # IE NERGY! http://www.ienergy1.com
-    # KANBi http://www.kanbi-av.com
-    'DDT': 'https://www.prestige-av.com/images/corner/goods/kanbi/dtt/{item}/pb_e_dtt-{item}.jpg',
-    'DTT': 'https://www.prestige-av.com/images/corner/goods/kanbi/dtt/{item}/pb_e_dtt-{item}.jpg',
-    'KBI': 'https://www.prestige-av.com/images/corner/goods/kanbi/tktkbi/{item}/pb_e_tktkbi-{item}.jpg',
     # kawaii* https://www.kawaiikawaii.jp
     'CAWD': 'https://www.kawaiikawaii.jp/contents/works/cawd{item}/cawd{item}-pl.jpg',
     # kira☆kira https://www.kirakira-av.com
@@ -79,6 +74,7 @@ backgrounds = {
     # MARRION http://marrion-av.com/
     'MMUS': 'http://marrion-av.com/img/products/mcp/mmus_{item}/package_l.jpg',
     # MGS https://www.mgstage.com
+    '013ONEZ': 'https://image.mgstage.com/images/onemore/013onez/{item}/pb_e_013onez-{item}.jpg',
     '200GANA': 'https://image.mgstage.com/images/nanpatv/200gana/{item}/pb_e_200gana-{item}.jpg',
     '259LUXU': 'https://image.mgstage.com/images/luxutv/259luxu/{item}/pb_e_259luxu-{item}.jpg',
     '261ARA': 'https://image.mgstage.com/images/ara/261ara/{item}/pb_e_261ara-{item}.jpg',
@@ -91,9 +87,23 @@ backgrounds = {
     '326SPOR': 'https://image.mgstage.com/images/kurofune/326spor/{item}/pb_e_326spor-{item}.jpg',
     '326URF': 'https://image.mgstage.com/images/kurofune/326urf/{item}/pb_e_326urf-{item}.jpg',
     '328HMDN': 'https://image.mgstage.com/images/hamedori2nd/328hmdn/{item}/pb_e_328hmdn-{item}.jpg',
+    '336DTT': 'https://image.mgstage.com/images/kanbi/336dtt/{item}/pb_e_336dtt-{item}.jpg',
+    '336KBI': 'https://image.mgstage.com/images/kanbi/336kbi/{item}/pb_e_336kbi-{item}.jpg',
     '390JAC': 'https://image.mgstage.com/images/jackson/390jac/{item}/pb_e_390jac-{item}.jpg',
     '428SUKE': 'https://image.mgstage.com/images/sukekiyo/428suke/{item}/pb_e_428suke-{item}.jpg',
     'SIRO': 'https://image.mgstage.com/images/shirouto/siro/{item}/pb_e_siro-{item}.jpg',
+    'ABP': 'https://image.mgstage.com/images/prestige/abp/{item}/pb_e_abp-{item}.jpg',
+    'BLO': 'https://image.mgstage.com/images/prestige/blo/{item}/pb_e_blo-{item}.jpg',
+    'CHN': 'https://image.mgstage.com/images/prestige/chn/{item}/pb_e_chn-{item}.jpg',
+    'EVO': 'https://image.mgstage.com/images/prestige/evo/{item}/pb_e_evo-{item}.jpg',
+    'JBS': 'https://image.mgstage.com/images/prestige/jbs/{item}/pb_e_jbs-{item}.jpg',
+    'JOB': 'https://image.mgstage.com/images/prestige/job/{item}/pb_e_job-{item}.jpg',
+    'MEK': 'https://image.mgstage.com/images/prestige/mek/{item}/pb_e_mek-{item}.jpg',
+    'PPT': 'https://image.mgstage.com/images/prestige/ppt/{item}/pb_e_ppt-{item}.jpg',
+    'SGA': 'https://image.mgstage.com/images/prestige/sga/{item}/pb_e_sga-{item}.jpg',
+    'TRE': 'https://image.mgstage.com/images/prestige/tre/{item}/pb_e_tre-{item}.jpg',
+    'TUS': 'https://image.mgstage.com/images/prestige/tus/{item}/pb_e_tus-{item}.jpg',
+    'YRH': 'https://image.mgstage.com/images/prestige/yrh/{item}/pb_e_yrh-{item}.jpg',
     # MOODYZ https://www.moodyz.com
     'MIAA': 'https://www.moodyz.com/contents/works/miaa{item}/miaa{item}-pl.jpg',
     'MIAE': 'https://www.moodyz.com/contents/works/miae{item}/miae{item}-pl.jpg',
@@ -109,22 +119,9 @@ backgrounds = {
     # PREMIUM https://www.premium-beauty.com
     'PRED': 'https://www.premium-beauty.com/contents/works/pred{item}/pred{item}-pl.jpg',
     # PRESTIGE https://www.prestige-av.com
-    'ABP': 'https://www.prestige-av.com/images/corner/goods/prestige/abp/{item}/pb_e_abp-{item}.jpg',
-    'BLO': 'https://www.prestige-av.com/images/corner/goods/prestige/blo/{item}/pb_e_blo-{item}.jpg',
-    'CHN': 'https://www.prestige-av.com/images/corner/goods/prestige/chn/{item}/pb_e_chn-{item}.jpg',
     'DAC': 'https://www.prestige-av.com/images/corner/goods/doc/dac/{item}/pb_e_dac-{item}.jpg',
-    'EVO': 'https://www.prestige-av.com/images/corner/goods/prestige/evo/{item}/pb_e_evo-{item}.jpg',
     'GAH': 'https://www.prestige-av.com/images/corner/goods/gallop/gah/{item}/pb_e_gah-{item}.jpg',
-    'JBS': 'https://www.prestige-av.com/images/corner/goods/prestige/jbs/{item}/pb_e_jbs-{item}.jpg',
-    'JOB': 'https://www.prestige-av.com/images/corner/goods/prestige/job/{item}/pb_e_job-{item}.jpg',
-    'MEK': 'https://www.prestige-av.com/images/corner/goods/prestige/mek/{item}/pb_e_mek-{item}.jpg',
     'MGT': 'https://www.prestige-av.com/images/corner/goods/prestige/mgt/{item}/pb_e_mgt-{item}.jpg',
-    'ONEZ': 'https://www.prestige-av.com/images/corner/goods/onemore/onez/{item}/pb_e_onez-{item}.jpg',
-    'PPT': 'https://www.prestige-av.com/images/corner/goods/prestige/ppt/{item}/pb_e_ppt-{item}.jpg',
-    'SGA': 'https://www.prestige-av.com/images/corner/goods/prestige/sga/{item}/pb_e_sga-{item}.jpg',
-    'TRE': 'https://www.prestige-av.com/images/corner/goods/prestige/tre/{item}/pb_e_tre-{item}.jpg',
-    'TUS': 'https://www.prestige-av.com/images/corner/goods/prestige/tus/{item}/pb_e_tus-{item}.jpg',
-    'YRH': 'https://www.prestige-av.com/images/corner/goods/prestige/yrh/{item}/pb_e_yrh-{item}.jpg',
     # ROOKIE https://www.rookie-av.jp
     'RBB': 'https://www.rookie-av.jp/contents/works/rbb{item}/rbb{item}-pl.jpg',
     # S1 NO.1 STYLE https://www.s1s1s1.com
