@@ -10,6 +10,7 @@ from cover import covers
 
 
 def format_folder(folder_path):
+    global new_file
     for (dirpath, dirnames, filenames) in os.walk(folder_path):
         for filename in filenames:
             # 文件
@@ -83,11 +84,12 @@ def is_video(file):
 
 if __name__ == '__main__':
     # 整理
-    format_folder('C:\Downloads')
+    # format_folder('\\\\192.168.100.5\happy\Digital')
+    format_folder('D:\Downloads\来まえび')
 
-    # 查找不存在的系列
-    result = series_not_in('C:\Downloads')
-    if result:
-        print(result)
-    else:
-        print("match all")
+    # # 查找不存在的系列
+    # result = series_not_in('C:\Downloads')
+    # if result:
+    #     print(result)
+    # else:
+    #     print("match all")

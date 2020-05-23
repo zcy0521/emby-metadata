@@ -29,15 +29,19 @@ backgrounds = {
     # FANZA https://www.dmm.co.jp
     'ALB': 'https://pics.dmm.co.jp/digital/video/alb00{item}/alb00{item}pl.jpg',
     'CADV': 'https://pics.dmm.co.jp/digital/video/49cadv00{item}/49cadv00{item}pl.jpg',
+    'DVAJ': 'https://pics.dmm.co.jp/digital/video/dvaj00{item}/dvaj00{item}pl.jpg',
     'ETQR': 'https://pics.dmm.co.jp/digital/video/h_1186etqr00{item}/h_1186etqr00{item}pl.jpg',
     'GENM': 'https://pics.dmm.co.jp/digital/video/genm00{item}/genm00{item}pl.jpg',
     'HBAD': 'https://pics.dmm.co.jp/digital/video/1hbad00{item}/1hbad00{item}pl.jpg',
     'IESM': 'https://pics.dmm.co.jp/digital/video/1iesm00{item}/1iesm00{item}pl.jpg',
     'IESP': 'https://pics.dmm.co.jp/digital/video/1iesp00{item}/1iesp00{item}pl.jpg',
     'JUTN': 'https://pics.dmm.co.jp/digital/video/h_227jutn00{item}/h_227jutn00{item}pl.jpg',
+    'KSBJ': 'https://pics.dmm.co.jp/digital/video/ksbj00{item}/ksbj00{item}pl.jpg',
     'MADM': 'https://pics.dmm.co.jp/digital/video/49madm00{item}/49madm00{item}pl.jpg',
     'MAKT': 'https://pics.dmm.co.jp/digital/video/h_1133makt00{item}/h_1133makt00{item}pl.jpg',
     'MILK': 'https://pics.dmm.co.jp/digital/video/h_1240milk00{item}/h_1240milk00{item}pl.jpg',
+    'MIST': 'https://pics.dmm.co.jp/digital/video/1mist00{item}/1mist00{item}pl.jpg',
+    'MMKZ': 'https://pics.dmm.co.jp/digital/video/mmkz00{item}/mmkz00{item}pl.jpg',
     'NGOD': 'https://pics.dmm.co.jp/digital/video/ngod00{item}/ngod00{item}pl.jpg',
     'NKD': 'https://pics.dmm.co.jp/digital/video/nkd00{item}/nkd00{item}pl.jpg',
     'SHM': 'https://pics.dmm.co.jp/digital/video/h_687shm00{item}/h_687shm00{item}pl.jpg',
@@ -59,7 +63,7 @@ backgrounds = {
     # KANBi http://www.kanbi-av.com
     'DDT': 'https://www.prestige-av.com/images/corner/goods/kanbi/dtt/{item}/pb_e_dtt-{item}.jpg',
     'DTT': 'https://www.prestige-av.com/images/corner/goods/kanbi/dtt/{item}/pb_e_dtt-{item}.jpg',
-    'KBI': 'https://www.prestige-av.com/images/corner/goods/kanbi/kbi/{item}/pb_e_kbi-{item}.jpg',
+    'KBI': 'https://www.prestige-av.com/images/corner/goods/kanbi/tktkbi/{item}/pb_e_tktkbi-{item}.jpg',
     # kawaii* https://www.kawaiikawaii.jp
     'CAWD': 'https://www.kawaiikawaii.jp/contents/works/cawd{item}/cawd{item}-pl.jpg',
     # kira☆kira https://www.kirakira-av.com
@@ -82,6 +86,7 @@ backgrounds = {
     '300MAAN': 'https://image.mgstage.com/images/prestigepremium/300maan/{item}/pb_e_300maan-{item}.jpg',
     '300MIUM': 'https://image.mgstage.com/images/prestigepremium/300mium/{item}/pb_e_300mium-{item}.jpg',
     '300NTK': 'https://image.mgstage.com/images/prestigepremium/300ntk/{item}/pb_e_300ntk-{item}.jpg',
+    '326KURO': 'https://image.mgstage.com/images/kurofune/326kuro/{item}/pb_e_326kuro-{item}.jpg',
     '326MAG': 'https://image.mgstage.com/images/kurofune/326mag/{item}/pb_e_326mag-{item}.jpg',
     '326SPOR': 'https://image.mgstage.com/images/kurofune/326spor/{item}/pb_e_326spor-{item}.jpg',
     '326URF': 'https://image.mgstage.com/images/kurofune/326urf/{item}/pb_e_326urf-{item}.jpg',
@@ -106,16 +111,19 @@ backgrounds = {
     # PRESTIGE https://www.prestige-av.com
     'ABP': 'https://www.prestige-av.com/images/corner/goods/prestige/abp/{item}/pb_e_abp-{item}.jpg',
     'BLO': 'https://www.prestige-av.com/images/corner/goods/prestige/blo/{item}/pb_e_blo-{item}.jpg',
-    'CHN': 'https://www.prestige-av.com/images/corner/goods/prestige/tktchn/{item}/pb_e_tktchn-{item}.jpg',
+    'CHN': 'https://www.prestige-av.com/images/corner/goods/prestige/chn/{item}/pb_e_chn-{item}.jpg',
+    'DAC': 'https://www.prestige-av.com/images/corner/goods/doc/dac/{item}/pb_e_dac-{item}.jpg',
     'EVO': 'https://www.prestige-av.com/images/corner/goods/prestige/evo/{item}/pb_e_evo-{item}.jpg',
     'GAH': 'https://www.prestige-av.com/images/corner/goods/gallop/gah/{item}/pb_e_gah-{item}.jpg',
     'JBS': 'https://www.prestige-av.com/images/corner/goods/prestige/jbs/{item}/pb_e_jbs-{item}.jpg',
     'JOB': 'https://www.prestige-av.com/images/corner/goods/prestige/job/{item}/pb_e_job-{item}.jpg',
     'MEK': 'https://www.prestige-av.com/images/corner/goods/prestige/mek/{item}/pb_e_mek-{item}.jpg',
+    'MGT': 'https://www.prestige-av.com/images/corner/goods/prestige/mgt/{item}/pb_e_mgt-{item}.jpg',
     'ONEZ': 'https://www.prestige-av.com/images/corner/goods/onemore/onez/{item}/pb_e_onez-{item}.jpg',
     'PPT': 'https://www.prestige-av.com/images/corner/goods/prestige/ppt/{item}/pb_e_ppt-{item}.jpg',
     'SGA': 'https://www.prestige-av.com/images/corner/goods/prestige/sga/{item}/pb_e_sga-{item}.jpg',
     'TRE': 'https://www.prestige-av.com/images/corner/goods/prestige/tre/{item}/pb_e_tre-{item}.jpg',
+    'TUS': 'https://www.prestige-av.com/images/corner/goods/prestige/tus/{item}/pb_e_tus-{item}.jpg',
     'YRH': 'https://www.prestige-av.com/images/corner/goods/prestige/yrh/{item}/pb_e_yrh-{item}.jpg',
     # ROOKIE https://www.rookie-av.jp
     'RBB': 'https://www.rookie-av.jp/contents/works/rbb{item}/rbb{item}-pl.jpg',
@@ -141,6 +149,8 @@ backgrounds = {
     'TIKB': 'https://www.mousouzoku-av.com/contents/works/tikb/tikb{item}/tikb{item}pl.jpg',
     # 舞ワイフ
     'Mywife': 'https://p02.mywife.cc/girl/{item}/thumb.jpg',
+    # プラネットプラス http://planetplus.jp/
+    'NACR': 'http://planetplus.jp/wp01/wp-content/uploads/NACR-{item}.jpg',
     # 溜池ゴロー https://www.tameikegoro.jp
     'MEYD': 'https://www.tameikegoro.jp/contents/works/meyd{item}/meyd{item}-pl.jpg',
     # AV ENTERTAINMENTS https://www.aventertainments.com
