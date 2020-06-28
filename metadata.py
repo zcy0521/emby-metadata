@@ -9,7 +9,7 @@ from folder import format_folder, series_not_in, get_video_number
 
 if __name__ == '__main__':
     # 输入待整理文件夹与下载代理
-    folder_path = "D:\Downloads"
+    folder_path = "D:\Happy"
     proxy_ip = None
 
     # 整理视频文件夹
@@ -24,12 +24,12 @@ if __name__ == '__main__':
     for (dirpath, dirnames, filenames) in os.walk(folder_path):
         for filename in filenames:
             # 已有封面
-            cover_path = os.path.join(dirpath, 'cover.jpg')
+            cover_path = os.path.join(dirpath, 'poster.jpg')
             if os.path.exists(cover_path):
                 continue
 
             # 已有背景图
-            background_path = os.path.join(dirpath, 'background.jpg')
+            background_path = os.path.join(dirpath, 'fanart.jpg')
             if os.path.exists(background_path):
                 continue
 
