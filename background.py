@@ -91,6 +91,8 @@ backgrounds = {
     '336DTT': 'https://image.mgstage.com/images/kanbi/336dtt/{item}/pb_e_336dtt-{item}.jpg',
     '336KBI': 'https://image.mgstage.com/images/kanbi/336kbi/{item}/pb_e_336kbi-{item}.jpg',
     '390JAC': 'https://image.mgstage.com/images/jackson/390jac/{item}/pb_e_390jac-{item}.jpg',
+    '402MNTJ': 'https://image.mgstage.com/images/minatokujoshi/402mntj/{item}/pb_e_402mntj-{item}.jpg',
+    '420HOI': 'https://image.mgstage.com/images/hoihoiz/420hoi/{item}/pb_e_420hoi-{item}.jpg',
     '427MMH': 'https://image.mgstage.com/images/mimiiki/427mmh/{item}/pb_e_427mmh-{item}.jpg',
     '428SUKE': 'https://image.mgstage.com/images/sukekiyo/428suke/{item}/pb_e_428suke-{item}.jpg',
     'SIRO': 'https://image.mgstage.com/images/shirouto/siro/{item}/pb_e_siro-{item}.jpg',
