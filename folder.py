@@ -10,27 +10,26 @@ from cover import covers
 
 
 def format_folder(folder_path):
-    global new_file
     for (dirpath, dirnames, filenames) in os.walk(folder_path):
         for filename in filenames:
             # 文件
             file = os.path.join(dirpath, filename)
 
-            # 文件名
-            filename = Path(file).stem
-            if ' - ' in filename:
-                filename = filename.split(' - ')[0]
-
-            # 文件夹名
-            dirname = os.path.basename(os.path.dirname(file))
-
             # 非视频文件
             if not is_video(file):
                 continue
 
+            # 文件夹名
+            dirname = os.path.basename(os.path.dirname(file))
+
             # 预告视频所在文件夹
             if dirname == 'trailers':
                 continue
+
+            # 文件名
+            filename = Path(file).stem
+            if ' - ' in filename:
+                filename = filename.split(' - ')[0]
 
             # 文件与所在文件夹名称不同
             if filename != dirname:
