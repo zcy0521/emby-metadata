@@ -121,6 +121,9 @@ covers = {
     'MIMK': 'https://www.moodyz.com/contents/works/mimk{item}/mimk{item}-ps.jpg',
     # MVG https://www.mvg.jp
     'MVSD': 'https://www.mvg.jp/contents/works/mvsd{item}/mvsd{item}-ps.jpg',
+    # NATURAL HIGH https://www.naturalhigh.co.jp/
+    'NHDTB': 'https://www.naturalhigh.co.jp/wp-content/uploads/NHDTB-{item}.jpg',
+    'SHN': 'https://www.naturalhigh.co.jp/wp-content/uploads/SHN-{item}_01.jpg',
     # OPPAI https://www.oppai-av.com
     'PPPD': 'https://www.oppai-av.com/contents/works/pppd{item}/pppd{item}-ps.jpg',
     # PREMIUM https://www.premium-beauty.com

@@ -121,6 +121,9 @@ backgrounds = {
     'MIMK': 'https://www.moodyz.com/contents/works/mimk{item}/mimk{item}-pl.jpg',
     # MVG https://www.mvg.jp
     'MVSD': 'https://www.mvg.jp/contents/works/mvsd{item}/mvsd{item}-pl.jpg',
+    # NATURAL HIGH https://www.naturalhigh.co.jp/
+    'NHDTB': 'https://www.naturalhigh.co.jp/wp-content/uploads/NHDTB-{item}_ol.jpg',
+    'SHN': 'https://www.naturalhigh.co.jp/wp-content/uploads/SHN-{item}_H4.jpg',
     # OPPAI https://www.oppai-av.com
     'PPPD': 'https://www.oppai-av.com/contents/works/pppd{item}/pppd{item}-pl.jpg',
     # PREMIUM https://www.premium-beauty.com
