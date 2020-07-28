@@ -5,8 +5,8 @@ import os
 from distutils.file_util import move_file
 from pathlib import Path
 
-from background import backgrounds
-from cover import covers
+from fanart import fanarts
+from poster import posters
 
 
 def format_folder(folder_path):
@@ -51,11 +51,11 @@ def series_not_in(folder_path):
             if video_number is None:
                 continue
 
-            # 不在 covers backgrounds
+            # 不在 posters fanarts
             series = video_number.split('-', 1)[0]
-            if series not in covers:
+            if series not in posters:
                 series_set.add(filename)
-            if series not in backgrounds:
+            if series not in fanarts:
                 series_set.add(filename)
     return series_set
 

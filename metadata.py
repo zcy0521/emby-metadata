@@ -3,13 +3,13 @@
 import os
 import sys
 
-from background import download_background
-from cover import download_cover
+from fanart import download_fanart
+from poster import download_poster
 from folder import format_folder, series_not_in, get_video_number
 
 if __name__ == '__main__':
     # 输入待整理文件夹与下载代理
-    folder_path = "Z:"
+    folder_path = "T:\\Downloads"
     proxy_ip = None
 
     # 整理视频文件夹
@@ -24,13 +24,13 @@ if __name__ == '__main__':
     for (dirpath, dirnames, filenames) in os.walk(folder_path):
         for filename in filenames:
             # 已有封面
-            cover_path = os.path.join(dirpath, 'poster.jpg')
-            if os.path.exists(cover_path):
+            poster_path = os.path.join(dirpath, 'poster.jpg')
+            if os.path.exists(poster_path):
                 continue
 
             # 已有背景图
-            background_path = os.path.join(dirpath, 'fanart.jpg')
-            if os.path.exists(background_path):
+            fanart_path = os.path.join(dirpath, 'fanart.jpg')
+            if os.path.exists(fanart_path):
                 continue
 
             # 文件
@@ -47,13 +47,13 @@ if __name__ == '__main__':
                 continue
 
             # 下载封面
-            cover_bytes = download_cover(video_number, proxy_ip)
-            if cover_bytes is not None:
-                with open(cover_path, 'wb') as f:
-                    f.write(cover_bytes)
+            poster_bytes = download_poster(video_number, proxy_ip)
+            if poster_bytes is not None:
+                with open(poster_path, 'wb') as f:
+                    f.write(poster_bytes)
 
             # 下载背景图
-            background_bytes = download_background(video_number, proxy_ip)
-            if background_bytes is not None:
-                with open(background_path, 'wb') as f:
-                    f.write(background_bytes)
+            fanart_bytes = download_fanart(video_number, proxy_ip)
+            if fanart_bytes is not None:
+                with open(fanart_path, 'wb') as f:
+                    f.write(fanart_bytes)

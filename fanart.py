@@ -7,7 +7,7 @@ from PIL import Image
 
 from download import download
 
-backgrounds = {
+fanarts = {
     # ATTACKERS https://www.attackers.net
     'ADN': 'https://www.attackers.net/contents/works/adn{item}/adn{item}-pl.jpg',
     'ATID': 'https://www.attackers.net/contents/works/atid{item}/atid{item}-pl.jpg',
@@ -54,7 +54,15 @@ backgrounds = {
     'ORETD': 'https://pics.dmm.co.jp/digital/amateur/oretd{item}/oretd{item}jp.jpg',
     'OREX': 'https://pics.dmm.co.jp/digital/amateur/orex{item}/orex{item}jp.jpg',
     # Fitch https://www.fitch-av.com
+    'JUFD': 'https://www.fitch-av.com/contents/works/jufd{item}/jufd{item}-pl.jpg',
     'JUFE': 'https://www.fitch-av.com/contents/works/jufe{item}/jufe{item}-pl.jpg',
+    # GOGOS.TV（ゴーゴーズ） https://www.gogos.tv
+    'C': 'https://www.gogos.tv/wp-content/uploads/gogos/pac_n/{item}.jpg',
+    # HHH（トリプルエイチ） https://www.hhh-av.com
+    'AP': 'https://www.hhh-av.com/contents/works/ap{item}/ap{item}pl.jpg',
+    'HUNTA': 'https://www.hhh-av.com/contents/works/hunta{item}/hunta{item}pl.jpg',
+    # HMJM http://www.hamajim.com
+    'HMNF': 'https://pics.dmm.co.jp/digital/video/h_172hmnf00{item}/h_172hmnf00{item}pl.jpg',
     # IDEAPOCKET https://www.ideapocket.com
     'IDBD': 'https://www.ideapocket.com/contents/works/idbd{item}/idbd{item}-pl.jpg',
     'IPX': 'https://www.ideapocket.com/contents/works/ipx{item}/ipx{item}-pl.jpg',
@@ -66,6 +74,7 @@ backgrounds = {
     'BLK': 'https://www.kirakira-av.com/contents/works/blk{item}/blk{item}-pl.jpg',
     # K.M.Produce https://www.km-produce.com
     'MDTM': 'https://www.km-produce.com/img/title1/mdtm-{item}.jpg',
+    'SABA': 'https://www.km-produce.com/img/title1/saba-{item}.jpg',
     'SUPA': 'https://www.km-produce.com/img/title1/supa-{item}.jpg',
     'XRW': 'https://www.km-produce.com/img/title1/xrw-{item}.jpg',
     # Madonna https://www.madonna-av.com
@@ -83,11 +92,13 @@ backgrounds = {
     '300MAAN': 'https://image.mgstage.com/images/prestigepremium/300maan/{item}/pb_e_300maan-{item}.jpg',
     '300MIUM': 'https://image.mgstage.com/images/prestigepremium/300mium/{item}/pb_e_300mium-{item}.jpg',
     '300NTK': 'https://image.mgstage.com/images/prestigepremium/300ntk/{item}/pb_e_300ntk-{item}.jpg',
+    '326EVA': 'https://image.mgstage.com/images/kurofune/326eva/{item}/pb_e_326eva-{item}.jpg',
     '326KURO': 'https://image.mgstage.com/images/kurofune/326kuro/{item}/pb_e_326kuro-{item}.jpg',
     '326MAG': 'https://image.mgstage.com/images/kurofune/326mag/{item}/pb_e_326mag-{item}.jpg',
     '326SPOR': 'https://image.mgstage.com/images/kurofune/326spor/{item}/pb_e_326spor-{item}.jpg',
     '326URF': 'https://image.mgstage.com/images/kurofune/326urf/{item}/pb_e_326urf-{item}.jpg',
     '328HMDN': 'https://image.mgstage.com/images/hamedori2nd/328hmdn/{item}/pb_e_328hmdn-{item}.jpg',
+    '332NAMA': 'https://image.mgstage.com/images/namanamanet/332nama/{item}/pb_e_332nama-{item}.jpg',
     '336DTT': 'https://image.mgstage.com/images/kanbi/336dtt/{item}/pb_e_336dtt-{item}.jpg',
     '336KBI': 'https://image.mgstage.com/images/kanbi/336kbi/{item}/pb_e_336kbi-{item}.jpg',
     '345SIMM': 'https://image.mgstage.com/images/shiroutomanman/345simm/{item}/pb_e_345simm-{item}.jpg',
@@ -148,6 +159,8 @@ backgrounds = {
     'CJOD': 'https://www.bi-av.com/contents/works/cjod{item}/cjod{item}-pl.jpg',
     # ダスッ！ https://www.dasdas.jp
     'DASD': 'https://www.dasdas.jp/contents/works/dasd{item}/dasd{item}-pl.jpg',
+    # ひよこ https://www.hiyoko-av.com
+    'PIYO': 'https://pics.dmm.co.jp/digital/video/1piyo00{item}/1piyo00{item}pl.jpg',
     # 本中 https://www.honnaka.jp
     'HND': 'https://www.honnaka.jp/contents/works/hnd{item}/hnd{item}-pl.jpg',
     # 桃太郎 https://www.indies-av.co.jp
@@ -156,8 +169,10 @@ backgrounds = {
     'TIKB': 'https://www.mousouzoku-av.com/contents/works/tikb/tikb{item}/tikb{item}pl.jpg',
     # 舞ワイフ
     'Mywife': 'https://p02.mywife.cc/girl/{item}/thumb.jpg',
-    # プラネットプラス http://planetplus.jp/
+    # プラネットプラス http://planetplus.jp
     'NACR': 'http://planetplus.jp/wp01/wp-content/uploads/NACR-{item}.jpg',
+    # サディスティックヴィレッジ http://www.sadistic-v.com
+    'SVDVD': 'https://pics.dmm.co.jp/digital/video/1svdvd00{item}/1svdvd00{item}pl.jpg',
     # 溜池ゴロー https://www.tameikegoro.jp
     'MEYD': 'https://www.tameikegoro.jp/contents/works/meyd{item}/meyd{item}-pl.jpg',
     # AV ENTERTAINMENTS https://www.aventertainments.com
@@ -172,26 +187,26 @@ backgrounds = {
 }
 
 
-def download_background(video_number, proxy_ip):
+def download_fanart(video_number, proxy_ip):
     (series, item) = video_number.split('-', 1)
-    if series not in backgrounds:
+    if series not in fanarts:
         return None
 
-    background_url = backgrounds[series].format(item=item)
-    if background_url is None:
-        print('Video %s background_url is None'.format(video_number))
+    fanart_url = fanarts[series].format(item=item)
+    if fanart_url is None:
+        print('Video %s fanart_url is None'.format(video_number))
         return None
 
-    return download(background_url, proxy_ip)
+    return download(fanart_url, proxy_ip)
 
 
 if __name__ == '__main__':
-    background_bytes = download_background('SKYHD-120', '192.168.2.254:1080')
-    if background_bytes is not None:
-        image = Image.open(BytesIO(background_bytes))
+    fanart_bytes = download_fanart('SKYHD-120', '192.168.2.254:1080')
+    if fanart_bytes is not None:
+        image = Image.open(BytesIO(fanart_bytes))
         image.show()
 
         download_folder = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Downloads')
-        background_path = os.path.join(download_folder, 'background.jpg')
-        with open(background_path, 'wb') as f:
-            f.write(background_bytes)
+        fanart_path = os.path.join(download_folder, 'fanart.jpg')
+        with open(fanart_path, 'wb') as f:
+            f.write(fanart_bytes)
