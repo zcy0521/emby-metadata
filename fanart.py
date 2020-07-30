@@ -86,6 +86,7 @@ fanarts = {
     # MGS https://www.mgstage.com
     '013ONEZ': 'https://image.mgstage.com/images/onemore/013onez/{item}/pb_e_013onez-{item}.jpg',
     '200GANA': 'https://image.mgstage.com/images/nanpatv/200gana/{item}/pb_e_200gana-{item}.jpg',
+    '230OREX': 'https://image.mgstage.com/images/orenoshirouto/230orex/{item}/pb_e_230orex-{item}.jpg',
     '259LUXU': 'https://image.mgstage.com/images/luxutv/259luxu/{item}/pb_e_259luxu-{item}.jpg',
     '261ARA': 'https://image.mgstage.com/images/ara/261ara/{item}/pb_e_261ara-{item}.jpg',
     '277DCV': 'https://image.mgstage.com/images/documentv/277dcv/{item}/pb_e_277dcv-{item}.jpg',
@@ -104,6 +105,7 @@ fanarts = {
     '345SIMM': 'https://image.mgstage.com/images/shiroutomanman/345simm/{item}/pb_e_345simm-{item}.jpg',
     '348NTR': 'https://image.mgstage.com/images/ntrnet/348ntr/{item}/pb_e_348ntr-{item}.jpg',
     '390JAC': 'https://image.mgstage.com/images/jackson/390jac/{item}/pb_e_390jac-{item}.jpg',
+    '390JNT': 'https://image.mgstage.com/images/jackson/390jnt/{item}/pb_e_390jnt-{item}.jpg',
     '402MNTJ': 'https://image.mgstage.com/images/minatokujoshi/402mntj/{item}/pb_e_402mntj-{item}.jpg',
     '420HOI': 'https://image.mgstage.com/images/hoihoiz/420hoi/{item}/pb_e_420hoi-{item}.jpg',
     '427MMH': 'https://image.mgstage.com/images/mimiiki/427mmh/{item}/pb_e_427mmh-{item}.jpg',
