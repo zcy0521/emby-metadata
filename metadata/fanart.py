@@ -5,7 +5,7 @@ from io import BytesIO
 
 from PIL import Image
 
-from download import download
+from utils.http import get
 
 fanarts = {
     # ATTACKERS https://www.attackers.net
@@ -189,7 +189,7 @@ fanarts = {
 }
 
 
-def download_fanart(video_number, proxy_ip):
+def download_fanart(video_number):
     (series, item) = video_number.split('-', 1)
     if series not in fanarts:
         return None
@@ -199,11 +199,12 @@ def download_fanart(video_number, proxy_ip):
         print('Video %s fanart_url is None'.format(video_number))
         return None
 
-    return download(fanart_url, proxy_ip)
+    response = get(fanart_url)
+    return response.content
 
 
 if __name__ == '__main__':
-    fanart_bytes = download_fanart('SKYHD-120', '192.168.2.254:1080')
+    fanart_bytes = download_fanart('SKYHD-120')
     if fanart_bytes is not None:
         image = Image.open(BytesIO(fanart_bytes))
         image.show()

@@ -5,8 +5,8 @@ import os
 from distutils.file_util import move_file
 from pathlib import Path
 
-from fanart import fanarts
-from poster import posters
+from metadata.fanart import fanarts
+from metadata.poster import posters
 
 
 def format_folder(folder_path):

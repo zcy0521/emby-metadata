@@ -5,7 +5,7 @@ from io import BytesIO
 
 from PIL import Image
 
-from download import download
+from utils.http import get
 
 posters = {
     # ATTACKERS https://www.attackers.net
@@ -189,7 +189,7 @@ posters = {
 }
 
 
-def download_poster(video_number, proxy_ip):
+def download_poster(video_number):
     (series, item) = video_number.split('-', 1)
     if series not in posters:
         return None
@@ -199,11 +199,12 @@ def download_poster(video_number, proxy_ip):
         print('Video %s poster_url is None'.format(video_number))
         return None
 
-    return download(poster_url, proxy_ip)
+    response = get(poster_url)
+    return response.content
 
 
 if __name__ == '__main__':
-    poster_bytes = download_poster('SKYHD-120', '192.168.2.254:1080')
+    poster_bytes = download_poster('SKYHD-120')
     if poster_bytes is not None:
         image = Image.open(BytesIO(poster_bytes))
         image.show()

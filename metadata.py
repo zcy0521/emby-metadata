@@ -3,9 +3,9 @@
 import os
 import sys
 
-from fanart import download_fanart
-from poster import download_poster
-from folder import format_folder, series_not_in, get_video_number
+from metadata.fanart import download_fanart
+from metadata.poster import download_poster
+from utils.folder import format_folder, series_not_in, get_video_number
 
 if __name__ == '__main__':
     # 输入待整理文件夹与下载代理
@@ -47,13 +47,13 @@ if __name__ == '__main__':
                 continue
 
             # 下载封面
-            poster_bytes = download_poster(video_number, proxy_ip)
+            poster_bytes = download_poster(video_number)
             if poster_bytes is not None:
                 with open(poster_path, 'wb') as f:
                     f.write(poster_bytes)
 
             # 下载背景图
-            fanart_bytes = download_fanart(video_number, proxy_ip)
+            fanart_bytes = download_fanart(video_number)
             if fanart_bytes is not None:
                 with open(fanart_path, 'wb') as f:
                     f.write(fanart_bytes)
