@@ -3,8 +3,7 @@
 import os
 
 if __name__ == '__main__':
-    # 输入待整理文件夹与下载代理
-    folder_path = "D:\Happy"
+    folder_path = '/mnt/downloads/明里つむぎ'
 
     for (dirpath, dirnames, filenames) in os.walk(folder_path):
         for filename in filenames:
