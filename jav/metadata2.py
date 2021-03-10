@@ -7,28 +7,33 @@ from tqdm import tqdm
 class_dict = {
     'FANZA': {},
     'MOODYZ': {'MIDD', 'MIDE'},
-    'IdeaPocket': {'IPZ', 'IPX', 'IDBD', 'SUPD'},
+    'IdeaPocket': {'IPZ', 'IPX', 'IPIT', 'IDBD', 'SUPD'},
     'S1S1S1': {'SNIS', 'SSNI', 'OFJE', 'SIVR'},
     'PREMIUM': {'PRED'},
     'Madonna': {'JUY'},
     'TameikeGoro': {'MEYD'},
-    'Attackers': {'ADN', 'ATID', 'RBD', 'SHKD', 'SSPD', 'ATKD'},
+    'Attackers': {'ADN', 'ATID', 'ATKD', 'RBD', 'RBK', 'SHKD', 'SSPD'},
     'Das': {'DASD'},
-    'SOD': {'STAR', 'STARS', 'SDDE', 'SDEN', 'SDMF', 'SDMU', 'SSHN', 'HYPN', '3DSVR'},
+    'SOD': {'HBAD', 'HYPN', 'IESP', 'OKS', 'SDDE', 'SDEN', 'SDMF', 'SDMU', 'SSHN', 'STAR', 'STARS', '3DSVR'},
     'NaturalHigh': {'NHDTB', 'SHN'},
-    'MGS': {'ABS', 'ABP', 'DOM', 'EDD', 'INU', 'JOB', 'PPT', 'SGA', 'WAT', 'YRH', 'SIRO', '001HMNF', '200GANA', '230ORE', '259LUXU', '276KITAIKE', '277DCV', '300MAAN', '300MIUM', '300NTK', '345SIMM', '390JAC', '390JNT', '402MNTJ', '435MFC', '459TEN', '483SGK'},
+    'MGS': {'ABS', 'ABP', 'AOI', 'DOM', 'EDD', 'INU', 'JOB', 'PPT', 'SGA', 'WAT', 'YRH', 'SIRO', '001HMNF', '020GVG', '039NEO', '169MDTM', '179BAZX', '200GANA', '230ORE', '249OKS', '259LUXU', '263NACR', '276KITAIKE', '277DCV', '290JBJB', '300MAAN', '300MIUM', '300NTK', '302GERK', '315ETQR', '345SIMM', '390JAC', '390JNT', '402MNTJ', '435MFC', '459TEN', '483SGK'},
     'Prestige': {},
     'AliceJapan': {},
     'Dogma': {},
-    'HHH': {'HUNTA', 'AP'},
+    'HHH': {'AP', 'HUNTA', 'OYC'},
     'HMP': {'HODV'},
     'MaxA': {},
     'Momotaro': {},
-    'Mousouzoku': {}
+    'Mousouzoku': {},
+    'KMP': {'MDTM'},
+    'Tsumabana': {'HZGD'},
+    'Shark': {'JBJB', 'MACB'},
+    'Planetplus': {'NACR'},
+    'WANZ': {'WANZ'},
 }
 
 if __name__ == '__main__':
-    folder_path = '/mnt/downloads/明里つむぎ'
+    folder_path = 'E:/115/七瀬アリス'
 
     # 删除文件夹中现有图片
     for (dirpath, dirnames, filenames) in os.walk(folder_path):

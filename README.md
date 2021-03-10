@@ -7,10 +7,9 @@
 ## 安装模块
 
 ```shell
-pip install pillow
-pip install requests
+pip install beautifulsoup4
+pip install tqdm
+pip install cfscrape
 ```
-
-## 重命名文件
 
 ## 下载封面

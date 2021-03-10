@@ -5,9 +5,6 @@ import os
 from distutils.file_util import move_file
 from pathlib import Path
 
-from metadata.fanart import fanarts
-from metadata.poster import posters
-
 
 def format_folder(folder_path):
     for (dirpath, dirnames, filenames) in os.walk(folder_path):
@@ -39,38 +36,6 @@ def format_folder(folder_path):
                 move_file(file, target_dir)
 
 
-def series_not_in(folder_path):
-    series_set = set()
-    for (dirpath, dirnames, filenames) in os.walk(folder_path):
-        for filename in filenames:
-            # 文件
-            file = os.path.join(dirpath, filename)
-
-            # 获取视频文件编号
-            video_number = get_video_number(file)
-            if video_number is None:
-                continue
-
-            # 不在 posters fanarts
-            series = video_number.split('-', 1)[0]
-            if series not in posters:
-                series_set.add(filename)
-            if series not in fanarts:
-                series_set.add(filename)
-    return series_set
-
-
-def get_video_number(file):
-    if is_video(file):
-        video_number = Path(file).stem
-        if ' - ' in video_number:
-            video_number = video_number.split(' - ')[0]
-        if video_number.endswith('-Split'):
-            video_number = video_number[:-6]
-        return video_number
-    return None
-
-
 def is_video(file):
     mimetypes.init()
     file_type = mimetypes.guess_type(file)[0]
@@ -83,12 +48,4 @@ def is_video(file):
 
 if __name__ == '__main__':
     # 整理
-    # format_folder('\\\\192.168.100.5\happy\Digital')
-    format_folder('D:\Downloads\来まえび')
-
-    # # 查找不存在的系列
-    # result = series_not_in('C:\Downloads')
-    # if result:
-    #     print(result)
-    # else:
-    #     print("match all")
+    format_folder('E:/115/望月りさ')
