@@ -16,7 +16,7 @@ class_dict = {
     'Das': {'DASD'},
     'SOD': {'HBAD', 'HYPN', 'IESP', 'OKS', 'SDDE', 'SDEN', 'SDMF', 'SDMU', 'SSHN', 'STAR', 'STARS', '3DSVR'},
     'NaturalHigh': {'NHDTB', 'SHN'},
-    'MGS': {'ABS', 'ABP', 'AOI', 'DOM', 'EDD', 'INU', 'JOB', 'PPT', 'SGA', 'WAT', 'YRH', 'SIRO', '001HMNF', '020GVG', '039NEO', '169MDTM', '179BAZX', '200GANA', '230ORE', '249OKS', '259LUXU', '263NACR', '276KITAIKE', '277DCV', '290JBJB', '300MAAN', '300MIUM', '300NTK', '302GERK', '315ETQR', '345SIMM', '390JAC', '390JNT', '402MNTJ', '435MFC', '459TEN', '483SGK'},
+    'MGS': {'ABS', 'ABP', 'ABW', 'AOI', 'DOM', 'EDD', 'INU', 'JBS', 'JOB', 'PPT', 'SGA', 'WAT', 'YRH', 'SIRO', '001HMNF', '020GVG', '039NEO', '169MDTM', '179BAZX', '200GANA', '230ORE', '249OKS', '259LUXU', '263NACR', '276KITAIKE', '277DCV', '290JBJB', '300MAAN', '300MIUM', '300NTK', '302GERK', '315ETQR', '345SIMM', '348NTR', '390JAC', '390JNT', '402MNTJ', '435MFC', '459TEN', '483SGK'},
     'Prestige': {},
     'AliceJapan': {},
     'Dogma': {},
@@ -24,7 +24,7 @@ class_dict = {
     'HMP': {'HODV'},
     'MaxA': {},
     'Momotaro': {},
-    'Mousouzoku': {},
+    'Mousouzoku': {'BIJN'},
     'KMP': {'MDTM'},
     'Tsumabana': {'HZGD'},
     'Shark': {'JBJB', 'MACB'},
@@ -33,12 +33,12 @@ class_dict = {
 }
 
 if __name__ == '__main__':
-    folder_path = 'E:/115/七瀬アリス'
+    folder_path = 'E:/115/4K'
 
     # 删除文件夹中现有图片
     for (dirpath, dirnames, filenames) in os.walk(folder_path):
         for filename in filenames:
-            if filename.endswith('.jpg'):
+            if filename.endswith(('.jpg', ',jpeg', 'png')):
                 file = os.path.join(dirpath, filename)
                 os.remove(file)
 
@@ -70,14 +70,16 @@ if __name__ == '__main__':
 
             # 保存poster
             poster_bytes = jav.download_poster()
+            poster_ext = jav.get_poster_ext()
             if poster_bytes is not None:
-                poster_path = os.path.join(dirpath, dirname, 'poster.jpg')
+                poster_path = os.path.join(dirpath, dirname, 'poster' + poster_ext)
                 with open(poster_path, 'wb') as f:
                     f.write(poster_bytes)
 
             # 保存fanart
             fanart_bytes = jav.download_fanart()
+            fanart_ext = jav.get_fanart_ext()
             if fanart_bytes is not None:
-                fanart_path = os.path.join(dirpath, dirname, 'fanart.jpg')
+                fanart_path = os.path.join(dirpath, dirname, 'fanart' + fanart_ext)
                 with open(fanart_path, 'wb') as f:
                     f.write(fanart_bytes)

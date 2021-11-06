@@ -1,5 +1,7 @@
 #!/usr/bin/envpython3
 # -*-coding:utf-8-*-
+import os
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -13,23 +15,28 @@ class Planetplus(object):
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
         }
 
-        # 查询列表页
+        # 搜索列表
         list_url= 'http://planetplus.jp/wp01/?s=' + video_no
         list_response = session.get(list_url, headers=headers)
         list_html = list_response.text
         list_soup = BeautifulSoup(list_html, features="html.parser")
+        # print(list_soup)
 
         # poster
-        self.poster_url = list_soup.find('article').find('img')['src']
+        self.poster_url = list_soup.find('article').find('img')['data-src']
+        self.poster_name = os.path.basename(self.poster_url)
+        self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # 详情页
-        info_url = list_soup.find('article').find('a')['href']
-        info_response = session.get(info_url, headers=headers)
-        info_html = info_response.text
-        info_soup = BeautifulSoup(info_html, features="html.parser")
+        url = list_soup.find('article').find('a')['href']
+        response = session.get(url, headers=headers)
+        html = response.text
+        soup = BeautifulSoup(html, features="html.parser")
 
         # fanart
-        self.fanart_url = info_soup.find('div', class_="execphpwidget").find('a')['href']
+        self.fanart_url = soup.find('div', class_="execphpwidget").find('a')['href']
+        self.fanart_name = os.path.basename(self.fanart_url)
+        self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
     def download_poster(self):
         response = self.session.get(self.poster_url, headers=self.headers)
@@ -39,9 +46,19 @@ class Planetplus(object):
         response = self.session.get(self.fanart_url, headers=self.headers)
         return response.content
 
+    def get_poster_ext(self):
+        return self.poster_ext
+
+    def get_fanart_ext(self):
+        return self.fanart_ext
+
 
 if __name__ == '__main__':
+    # http://planetplus.jp/wp01/?s=NACR-387
     planetplus = Planetplus('NACR-387')
 
     print(planetplus.poster_url)
     print(planetplus.fanart_url)
+
+    print(planetplus.poster_ext)
+    print(planetplus.fanart_ext)

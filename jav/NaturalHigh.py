@@ -1,5 +1,7 @@
 #!/usr/bin/envpython3
 # -*-coding:utf-8-*-
+import os
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -9,9 +11,6 @@ class NaturalHigh(object):
 
     def __init__(self, video_no):
         self.video_no = video_no = video_no.lower()
-        self.url = url = 'https://www.naturalhigh.co.jp/all/' + video_no + '/'
-        print(url)
-
         self.session = session = requests.Session()
 
         # 年龄检查
@@ -45,7 +44,7 @@ class NaturalHigh(object):
         session.post('https://www.naturalhigh.co.jp/wp-admin/admin-post.php', data=data, headers=age_check_headers)
 
         # 视频详情页html
-        headers = {
+        self.headers = headers = {
             # 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
             # 'Accept-Encoding': 'gzip, deflate, br',
             # 'Accept-Language': 'en-US,en;q=0.9',
@@ -61,19 +60,21 @@ class NaturalHigh(object):
             # 'Upgrade-Insecure-Requests': '1',
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
         }
+
+        url = 'https://www.naturalhigh.co.jp/all/' + video_no + '/'
         response = session.get(url, headers=headers)
         html = response.text
-        print(html)
-
-        # BeautifulSoup https://www.crummy.com/software/BeautifulSoup/bs4/doc.zh/
-        # pip install beautifulsoup4
         soup = BeautifulSoup(html, features="html.parser")
 
         # poster
-        # self.poster_url = soup.find('img', class_="sam160")['src']
+        self.poster_url = soup.find('img', class_="sam160")['src']
+        self.poster_name = os.path.basename(self.poster_url)
+        self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # fanart
-        # self.fanart_url = soup.find('a', class_="popup-image")['href']
+        self.fanart_url = soup.find('a', class_="popup-image")['href']
+        self.fanart_name = os.path.basename(self.fanart_url)
+        self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
     def download_poster(self):
         response = self.session.get(self.poster_url, headers=self.headers)
@@ -83,10 +84,19 @@ class NaturalHigh(object):
         response = self.session.get(self.fanart_url, headers=self.headers)
         return response.content
 
+    def get_poster_ext(self):
+        return self.poster_ext
+
+    def get_fanart_ext(self):
+        return self.fanart_ext
+
 
 if __name__ == '__main__':
     # https://www.naturalhigh.co.jp/all/shn-016/
     natural_high = NaturalHigh('SHN-016')
 
-    # print(natural_high.poster_url)
-    # print(natural_high.fanart_url)
+    print(natural_high.poster_url)
+    print(natural_high.fanart_url)
+
+    print(natural_high.poster_ext)
+    print(natural_high.fanart_ext)

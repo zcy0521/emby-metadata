@@ -1,5 +1,7 @@
 #!/usr/bin/envpython3
 # -*-coding:utf-8-*-
+import os
+
 import requests
 from bs4 import BeautifulSoup
 
@@ -14,26 +16,27 @@ class HHH(object):
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
         }
 
-        # 查询列表页
+        # 搜索列表
         list_url= 'https://www.hhh-av.com/search/list/?q=' + video_no
         list_response = session.get(list_url, headers=headers)
         list_html = list_response.text
         list_soup = BeautifulSoup(list_html, features="html.parser")
 
         # poster
-        poster_url = list_soup.find('ul', class_="lst-works").find('img')['src']
-        self.poster_url = self.site_url.rstrip('/') + poster_url
+        self.poster_url = self.site_url.rstrip('/') + list_soup.find('ul', class_="lst-works").find('img')['src']
+        self.poster_name = os.path.basename(self.poster_url)
+        self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # 详情页
-        info_url = list_soup.find('ul', class_="lst-works").find('a')['href']
-        info_url = self.site_url.rstrip('/') + info_url
-        info_response = session.get(info_url, headers=headers)
-        info_html = info_response.text
-        info_soup = BeautifulSoup(info_html, features="html.parser")
+        url = self.site_url.rstrip('/') + list_soup.find('ul', class_="lst-works").find('a')['href']
+        response = session.get(url, headers=headers)
+        html = response.text
+        soup = BeautifulSoup(html, features="html.parser")
 
         # fanart
-        fanart_url = info_soup.find('div', class_="area-sample").find('img')['src']
-        self.fanart_url = self.site_url.rstrip('/') + fanart_url
+        self.fanart_url = self.site_url.rstrip('/') + soup.find('div', class_="area-sample").find('img')['src']
+        self.fanart_name = os.path.basename(self.fanart_url)
+        self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
     def download_poster(self):
         response = self.session.get(self.poster_url, headers=self.headers)
@@ -43,9 +46,18 @@ class HHH(object):
         response = self.session.get(self.fanart_url, headers=self.headers)
         return response.content
 
+    def get_poster_ext(self):
+        return self.poster_ext
+
+    def get_fanart_ext(self):
+        return self.fanart_ext
+
 
 if __name__ == '__main__':
     hhh = HHH('OYC-278')
 
     print(hhh.poster_url)
     print(hhh.fanart_url)
+
+    print(hhh.poster_ext)
+    print(hhh.fanart_ext)
