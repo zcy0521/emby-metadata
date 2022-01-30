@@ -33,7 +33,7 @@ class_dict = {
 }
 
 if __name__ == '__main__':
-    folder_path = 'E:/115/4K'
+    folder_path = '/mnt/downloads'
 
     # 删除文件夹中现有图片
     for (dirpath, dirnames, filenames) in os.walk(folder_path):

@@ -48,4 +48,4 @@ def is_video(file):
 
 if __name__ == '__main__':
     # 整理 STARS-094 - Chinese.mp4
-    format_folder('E:/115/4K')
+    format_folder('/mnt/downloads')
