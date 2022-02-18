@@ -5,6 +5,8 @@ import os
 import requests
 from bs4 import BeautifulSoup
 
+from utils import http
+
 
 class MGS(object):
     site_url = 'https://www.mgstage.com/'
@@ -23,7 +25,8 @@ class MGS(object):
 
         # 详情页
         url = 'https://www.mgstage.com/product/product_detail/' + video_no + '/'
-        response = session.get(url, headers=headers)
+        # response = session.get(url, headers=headers)
+        response = http.proxy_get(session, url, headers=headers)
         html = response.text
         soup = BeautifulSoup(html, features="html.parser")
 
@@ -48,11 +51,13 @@ class MGS(object):
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
     def download_poster(self):
-        response = self.session.get(self.poster_url, headers=self.headers)
+        # response = self.session.get(self.poster_url, headers=self.headers)
+        response = http.proxy_get(self.session, self.poster_url, headers=self.headers)
         return response.content
 
     def download_fanart(self):
-        response = self.session.get(self.fanart_url, headers=self.headers)
+        # response = self.session.get(self.fanart_url, headers=self.headers)
+        response = http.proxy_get(self.session, self.fanart_url, headers=self.headers)
         return response.content
 
     def get_poster_ext(self):
