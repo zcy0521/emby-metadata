@@ -24,3 +24,12 @@ def proxy_get(session, url, headers):
     }
 
     return session.get(url, headers=headers, proxies=proxies)
+
+
+def proxy_post(session, url, data, headers):
+    proxies = {
+        "http": "socks5://127.0.0.1:1080",
+        "https": "socks5://127.0.0.1:1080",
+    }
+
+    return session.post(url, data=data, headers=headers, proxies=proxies)

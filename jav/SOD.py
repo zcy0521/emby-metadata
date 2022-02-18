@@ -5,6 +5,8 @@ import os
 import requests
 from bs4 import BeautifulSoup
 
+from utils import http
+
 
 class SOD(object):
     site_url = 'https://ec.sod.co.jp/'
@@ -21,7 +23,8 @@ class SOD(object):
 
         # 详情页
         url = 'https://ec.sod.co.jp/prime/videos/?id=' + video_no
-        response = session.get(url, headers=headers)
+        # response = session.get(url, headers=headers)
+        response = http.proxy_get(session, url, headers)
         html = response.text
         soup = BeautifulSoup(html, features="html.parser")
 
@@ -36,11 +39,13 @@ class SOD(object):
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
     def download_poster(self):
-        response = self.session.get(self.poster_url, headers=self.headers)
+        # response = self.session.get(self.poster_url, headers=self.headers)
+        response = http.proxy_get(self.session, self.poster_url, self.headers)
         return response.content
 
     def download_fanart(self):
-        response = self.session.get(self.fanart_url, headers=self.headers)
+        # response = self.session.get(self.fanart_url, headers=self.headers)
+        response = http.proxy_get(self.session, self.fanart_url, self.headers)
         return response.content
 
     def get_poster_ext(self):

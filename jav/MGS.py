@@ -26,7 +26,7 @@ class MGS(object):
         # 详情页
         url = 'https://www.mgstage.com/product/product_detail/' + video_no + '/'
         # response = session.get(url, headers=headers)
-        response = http.proxy_get(session, url, headers=headers)
+        response = http.proxy_get(session, url, headers)
         html = response.text
         soup = BeautifulSoup(html, features="html.parser")
 
@@ -52,12 +52,12 @@ class MGS(object):
 
     def download_poster(self):
         # response = self.session.get(self.poster_url, headers=self.headers)
-        response = http.proxy_get(self.session, self.poster_url, headers=self.headers)
+        response = http.proxy_get(self.session, self.poster_url, self.headers)
         return response.content
 
     def download_fanart(self):
         # response = self.session.get(self.fanart_url, headers=self.headers)
-        response = http.proxy_get(self.session, self.fanart_url, headers=self.headers)
+        response = http.proxy_get(self.session, self.fanart_url, self.headers)
         return response.content
 
     def get_poster_ext(self):
