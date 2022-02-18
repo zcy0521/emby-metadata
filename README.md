@@ -6,6 +6,7 @@
 pip install beautifulsoup4
 pip install tqdm
 pip install cfscrape
+pip install pysocks
 ```
 
 ## BeautifulSoup
