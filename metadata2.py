@@ -32,6 +32,33 @@ class_dict = {
     'WANZ': {'WANZ'},
 }
 
+
+def get_jav(dirname):
+    # 文件夹名 系列-番号
+    (series, item) = dirname.split('-', 1)
+
+    # 查找系列不在字典中
+    if series not in str(class_dict.values()):
+        if series.startswith('230ORE'):
+            series = '230ORE'
+        else:
+            print('无法下载封面:' + dirname)
+            return None
+
+    # 查找系列所在类
+    class_name = next(filter(lambda x: series in class_dict[x] and x, class_dict))
+    print('下载封面:' + dirname)
+
+    # 根据类名实例化
+    # class_name.py
+    jav_package = __import__('jav.' + class_name)
+    # class class_name(){...}
+    jav_class = getattr(jav_package, class_name)
+    jav_class = getattr(jav_class, class_name)
+    # instance dirname是番号
+    return jav_class(dirname)
+
+
 if __name__ == '__main__':
     folder_path = '/mnt/downloads'
 
@@ -45,28 +72,9 @@ if __name__ == '__main__':
     # 按文件夹整理
     for (dirpath, dirnames, filenames) in os.walk(folder_path):
         for dirname in tqdm(dirnames):
-            # 文件夹名 系列-番号
-            (series, item) = dirname.split('-', 1)
-
-            # 查找系列不在字典中
-            if series not in str(class_dict.values()):
-                if series.startswith('230ORE'):
-                    series = '230ORE'
-                else:
-                    print('无法下载封面:' + dirname)
-                    continue
-
-            # 查找系列所在类
-            class_name = next(filter(lambda x: series in class_dict[x] and x, class_dict))
-            print('下载封面:' + dirname)
-
-            # 根据类名实例化
-            # class_name.py
-            jav_package = __import__(class_name)
-            # class class_name(){...}
-            jav_class = getattr(jav_package, class_name)
-            # instance dirname是番号
-            jav = jav_class(dirname)
+            jav = get_jav(dirname)
+            if jav is None:
+                continue
 
             # 保存poster
             poster_bytes = jav.download_poster()
