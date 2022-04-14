@@ -39,8 +39,13 @@ class MGS(object):
             self.poster_url = self.gana_poster_url.format(number=number)
             self.fanart_url = self.gana_fanart_url.format(number=number)
         else:
-            self.poster_url = soup.find('div', class_="detail_photo").find('img', class_='enlarge_image')['src']
-            self.fanart_url = soup.find('div', class_="detail_photo").find('a', class_='link_magnify')['href']
+            detail_photo = soup.find('div', class_="detail_photo")
+            if detail_photo is None:
+                self.poster_url = ''
+                self.fanart_url = ''
+            else:
+                self.poster_url = detail_photo.find('img', class_='enlarge_image')['src']
+                self.fanart_url = detail_photo.find('a', class_='link_magnify')['href']
 
         # poster
         self.poster_name = os.path.basename(self.poster_url)
