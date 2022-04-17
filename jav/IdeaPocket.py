@@ -18,20 +18,28 @@ class IdeaPocket(object):
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
         }
 
-        # 详情页
-        url = 'https://www.ideapocket.com/works/detail/' + video_no + '/'
-        # response = session.get(url, headers=headers)
-        response = http.proxy_get(session, url, headers)
-        html = response.text
-        soup = BeautifulSoup(html, features="html.parser")
+        # 搜索列表
+        list_url = 'https://ideapocket.com/search/list?keyword=' + video_no
+        list_response = session.get(list_url, headers=headers)
+        # list_response = http.proxy_get(session, list_url, headers)
+        list_html = list_response.text
+        list_soup = BeautifulSoup(list_html, features="html.parser")
 
         # poster
-        self.poster_url = soup.find(attrs={"property": "og:image"})['content']
+        self.poster_url = list_soup.find('div', class_="swiper-wrapper").find('div', class_="item").find('img')['data-src']
         self.poster_name = os.path.basename(self.poster_url)
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 
+        # 详情页
+        # url = 'https://www.ideapocket.com/works/detail/' + video_no + '/'
+        url = list_soup.find('div', class_="swiper-wrapper").find('div', class_="item").find('a')['href']
+        response = session.get(url, headers=headers)
+        # response = http.proxy_get(session, url, headers)
+        html = response.text
+        soup = BeautifulSoup(html, features="html.parser")
+
         # fanart
-        self.fanart_url = self.site_url.rstrip('/') + soup.find('li', class_="sample-image-item").find('img')['src']
+        self.fanart_url = soup.find('div', class_="swiper-slide").find('img')['data-src']
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
