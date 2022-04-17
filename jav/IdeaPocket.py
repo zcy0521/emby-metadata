@@ -31,7 +31,6 @@ class IdeaPocket(object):
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # 详情页
-        # url = 'https://www.ideapocket.com/works/detail/' + video_no + '/'
         url = list_soup.find('div', class_="swiper-wrapper").find('div', class_="item").find('a')['href']
         response = session.get(url, headers=headers)
         # response = http.proxy_get(session, url, headers)
