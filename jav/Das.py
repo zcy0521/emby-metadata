@@ -18,17 +18,24 @@ class Das(object):
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
         }
 
-        # 详情页
-        url = 'https://www.dasdas.jp/works/detail/' + video_no + '/'
-        # response = session.get(url, headers=headers)
-        response = http.proxy_get(session, url, headers)
-        html = response.text
-        soup = BeautifulSoup(html, features="html.parser")
+        # 搜索列表
+        list_url = 'https://www.dasdas.jp/search/list/?q=' + video_no
+        list_response = session.get(list_url, headers=headers)
+        # list_response = http.proxy_get(session, list_url, headers)
+        list_html = list_response.text
+        list_soup = BeautifulSoup(list_html, features="html.parser")
 
         # poster
-        self.poster_url = soup.find(attrs={"property": "og:image"})['content']
+        self.poster_url = self.site_url.rstrip('/') + list_soup.find('div', class_="wrap-works-list-item--work").find('img')['src']
         self.poster_name = os.path.basename(self.poster_url)
         self.poster_ext = os.path.splitext(self.poster_name)[1]
+
+        # 详情页
+        url = self.site_url.rstrip('/') + list_soup.find('div', class_="wrap-works-list-item-info--work").find('a')['href']
+        response = session.get(url, headers=headers)
+        # response = http.proxy_get(session, url, headers)
+        html = response.text
+        soup = BeautifulSoup(html, features="html.parser")
 
         # fanart
         self.fanart_url = self.site_url.rstrip('/') + soup.find('div', class_="wrap-package-image js-photo-swipe-target").find('img')['src']
