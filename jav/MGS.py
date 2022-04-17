@@ -25,8 +25,8 @@ class MGS(object):
 
         # 详情页
         url = 'https://www.mgstage.com/product/product_detail/' + video_no + '/'
-        # response = session.get(url, headers=headers)
-        response = http.proxy_get(session, url, headers)
+        response = session.get(url, headers=headers)
+        # response = http.proxy_get(session, url, headers)
         html = response.text
         soup = BeautifulSoup(html, features="html.parser")
 
