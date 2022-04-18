@@ -17,19 +17,25 @@ class TameikeGoro(object):
     def __init__(self, video_no):
         self.video_no = video_no = video_no.lower().replace('-', '')
 
+        # 搜索列表
+        list_url = 'https://www.tameikegoro.jp/search/list/?q=' + video_no
+        list_response = http.get(list_url, self.headers)
+        list_html = list_response.text
+        list_soup = BeautifulSoup(list_html, features="html.parser")
+
+        # poster
+        self.poster_url = self.site_url.rstrip('/') + list_soup.find('ul', class_="wrap-content-list").find('img')['src']
+        self.poster_name = os.path.basename(self.poster_url)
+        self.poster_ext = os.path.splitext(self.poster_name)[1]
+
         # 详情页
-        url = 'https://www.tameikegoro.jp/works/detail/' + video_no + '/'
+        url = self.site_url.rstrip('/') + list_soup.find('ul', class_="wrap-content-list").find('a')['href']
         response = http.get(url, self.headers)
         html = response.text
         soup = BeautifulSoup(html, features="html.parser")
 
-        # poster
-        self.poster_url = soup.find(attrs={"property": "og:image"})['content']
-        self.poster_name = os.path.basename(self.poster_url)
-        self.poster_ext = os.path.splitext(self.poster_name)[1]
-
         # fanart
-        self.fanart_url = self.site_url.rstrip('/') + soup.find('div', id="wrap-detail-slider").find('img')['src']
+        self.fanart_url = self.site_url.rstrip('/') + soup.find('ul', class_="bx-detail-slider").find('img')['src']
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
