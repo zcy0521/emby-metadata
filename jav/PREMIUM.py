@@ -19,7 +19,7 @@ class PREMIUM(object):
 
         # 搜索列表
         list_url = 'https://premium-beauty.com/search/list?keyword=' + video_no
-        list_response = http.get(list_url, headers=headers)
+        list_response = http.get(list_url, self.headers)
         list_html = list_response.text
         list_soup = BeautifulSoup(list_html, features="html.parser")
 
@@ -30,7 +30,7 @@ class PREMIUM(object):
 
         # 详情页
         url = list_soup.find('div', class_="swiper-wrapper").find('div', class_="item").find('a')['href']
-        response = http.get(url, headers=headers)
+        response = http.get(url, self.headers)
         html = response.text
         soup = BeautifulSoup(html, features="html.parser")
 

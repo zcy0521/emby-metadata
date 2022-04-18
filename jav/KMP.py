@@ -15,12 +15,16 @@ class KMP(object):
     # 宇宙企画
     uchu_site_url = 'http://uchu.co.jp/'
 
+    headers = {
+        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
+    }
+
     def __init__(self, video_no):
         self.video_no = video_no = video_no.lower()
 
         # 详情页
         url = 'https://www.km-produce.com/works/' + video_no
-        response = http.get(url)
+        response = http.get(url, self.headers)
         html = response.text
         soup = BeautifulSoup(html, features="html.parser")
 
@@ -35,11 +39,11 @@ class KMP(object):
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
     def download_poster(self):
-        response = http.get(self.poster_url)
+        response = http.get(self.poster_url, self.headers)
         return response.content
 
     def download_fanart(self):
-        response = http.get(self.fanart_url)
+        response = http.get(self.fanart_url, self.headers)
         return response.content
 
     def get_poster_ext(self):

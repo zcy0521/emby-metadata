@@ -20,7 +20,7 @@ class HMP(object):
         # 搜索列表
         list_url= 'https://smt.hmp.jp/list.php'
         list_data = {'key': video_no}
-        list_response = http.post(list_url, list_data)
+        list_response = http.post(list_url, list_data, self.headers)
         list_html = list_response.text
         list_soup = BeautifulSoup(list_html, features="html.parser")
 
