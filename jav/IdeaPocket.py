@@ -2,7 +2,6 @@
 # -*-coding:utf-8-*-
 import os
 
-import requests
 from bs4 import BeautifulSoup
 
 from utils import http
@@ -11,17 +10,16 @@ from utils import http
 class IdeaPocket(object):
     site_url = 'https://www.ideapocket.com/'
 
+    headers = {
+        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
+    }
+
     def __init__(self, video_no):
         self.video_no = video_no = video_no.lower().replace('-', '')
-        self.session = session = requests.Session()
-        self.headers = headers = {
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
-        }
 
         # 搜索列表
         list_url = 'https://ideapocket.com/search/list?keyword=' + video_no
-        list_response = session.get(list_url, headers=headers)
-        # list_response = http.proxy_get(session, list_url, headers)
+        list_response = http.get(list_url, self.headers)
         list_html = list_response.text
         list_soup = BeautifulSoup(list_html, features="html.parser")
 
@@ -32,8 +30,7 @@ class IdeaPocket(object):
 
         # 详情页
         url = list_soup.find('div', class_="swiper-wrapper").find('div', class_="item").find('a')['href']
-        response = session.get(url, headers=headers)
-        # response = http.proxy_get(session, url, headers)
+        response = http.get(url, self.headers)
         html = response.text
         soup = BeautifulSoup(html, features="html.parser")
 
@@ -43,13 +40,11 @@ class IdeaPocket(object):
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
     def download_poster(self):
-        # response = self.session.get(self.poster_url, headers=self.headers)
-        response = http.proxy_get(self.session, self.poster_url, self.headers)
+        response = http.get(self.poster_url, self.headers)
         return response.content
 
     def download_fanart(self):
-        # response = self.session.get(self.fanart_url, headers=self.headers)
-        response = http.proxy_get(self.session, self.fanart_url, self.headers)
+        response = http.get(self.fanart_url, self.headers)
         return response.content
 
     def get_poster_ext(self):

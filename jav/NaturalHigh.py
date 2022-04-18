@@ -2,7 +2,6 @@
 # -*-coding:utf-8-*-
 import os
 
-import requests
 from bs4 import BeautifulSoup
 
 from utils import http
@@ -11,11 +10,27 @@ from utils import http
 class NaturalHigh(object):
     site_url = 'https://www.naturalhigh.co.jp/'
 
+    headers = {
+        # 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+        # 'Accept-Encoding': 'gzip, deflate, br',
+        # 'Accept-Language': 'en-US,en;q=0.9',
+        # 'Cache-Control': 'max-age=0',
+        # 'Connection': 'keep-alive',
+        'Cookie': '_ga=GA1.3.488997533.1609657427; _gid=GA1.3.1979187914.1609657427; _gat=1; age_gate=18',
+        'Host': 'www.naturalhigh.co.jp',
+        'Referer': 'https://www.naturalhigh.co.jp/all/shn-016/',
+        # 'Sec-Fetch-Dest': 'document',
+        # 'Sec-Fetch-Mode': 'navigate',
+        # 'Sec-Fetch-Site': 'same-origin',
+        # 'Sec-Fetch-User': '?1',
+        # 'Upgrade-Insecure-Requests': '1',
+        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
+    }
+
     def __init__(self, video_no):
         self.video_no = video_no = video_no.lower()
-        self.session = session = requests.Session()
 
-        # 年龄检查
+        # 年龄检查页
         data = {
             'age_gate': '1',
             'age_gate[age]': 'TVRnPQ==',
@@ -43,29 +58,11 @@ class NaturalHigh(object):
             # 'Upgrade-Insecure-Requests': '1',
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
         }
-        session.post('https://www.naturalhigh.co.jp/wp-admin/admin-post.php', data=data, headers=age_check_headers)
+        http.post('https://www.naturalhigh.co.jp/wp-admin/admin-post.php', data=data, headers=age_check_headers)
 
         # 视频详情页html
-        self.headers = headers = {
-            # 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
-            # 'Accept-Encoding': 'gzip, deflate, br',
-            # 'Accept-Language': 'en-US,en;q=0.9',
-            # 'Cache-Control': 'max-age=0',
-            # 'Connection': 'keep-alive',
-            'Cookie': '_ga=GA1.3.488997533.1609657427; _gid=GA1.3.1979187914.1609657427; _gat=1; age_gate=18',
-            'Host': 'www.naturalhigh.co.jp',
-            'Referer': 'https://www.naturalhigh.co.jp/all/shn-016/',
-            # 'Sec-Fetch-Dest': 'document',
-            # 'Sec-Fetch-Mode': 'navigate',
-            # 'Sec-Fetch-Site': 'same-origin',
-            # 'Sec-Fetch-User': '?1',
-            # 'Upgrade-Insecure-Requests': '1',
-            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
-        }
-
         url = 'https://www.naturalhigh.co.jp/all/' + video_no + '/'
-        # response = session.get(url, headers=headers)
-        response = http.proxy_get(session, url, headers)
+        response = http.get(url, self.headers)
         html = response.text
         soup = BeautifulSoup(html, features="html.parser")
 
@@ -80,13 +77,11 @@ class NaturalHigh(object):
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
     def download_poster(self):
-        # response = self.session.get(self.poster_url, headers=self.headers)
-        response = http.proxy_get(self.session, self.poster_url, self.headers)
+        response = http.get(self.poster_url, self.headers)
         return response.content
 
     def download_fanart(self):
-        # response = self.session.get(self.fanart_url, headers=self.headers)
-        response = self.session.get(self.session, self.fanart_url, self.headers)
+        response = http.get(self.fanart_url, self.headers)
         return response.content
 
     def get_poster_ext(self):
