@@ -17,19 +17,25 @@ class WANZ(object):
     def __init__(self, video_no):
         self.video_no = video_no = video_no.lower().replace('-', '')
 
+        # 搜索列表
+        list_url = 'https://www.wanz-factory.com/search/list/?q=' + video_no
+        list_response = http.get(list_url, self.headers)
+        list_html = list_response.text
+        list_soup = BeautifulSoup(list_html, features="html.parser")
+
+        # poster
+        self.poster_url = self.site_url.rstrip('/') + list_soup.find('ul', class_="c-works-list").find('img')['src']
+        self.poster_name = os.path.basename(self.poster_url)
+        self.poster_ext = os.path.splitext(self.poster_name)[1]
+
         # 详情页
-        url = 'https://www.wanz-factory.com/works/detail/' + video_no + '/'
+        url = self.site_url.rstrip('/') + list_soup.find('ul', class_="c-works-list").find('a')['href']
         response = http.get(url, self.headers)
         html = response.text
         soup = BeautifulSoup(html, features="html.parser")
 
-        # poster
-        self.poster_url = soup.find(attrs={"property": "og:image"})['content']
-        self.poster_name = os.path.basename(self.poster_url)
-        self.poster_ext = os.path.splitext(self.poster_name)[1]
-
         # fanart
-        self.fanart_url = self.site_url.rstrip('/') + soup.find('div', class_="works-detail-main").find('a')['href']
+        self.fanart_url = self.site_url.rstrip('/') + soup.find('div', class_="works-detail-package js-photo-swipe-target").find('img')['src']
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
