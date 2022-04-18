@@ -8,7 +8,7 @@ from utils import http
 
 
 class S1S1S1(object):
-    site_url = 'https://www.s1s1s1.com/'
+    site_url = 'https://s1s1s1.com/'
 
     headers = {
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
@@ -19,6 +19,7 @@ class S1S1S1(object):
 
         # 搜索列表
         list_url = 'https://s1s1s1.com/search/list?keyword=' + video_no
+        print(list_url)
         list_response = http.get(list_url, self.headers)
         list_html = list_response.text
         list_soup = BeautifulSoup(list_html, features="html.parser")
@@ -29,7 +30,7 @@ class S1S1S1(object):
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # 详情页
-        url = 'https://www.s1s1s1.com/works/detail/' + video_no + '/'
+        url = 'https://s1s1s1.com/works/detail/' + video_no + '/'
         response = http.get(url, self.headers)
         html = response.text
         soup = BeautifulSoup(html, features="html.parser")
@@ -55,7 +56,7 @@ class S1S1S1(object):
 
 
 if __name__ == '__main__':
-    # https://www.s1s1s1.com/works/detail/ssni939/
+    # https://s1s1s1.com/works/detail/ssni939/
     s1s1s1 = S1S1S1('SSNI-939')
 
     print(s1s1s1.poster_url)
