@@ -8,7 +8,7 @@ from utils import http
 
 
 class MOODYZ(object):
-    site_url = 'https://www.moodyz.com/'
+    site_url = 'https://moodyz.com/'
 
     headers = {
         'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
@@ -55,7 +55,7 @@ class MOODYZ(object):
 
 
 if __name__ == '__main__':
-    # https://www.moodyz.com/works/detail/mide607/
+    # https://moodyz.com/works/detail/mide607/
     moodyz = MOODYZ('MIDE-607')
 
     print(moodyz.poster_url)
