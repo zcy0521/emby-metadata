@@ -13,7 +13,7 @@ def index():
 
 @app.route("/poster")
 def poster():
-    video_no = request.args.get('video_no')
+    video_no = request.args.get('video_no').upper()
 
     # 查询编号为空
     if video_no is None:
@@ -33,7 +33,7 @@ def poster():
 
 @app.route("/fanart")
 def fanart():
-    video_no = request.args.get('video_no')
+    video_no = request.args.get('video_no').upper()
 
     # 查询编号为空
     if video_no is None:
