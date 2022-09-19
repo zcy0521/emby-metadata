@@ -26,6 +26,7 @@ class_dict = {
     'Momotaro': {},
     'Mousouzoku': {'BIJN'},
     'KMP': {'MDTM'},
+    'TMA': {'AOZ'},
     'Tsumabana': {'HZGD'},
     'Shark': {'JBJB', 'MACB'},
     'Planetplus': {'NACR'},

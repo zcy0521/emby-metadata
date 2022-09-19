@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>movie</title>
+</head>
+<body>
+
+<div style="margin-bottom: 20px">
+    <h2>视频</h2>
+    <a style="display: inline-block" href="/">首页</a>
+    <a style="display: inline-block" href="/movie">清空</a>
+</div>
+
+<div style="margin-bottom: 20px">
+    <form action="/movie" method="get">
+        <label for="video_no">番号</label>
+        <input id="video_no" name="video_no" value="{{ video_no }}" style="width: 50%">
+        <button type="submit">查询</button>
+    </form>
+</div>
+
+<div>
+    {% for video in videos %}
+        <div style="position: relative; display: inline-block; overflow: hidden;">
+            <video src="{{ video.movie }}" title="{{ video.number }}" controls="controls"></video>
+        </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>
