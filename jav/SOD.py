@@ -18,6 +18,7 @@ class SOD(object):
 
         # 详情页
         url = 'https://ec.sod.co.jp/prime/videos/?id=' + video_no
+        # TODO 年龄认证
         html = http.get(url)
         print(html.decode('utf-8'))
         soup = BeautifulSoup(html, features="html.parser")

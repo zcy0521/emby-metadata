@@ -25,6 +25,7 @@ class MGS(object):
         # 详情页
         url = 'https://www.mgstage.com/product/product_detail/' + video_no + '/'
         html = http.get(url)
+        # TODO 年龄认证
         print(html)
         soup = BeautifulSoup(html, features="html.parser")
 

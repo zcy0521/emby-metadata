@@ -13,16 +13,18 @@ class Shark(object):
     def __init__(self, video_no):
         # 详情页
         url = 'https://shark2012-av.com/products/index.php?pn=' + video_no
-        html = http.get(url)
+        html = http.get(url, charset='cp932')
         soup = BeautifulSoup(html, features="html.parser")
 
         # poster
-        self.poster_url = self.site_url + soup.find('div', class_="works-detail").find('img')['src']
+        poster_url = soup.find('div', class_="works-detail").find('img')['src']
+        self.poster_url = self.site_url + poster_url.split('../')[1]
         self.poster_name = os.path.basename(self.poster_url)
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # fanart
-        self.fanart_url = self.site_url + soup.find('div', class_="works-detail").find('a')['href']
+        fanart_url = soup.find('div', class_="works-detail").find('a')['href']
+        self.fanart_url = self.site_url + fanart_url.split('../')[1]
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 

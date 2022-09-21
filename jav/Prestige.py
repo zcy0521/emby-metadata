@@ -16,6 +16,7 @@ class Prestige(object):
         # 详情页
         url = 'https://www.prestige-av.com/goods/goods_detail.php?sku=' + video_no
         html = http.get(url)
+        # TODO 年龄认证
         print(html)
         soup = BeautifulSoup(html, features="html.parser")
 
