@@ -10,15 +10,10 @@ from utils import http
 class Planetplus(object):
     site_url = 'http://planetplus.jp/'
 
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
-    }
-
     def __init__(self, video_no):
         # 搜索列表
         list_url= 'http://planetplus.jp/wp01/?s=' + video_no
-        list_response = http.get(list_url, self.headers)
-        list_html = list_response.text
+        list_html = http.get(list_url)
         list_soup = BeautifulSoup(list_html, features="html.parser")
 
         # poster
@@ -28,8 +23,7 @@ class Planetplus(object):
 
         # 详情页
         url = list_soup.find('article').find('a')['href']
-        response = http.get(url, self.headers)
-        html = response.text
+        html = http.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
         # fanart
@@ -38,11 +32,11 @@ class Planetplus(object):
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
     def download_poster(self):
-        response = http.get(self.poster_url, self.headers)
+        response = http.get(self.poster_url)
         return response.content
 
     def download_fanart(self):
-        response = http.get(self.fanart_url, self.headers)
+        response = http.get(self.fanart_url)
         return response.content
 
     def get_poster_ext(self):

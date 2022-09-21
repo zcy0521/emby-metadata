@@ -1,25 +1,23 @@
 #!/usr/bin/envpython3
 # -*-coding:utf-8-*-
-import requests
+from urllib3.contrib.socks import SOCKSProxyManager
 
 
-def get(url, headers):
-    session = requests.Session()
+def get(url):
+    # https://urllib3.readthedocs.io/en/stable/advanced-usage.html#socks-proxies
+    proxy = SOCKSProxyManager('socks5h://localhost:1080/')
 
-    proxies = {
-        "http": "socks5://127.0.0.1:1080",
-        "https": "socks5://127.0.0.1:1080",
-    }
+    r = proxy.request('GET', url)
 
-    return session.get(url, headers=headers, proxies=proxies)
+    # https://urllib3.readthedocs.io/en/stable/user-guide.html#response-content
+    return r.data.decode('utf-8')
 
 
-def post(url, data, headers):
-    session = requests.Session()
+def post(url, fields):
+    # https://urllib3.readthedocs.io/en/stable/advanced-usage.html#socks-proxies
+    proxy = SOCKSProxyManager('socks5h://localhost:1080/')
 
-    proxies = {
-        "http": "socks5://127.0.0.1:1080",
-        "https": "socks5://127.0.0.1:1080",
-    }
+    r = proxy.request('POST', url, fields=fields)
 
-    return session.post(url, data=data, headers=headers, proxies=proxies)
+    # https://urllib3.readthedocs.io/en/stable/user-guide.html#response-content
+    return r.data.decode('utf-8')

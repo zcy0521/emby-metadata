@@ -10,15 +10,10 @@ from utils import http
 class TMA(object):
     site_url = 'https://www.tma.co.jp/'
 
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
-    }
-
     def __init__(self, video_no):
         # 详情页
         url = 'https://www.tma.co.jp/products/' + video_no.lower()
-        response = http.get(url, self.headers)
-        html = response.text
+        html = http.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
         # poster
@@ -39,15 +34,15 @@ class TMA(object):
         self.movie_ext = os.path.splitext(self.movie_name)[1]
 
     def download_poster(self):
-        response = http.get(self.poster_url, self.headers)
+        response = http.get(self.poster_url)
         return response.content
 
     def download_fanart(self):
-        response = http.get(self.fanart_url, self.headers)
+        response = http.get(self.fanart_url)
         return response.content
 
     def download_movie(self):
-        response = http.get(self.movie_url, self.headers)
+        response = http.get(self.movie_url)
         return response.content
 
     def get_poster_ext(self):

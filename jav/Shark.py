@@ -10,15 +10,10 @@ from utils import http
 class Shark(object):
     site_url = 'https://shark2012-av.com/'
 
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
-    }
-
     def __init__(self, video_no):
         # 详情页
         url = 'https://shark2012-av.com/products/index.php?pn=' + video_no
-        response = http.get(url, self.headers)
-        html = response.text
+        html = http.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
         # poster
@@ -32,11 +27,11 @@ class Shark(object):
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
     def download_poster(self):
-        response = http.get(self.poster_url, self.headers)
+        response = http.get(self.poster_url)
         return response.content
 
     def download_fanart(self):
-        response = http.get(self.fanart_url, self.headers)
+        response = http.get(self.fanart_url)
         return response.content
 
     def get_poster_ext(self):
@@ -47,7 +42,7 @@ class Shark(object):
 
 
 if __name__ == '__main__':
-    # https://shark2012-av.com/products/index.php?pn=JBJB-019
+    # https://shark2012-av.com/products/index.php?pn=MACB-006
     shark = Shark('MACB-006')
 
     print(shark.poster_url)

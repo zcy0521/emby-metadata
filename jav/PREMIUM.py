@@ -10,17 +10,12 @@ from utils import http
 class PREMIUM(object):
     site_url = 'https://www.premium-beauty.com/'
 
-    headers = {
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
-    }
-
     def __init__(self, video_no):
         self.video_no = video_no = video_no.lower().replace('-', '')
 
         # 搜索列表
         list_url = 'https://premium-beauty.com/search/list?keyword=' + video_no
-        list_response = http.get(list_url, self.headers)
-        list_html = list_response.text
+        list_html = http.get(list_url)
         list_soup = BeautifulSoup(list_html, features="html.parser")
 
         # poster
@@ -30,8 +25,7 @@ class PREMIUM(object):
 
         # 详情页
         url = list_soup.find('div', class_="swiper-wrapper").find('div', class_="item").find('a')['href']
-        response = http.get(url, self.headers)
-        html = response.text
+        html = http.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
         # fanart
@@ -40,11 +34,11 @@ class PREMIUM(object):
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
     def download_poster(self):
-        response = http.get(self.poster_url, self.headers)
+        response = http.get(self.poster_url)
         return response.content
 
     def download_fanart(self):
-        response = http.get(self.fanart_url, self.headers)
+        response = http.get(self.fanart_url)
         return response.content
 
     def get_poster_ext(self):

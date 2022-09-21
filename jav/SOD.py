@@ -10,20 +10,16 @@ from utils import http
 class SOD(object):
     site_url = 'https://ec.sod.co.jp/'
 
-    headers = {
-        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
-    }
-
     def __init__(self, video_no):
         self.video_no = video_no
 
         # 年龄检查
-        http.get('https://ec.sod.co.jp/prime/_ontime.php', self.headers)
+        http.get('https://ec.sod.co.jp/prime/_ontime.php')
 
         # 详情页
         url = 'https://ec.sod.co.jp/prime/videos/?id=' + video_no
-        response = http.get(url, self.headers)
-        html = response.text
+        html = http.get(url)
+        print(html.decode('utf-8'))
         soup = BeautifulSoup(html, features="html.parser")
 
         # poster
@@ -37,11 +33,11 @@ class SOD(object):
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
     def download_poster(self):
-        response = http.get(self.poster_url, self.headers)
+        response = http.get(self.poster_url)
         return response.content
 
     def download_fanart(self):
-        response = http.get(self.fanart_url, self.headers)
+        response = http.get(self.fanart_url)
         return response.content
 
     def get_poster_ext(self):

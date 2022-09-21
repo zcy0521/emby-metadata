@@ -10,17 +10,12 @@ from utils import http
 class IdeaPocket(object):
     site_url = 'https://www.ideapocket.com/'
 
-    headers = {
-        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
-    }
-
     def __init__(self, video_no):
         self.video_no = video_no = video_no.lower().replace('-', '')
 
         # 搜索列表
         list_url = 'https://ideapocket.com/search/list?keyword=' + video_no
-        list_response = http.get(list_url, self.headers)
-        list_html = list_response.text
+        list_html = http.get(list_url)
         list_soup = BeautifulSoup(list_html, features="html.parser")
 
         # poster
@@ -30,8 +25,7 @@ class IdeaPocket(object):
 
         # 详情页
         url = list_soup.find('div', class_="swiper-wrapper").find('div', class_="item").find('a')['href']
-        response = http.get(url, self.headers)
-        html = response.text
+        html = http.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
         # fanart
@@ -39,12 +33,21 @@ class IdeaPocket(object):
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
+        # movie
+        self.movie_url = soup.find('div', class_="video").find('video')['src']
+        self.movie_name = os.path.basename(self.movie_url)
+        self.movie_ext = os.path.splitext(self.movie_name)[1]
+
     def download_poster(self):
-        response = http.get(self.poster_url, self.headers)
+        response = http.get(self.poster_url)
         return response.content
 
     def download_fanart(self):
-        response = http.get(self.fanart_url, self.headers)
+        response = http.get(self.fanart_url)
+        return response.content
+
+    def download_movie(self):
+        response = http.get(self.movie_url)
         return response.content
 
     def get_poster_ext(self):
@@ -53,6 +56,9 @@ class IdeaPocket(object):
     def get_fanart_ext(self):
         return self.fanart_ext
 
+    def get_movie_ext(self):
+        return self.movie_ext
+
 
 if __name__ == '__main__':
     # https://www.ideapocket.com/works/detail/ipx536/
@@ -60,6 +66,8 @@ if __name__ == '__main__':
 
     print(idea_pocket.poster_url)
     print(idea_pocket.fanart_url)
+    print(idea_pocket.movie_url)
 
     print(idea_pocket.poster_ext)
     print(idea_pocket.fanart_ext)
+    print(idea_pocket.movie_ext)

@@ -10,18 +10,12 @@ from utils import http
 class HMP(object):
     site_url = 'https://smt.hmp.jp/'
 
-    headers = {
-        'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36'
-    }
-
     def __init__(self, video_no):
         self.video_no = video_no
 
         # 搜索列表
         list_url= 'https://smt.hmp.jp/list.php'
-        list_data = {'key': video_no}
-        list_response = http.post(list_url, list_data, self.headers)
-        list_html = list_response.text
+        list_html = http.post(list_url, {'key': video_no})
         list_soup = BeautifulSoup(list_html, features="html.parser")
 
         # poster
@@ -31,8 +25,7 @@ class HMP(object):
 
         # 详情页
         url = self.site_url.rstrip('/') + list_soup.find('p', class_="mainImg").find('a')['href']
-        response = http.get(url, self.headers)
-        html = response.text
+        html = http.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
         # fanart
@@ -41,11 +34,11 @@ class HMP(object):
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
     def download_poster(self):
-        response = http.get(self.poster_url, self.headers)
+        response = http.get(self.poster_url)
         return response.content
 
     def download_fanart(self):
-        response = http.get(self.fanart_url, self.headers)
+        response = http.get(self.fanart_url)
         return response.content
 
     def get_poster_ext(self):
