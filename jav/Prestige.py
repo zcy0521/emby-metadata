@@ -11,7 +11,7 @@ site_url = 'https://www.prestige-av.com/'
 
 class Prestige(object):
     def __init__(self, video_no):
-        self.video_no = video_no = video_no.lower()
+        self.video_no = video_no
 
         # 年龄认证Cookie
         headers = {'cookie': '__age_auth__=true'}
@@ -34,7 +34,7 @@ class Prestige(object):
 
         # movie
         movie_url = 'https://www.prestige-av.com/api/media/movie/{number}.mp4'
-        self.movie_url = movie_url.format(number=video_no.upper())
+        self.movie_url = movie_url.format(number=video_no)
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
 
@@ -61,7 +61,16 @@ class Prestige(object):
 
 
 if __name__ == '__main__':
-    # https://www.prestige-av.com/goods/goods_detail.php?sku=abp-721
+    # https://www.prestige-av.com/goods/goods_detail.php?sku=ABP-721
+    # https://www.prestige-av.com/goods/goods_detail.php?sku=AOI-005
+    # https://www.prestige-av.com/goods/goods_detail.php?sku=DOM-045
+    # https://www.prestige-av.com/goods/goods_detail.php?sku=EDD-202
+    # https://www.prestige-av.com/goods/goods_detail.php?sku=INU-050
+    # https://www.prestige-av.com/goods/goods_detail.php?sku=JBS-028
+    # https://www.prestige-av.com/goods/goods_detail.php?sku=JOB-033
+    # https://www.prestige-av.com/goods/goods_detail.php?sku=PPT-046
+    # https://www.prestige-av.com/goods/goods_detail.php?sku=SGA-092
+    # https://www.prestige-av.com/goods/goods_detail.php?sku=WAT-001
     prestige = Prestige('ABP-721')
 
     print(prestige.poster_url)
