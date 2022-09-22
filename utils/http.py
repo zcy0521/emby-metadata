@@ -30,5 +30,4 @@ def download(url, headers=None):
     r = proxy.request('GET', url, headers=headers)
 
     # https://urllib3.readthedocs.io/en/stable/user-guide.html#response-content
-    print(r.data)
     return r.data

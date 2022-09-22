@@ -1,6 +1,7 @@
 #!/usr/bin/envpython3
 # -*-coding:utf-8-*-
 import os
+import shutil
 
 from tqdm import tqdm
 
@@ -35,6 +36,9 @@ class_dict = {
 
 
 def get_jav(dirname):
+    if '-' not in dirname:
+        return None
+
     # 文件夹名 系列-番号
     (series, item) = dirname.split('-', 1)
 
@@ -65,10 +69,17 @@ if __name__ == '__main__':
 
     # 删除文件夹中现有图片
     for (dirpath, dirnames, filenames) in os.walk(folder_path):
+        # 删除图片
         for filename in filenames:
             if filename.endswith(('.jpg', ',jpeg', 'png')):
                 file = os.path.join(dirpath, filename)
                 os.remove(file)
+
+        # 删除预告片目录
+        for dirname in tqdm(dirnames):
+            trailers_folder = os.path.join(dirpath, dirname, 'trailers')
+            if os.path.exists(trailers_folder):
+                shutil.rmtree(trailers_folder)
 
     # 按文件夹整理
     for (dirpath, dirnames, filenames) in os.walk(folder_path):
@@ -92,3 +103,16 @@ if __name__ == '__main__':
                 fanart_path = os.path.join(dirpath, dirname, 'fanart' + fanart_ext)
                 with open(fanart_path, 'wb') as f:
                     f.write(fanart_bytes)
+
+            # 保存movie
+            movie_bytes = jav.download_movie()
+            movie_ext = jav.get_movie_ext()
+            if movie_bytes is not None:
+                # 创建预告片目录
+                movie_folder = os.path.join(dirpath, dirname,'trailers')
+                if not os.path.exists(movie_folder):
+                    os.makedirs(movie_folder)
+                # 保存预告片
+                movie_path = os.path.join(movie_folder, dirname + movie_ext)
+                with open(movie_path, 'wb') as f:
+                    f.write(movie_bytes)
