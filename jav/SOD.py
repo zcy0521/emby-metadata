@@ -1,5 +1,6 @@
 #!/usr/bin/envpython3
 # -*-coding:utf-8-*-
+import io
 import os
 
 from bs4 import BeautifulSoup
@@ -53,16 +54,17 @@ class SOD(object):
         self.movie_ext = os.path.splitext(self.movie_name)[1]
 
     def download_poster(self):
-        response = http.get(self.poster_url)
-        return response.content
+        # 添加referer 绕过 Amazon CloudFront 图片防盗链
+        headers = {'referer': 'https://ec.sod.co.jp/'}
+        return http.download(self.poster_url, headers)
 
     def download_fanart(self):
-        response = http.get(self.fanart_url)
-        return response.content
+        headers = {'referer': 'https://ec.sod.co.jp/'}
+        return http.download(self.fanart_url, headers)
 
     def download_movie(self):
-        response = http.get(self.movie_url)
-        return response.content
+        headers = {'referer': 'https://ec.sod.co.jp/'}
+        return http.download(self.movie_url, headers)
 
     def get_poster_ext(self):
         return self.poster_ext
@@ -78,10 +80,12 @@ if __name__ == '__main__':
     # https://ec.sod.co.jp/prime/videos/?id=STARS-212
     sod = SOD('STARS-212')
 
-    print(sod.poster_url)
-    print(sod.fanart_url)
-    print(sod.movie_url)
+    # print(sod.poster_url)
+    # print(sod.fanart_url)
+    # print(sod.movie_url)
+    #
+    # print(sod.poster_ext)
+    # print(sod.fanart_ext)
+    # print(sod.movie_ext)
 
-    print(sod.poster_ext)
-    print(sod.fanart_ext)
-    print(sod.movie_ext)
+    sod.download_poster()
