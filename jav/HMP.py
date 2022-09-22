@@ -6,30 +6,30 @@ from bs4 import BeautifulSoup
 
 from utils import http
 
+site_url = 'https://smt.hmp.jp/'
+
 
 class HMP(object):
-    site_url = 'https://smt.hmp.jp/'
-
     def __init__(self, video_no):
         self.video_no = video_no
 
         # 搜索列表
-        list_url= 'https://smt.hmp.jp/list.php'
+        list_url = 'https://smt.hmp.jp/list.php'
         list_html = http.post(list_url, {'key': video_no})
         list_soup = BeautifulSoup(list_html, features="html.parser")
 
         # poster
-        self.poster_url = self.site_url.rstrip('/') + list_soup.find('p', class_="mainImg").find('img')['data-original']
+        self.poster_url = site_url.rstrip('/') + list_soup.find('p', class_="mainImg").find('img')['data-original']
         self.poster_name = os.path.basename(self.poster_url)
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # 详情页
-        url = self.site_url.rstrip('/') + list_soup.find('p', class_="mainImg").find('a')['href']
+        url = site_url.rstrip('/') + list_soup.find('p', class_="mainImg").find('a')['href']
         html = http.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
         # fanart
-        self.fanart_url = self.site_url.rstrip('/') + soup.find('p', class_="mainImg").find('img')['src']
+        self.fanart_url = site_url.rstrip('/') + soup.find('p', class_="mainImg").find('img')['src']
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 

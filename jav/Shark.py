@@ -6,10 +6,10 @@ from bs4 import BeautifulSoup
 
 from utils import http
 
+site_url = 'https://shark2012-av.com/'
+
 
 class Shark(object):
-    site_url = 'https://shark2012-av.com/'
-
     def __init__(self, video_no):
         # 详情页
         url = 'https://shark2012-av.com/products/index.php?pn=' + video_no
@@ -18,13 +18,13 @@ class Shark(object):
 
         # poster
         poster_url = soup.find('div', class_="works-detail").find('img')['src']
-        self.poster_url = self.site_url + poster_url.split('../')[1]
+        self.poster_url = site_url + poster_url.split('../')[1]
         self.poster_name = os.path.basename(self.poster_url)
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # fanart
         fanart_url = soup.find('div', class_="works-detail").find('a')['href']
-        self.fanart_url = self.site_url + fanart_url.split('../')[1]
+        self.fanart_url = site_url + fanart_url.split('../')[1]
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 

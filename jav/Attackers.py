@@ -6,10 +6,10 @@ from bs4 import BeautifulSoup
 
 from utils import http
 
+site_url = 'https://www.attackers.net/'
+
 
 class Attackers(object):
-    site_url = 'https://www.attackers.net/'
-
     def __init__(self, video_no):
         self.video_no = video_no = video_no.lower().replace('-', '')
 
@@ -19,7 +19,8 @@ class Attackers(object):
         list_soup = BeautifulSoup(list_html, features="html.parser")
 
         # poster
-        self.poster_url = list_soup.find('div', class_="swiper-wrapper").find('div', class_="item").find('img')['data-src']
+        self.poster_url = list_soup.find('div', class_="swiper-wrapper").find('div', class_="item").find('img')[
+            'data-src']
         self.poster_name = os.path.basename(self.poster_url)
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 

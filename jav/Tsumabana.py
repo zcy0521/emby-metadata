@@ -6,27 +6,27 @@ from bs4 import BeautifulSoup
 
 from utils import http
 
+# 人妻花園劇場
+site_url = 'http://www.tsumabana.com/'
+post_url = 'http://www.tsumabana.com/images/portfolio/{video_no}.jpg'
+
 
 class Tsumabana(object):
-    # 人妻花園劇場
-    site_url = 'http://www.tsumabana.com/'
-    post_url = 'http://www.tsumabana.com/images/portfolio/{video_no}.jpg'
-
     def __init__(self, video_no):
         self.video_no = video_no = video_no.lower().replace('-', '')
+
+        # poster
+        self.poster_url = post_url.format(video_no=video_no)
+        self.poster_name = os.path.basename(self.poster_url)
+        self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # 详情页
         url = 'http://www.tsumabana.com/' + video_no + '.php'
         html = http.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
-        # poster
-        self.poster_url = self.post_url.format(video_no=video_no)
-        self.poster_name = os.path.basename(self.poster_url)
-        self.poster_ext = os.path.splitext(self.poster_name)[1]
-
         # fanart
-        self.fanart_url = self.site_url + soup.find('article', class_="post").find('a')['href']
+        self.fanart_url = site_url + soup.find('article', class_="post").find('a')['href']
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 

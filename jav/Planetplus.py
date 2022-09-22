@@ -6,13 +6,13 @@ from bs4 import BeautifulSoup
 
 from utils import http
 
+site_url = 'http://planetplus.jp/'
+
 
 class Planetplus(object):
-    site_url = 'http://planetplus.jp/'
-
     def __init__(self, video_no):
         # 搜索列表
-        list_url= 'http://planetplus.jp/wp01/?s=' + video_no
+        list_url = 'http://planetplus.jp/wp01/?s=' + video_no
         list_html = http.get(list_url)
         list_soup = BeautifulSoup(list_html, features="html.parser")
 

@@ -6,10 +6,10 @@ from bs4 import BeautifulSoup
 
 from utils import http
 
+site_url = 'https://s1s1s1.com/'
+
 
 class S1S1S1(object):
-    site_url = 'https://s1s1s1.com/'
-
     def __init__(self, video_no):
         self.video_no = video_no = video_no.lower().replace('-', '')
 

@@ -6,10 +6,10 @@ from bs4 import BeautifulSoup
 
 from utils import http
 
+site_url = 'https://www.naturalhigh.co.jp/'
+
 
 class NaturalHigh(object):
-    site_url = 'https://www.naturalhigh.co.jp/'
-
     def __init__(self, video_no):
         self.video_no = video_no = video_no.lower()
 

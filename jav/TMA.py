@@ -6,10 +6,10 @@ from bs4 import BeautifulSoup
 
 from utils import http
 
+site_url = 'https://www.tma.co.jp/'
+
 
 class TMA(object):
-    site_url = 'https://www.tma.co.jp/'
-
     def __init__(self, video_no):
         # 详情页
         url = 'https://www.tma.co.jp/products/' + video_no.lower()
