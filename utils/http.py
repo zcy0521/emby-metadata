@@ -21,3 +21,14 @@ def post(url, fields, headers=None, redirect=True, *, charset='utf8'):
 
     # https://urllib3.readthedocs.io/en/stable/user-guide.html#response-content
     return r.data.decode(charset)
+
+
+def download(url, headers=None):
+    # https://urllib3.readthedocs.io/en/stable/advanced-usage.html#socks-proxies
+    proxy = SOCKSProxyManager('socks5h://localhost:1080/')
+
+    r = proxy.request('GET', url, headers=headers)
+
+    # https://urllib3.readthedocs.io/en/stable/user-guide.html#response-content
+    print(r.data)
+    return r.data

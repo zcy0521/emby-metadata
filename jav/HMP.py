@@ -34,12 +34,10 @@ class HMP(object):
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
     def download_poster(self):
-        response = http.get(self.poster_url)
-        return response.content
+        return http.download(self.poster_url)
 
     def download_fanart(self):
-        response = http.get(self.fanart_url)
-        return response.content
+        return http.download(self.fanart_url)
 
     def get_poster_ext(self):
         return self.poster_ext
