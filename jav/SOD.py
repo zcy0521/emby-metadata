@@ -1,5 +1,6 @@
 #!/usr/bin/envpython3
 # -*-coding:utf-8-*-
+import base64
 import io
 import os
 
@@ -52,6 +53,24 @@ class SOD(object):
         self.movie_url = movie_soup.find('video').find('source')['src']
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
+
+    def get_poster_url(self):
+        poster_bytes = self.download_poster()
+        encoded_bytes = base64.b64encode(poster_bytes)
+        encoded_str = encoded_bytes.decode('utf-8')
+        return 'data:image/' + self.poster_ext.replace('.', '') + ';base64,' + encoded_str
+
+    def get_fanart_url(self):
+        fanart_bytes = self.download_fanart()
+        encoded_bytes = base64.b64encode(fanart_bytes)
+        encoded_str = encoded_bytes.decode('utf-8')
+        return 'data:image/' + self.fanart_ext.replace('.', '') + ';base64,' + encoded_str
+
+    def get_movie_url(self):
+        movie_bytes = self.download_movie()
+        encoded_bytes = base64.b64encode(movie_bytes)
+        encoded_str = encoded_bytes.decode('utf-8')
+        return 'data:video/' + self.movie_ext.replace('.', '') + ';base64,' + encoded_str
 
     def download_poster(self):
         # 添加referer 绕过 Amazon CloudFront 图片防盗链

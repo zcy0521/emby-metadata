@@ -28,7 +28,7 @@ def poster():
         if video is None:
             videos.append(Video('', '', '', ''))
         else:
-            videos.append(Video(number, video.poster_url, '', ''))
+            videos.append(Video(number, video.get_poster_url(), '', ''))
 
     return render_template('poster.html', video_no=video_no, videos=videos)
 
@@ -50,7 +50,7 @@ def fanart():
         if video is None:
             videos.append(Video('', '', '', ''))
         else:
-            videos.append(Video(number, '', video.fanart_url, ''))
+            videos.append(Video(number, '', video.get_fanart_url(), ''))
 
     return render_template('fanart.html', video_no=video_no, videos=videos)
 
@@ -72,7 +72,7 @@ def movie():
         if video is None:
             videos.append(Video('', '', '', ''))
         else:
-            videos.append(Video(number, '', '', video.movie_url))
+            videos.append(Video(number, '', '', video.get_movie_url()))
 
     return render_template('movie.html', video_no=video_no, videos=videos)
 

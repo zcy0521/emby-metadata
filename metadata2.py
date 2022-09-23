@@ -52,7 +52,6 @@ def get_jav(dirname):
 
     # 查找系列所在类
     class_name = next(filter(lambda x: series in class_dict[x] and x, class_dict))
-    print('下载封面:' + dirname)
 
     # 根据类名实例化
     # class_name.py
