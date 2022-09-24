@@ -72,6 +72,15 @@ class SOD(object):
         encoded_str = encoded_bytes.decode('utf-8')
         return 'data:video/' + self.movie_ext.replace('.', '') + ';base64,' + encoded_str
 
+    def get_poster_ext(self):
+        return self.poster_ext
+
+    def get_fanart_ext(self):
+        return self.fanart_ext
+
+    def get_movie_ext(self):
+        return self.movie_ext
+
     def download_poster(self):
         # 添加referer 绕过 Amazon CloudFront 图片防盗链
         headers = {'referer': 'https://ec.sod.co.jp/'}
@@ -85,26 +94,15 @@ class SOD(object):
         headers = {'referer': 'https://ec.sod.co.jp/'}
         return http.download(self.movie_url, headers)
 
-    def get_poster_ext(self):
-        return self.poster_ext
-
-    def get_fanart_ext(self):
-        return self.fanart_ext
-
-    def get_movie_ext(self):
-        return self.movie_ext
-
 
 if __name__ == '__main__':
     # https://ec.sod.co.jp/prime/videos/?id=STARS-212
     sod = SOD('STARS-212')
 
-    # print(sod.poster_url)
-    # print(sod.fanart_url)
-    # print(sod.movie_url)
-    #
-    # print(sod.poster_ext)
-    # print(sod.fanart_ext)
-    # print(sod.movie_ext)
+    print(sod.get_poster_url())
+    print(sod.get_fanart_url())
+    print(sod.get_movie_url())
 
-    sod.download_poster()
+    print(sod.get_poster_ext())
+    print(sod.get_fanart_ext())
+    print(sod.get_movie_ext())

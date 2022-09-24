@@ -33,11 +33,19 @@ class KMP(object):
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
-    def download_poster(self):
-        return http.download(self.poster_url)
+        # TODO movie
+        self.movie_url = ''
+        self.movie_name = os.path.basename(self.movie_url)
+        self.movie_ext = os.path.splitext(self.movie_name)[1]
 
-    def download_fanart(self):
-        return http.download(self.fanart_url)
+    def get_poster_url(self):
+        return self.poster_url
+
+    def get_fanart_url(self):
+        return self.fanart_url
+
+    def get_movie_url(self):
+        return self.movie_url
 
     def get_poster_ext(self):
         return self.poster_ext
@@ -45,13 +53,27 @@ class KMP(object):
     def get_fanart_ext(self):
         return self.fanart_ext
 
+    def get_movie_ext(self):
+        return self.movie_ext
+
+    def download_poster(self):
+        return http.download(self.poster_url)
+
+    def download_fanart(self):
+        return http.download(self.fanart_url)
+
+    def download_movie(self):
+        return http.download(self.movie_url)
+
 
 if __name__ == '__main__':
     # https://www.km-produce.com/works/mdtm-515
     kmp = KMP('MDTM-515')
 
-    print(kmp.poster_url)
-    print(kmp.fanart_url)
+    print(kmp.get_poster_url())
+    print(kmp.get_fanart_url())
+    print(kmp.get_movie_url())
 
-    print(kmp.poster_ext)
-    print(kmp.fanart_ext)
+    print(kmp.get_poster_ext())
+    print(kmp.get_fanart_ext())
+    print(kmp.get_movie_ext())

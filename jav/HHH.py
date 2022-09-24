@@ -19,25 +19,33 @@ class HHH(object):
         list_soup = BeautifulSoup(list_html, features="html.parser")
 
         # poster
-        self.poster_url = site_url.rstrip('/') + list_soup.find('ul', class_="lst-works").find('img')['src']
+        self.poster_url = site_url.rstrip('/') + list_soup.find('ul', class_='lst-works').find('img')['src']
         self.poster_name = os.path.basename(self.poster_url)
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # 详情页
-        url = site_url.rstrip('/') + list_soup.find('ul', class_="lst-works").find('a')['href']
+        url = site_url.rstrip('/') + list_soup.find('ul', class_='lst-works').find('a')['href']
         html = http.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
         # fanart
-        self.fanart_url = site_url.rstrip('/') + soup.find('div', class_="area-sample").find('img')['src']
+        self.fanart_url = site_url.rstrip('/') + soup.find('div', class_='area-sample').find('img')['src']
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
-    def download_poster(self):
-        return http.download(self.poster_url)
+        # movie
+        self.movie_url = soup.find('div', class_='area-sample').find('a', class_='sample-movie')['data-movie-path']
+        self.movie_name = os.path.basename(self.movie_url)
+        self.movie_ext = os.path.splitext(self.movie_name)[1]
 
-    def download_fanart(self):
-        return http.download(self.fanart_url)
+    def get_poster_url(self):
+        return self.poster_url
+
+    def get_fanart_url(self):
+        return self.fanart_url
+
+    def get_movie_url(self):
+        return self.movie_url
 
     def get_poster_ext(self):
         return self.poster_ext
@@ -45,12 +53,26 @@ class HHH(object):
     def get_fanart_ext(self):
         return self.fanart_ext
 
+    def get_movie_ext(self):
+        return self.movie_ext
+
+    def download_poster(self):
+        return http.download(self.poster_url)
+
+    def download_fanart(self):
+        return http.download(self.fanart_url)
+
+    def download_movie(self):
+        return http.download(self.movie_url)
+
 
 if __name__ == '__main__':
     hhh = HHH('OYC-278')
 
-    print(hhh.poster_url)
-    print(hhh.fanart_url)
+    print(hhh.get_poster_url())
+    print(hhh.get_fanart_url())
+    print(hhh.get_movie_url())
 
-    print(hhh.poster_ext)
-    print(hhh.fanart_ext)
+    print(hhh.get_poster_ext())
+    print(hhh.get_fanart_ext())
+    print(hhh.get_movie_ext())

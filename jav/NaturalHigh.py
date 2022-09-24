@@ -28,11 +28,19 @@ class NaturalHigh(object):
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
-    def download_poster(self):
-        return http.download(self.poster_url)
+        # movie
+        self.movie_url = soup.find('div', class_="sample_movie").find('div', class_='movie_area').find('video')['src']
+        self.movie_name = os.path.basename(self.movie_url)
+        self.movie_ext = os.path.splitext(self.movie_name)[1]
 
-    def download_fanart(self):
-        return http.download(self.fanart_url)
+    def get_poster_url(self):
+        return self.poster_url
+
+    def get_fanart_url(self):
+        return self.fanart_url
+
+    def get_movie_url(self):
+        return self.movie_url
 
     def get_poster_ext(self):
         return self.poster_ext
@@ -40,13 +48,27 @@ class NaturalHigh(object):
     def get_fanart_ext(self):
         return self.fanart_ext
 
+    def get_movie_ext(self):
+        return self.movie_ext
+
+    def download_poster(self):
+        return http.download(self.poster_url)
+
+    def download_fanart(self):
+        return http.download(self.fanart_url)
+
+    def download_movie(self):
+        return http.download(self.movie_url)
+
 
 if __name__ == '__main__':
     # https://www.naturalhigh.co.jp/all/shn-016/
     natural_high = NaturalHigh('SHN-016')
 
-    print(natural_high.poster_url)
-    print(natural_high.fanart_url)
+    print(natural_high.get_poster_url())
+    print(natural_high.get_fanart_url())
+    print(natural_high.get_movie_url())
 
-    print(natural_high.poster_ext)
-    print(natural_high.fanart_ext)
+    print(natural_high.get_poster_ext())
+    print(natural_high.get_fanart_ext())
+    print(natural_high.get_movie_ext())

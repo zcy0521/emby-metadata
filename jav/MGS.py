@@ -42,14 +42,14 @@ class MGS(object):
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
 
-    def download_poster(self):
-        return http.download(self.poster_url)
+    def get_poster_url(self):
+        return self.poster_url
 
-    def download_fanart(self):
-        return http.download(self.fanart_url)
+    def get_fanart_url(self):
+        return self.fanart_url
 
-    def download_movie(self):
-        return http.download(self.movie_url)
+    def get_movie_url(self):
+        return self.movie_url
 
     def get_poster_ext(self):
         return self.poster_ext
@@ -60,18 +60,26 @@ class MGS(object):
     def get_movie_ext(self):
         return self.movie_ext
 
+    def download_poster(self):
+        return http.download(self.poster_url)
+
+    def download_fanart(self):
+        return http.download(self.fanart_url)
+
+    def download_movie(self):
+        return http.download(self.movie_url)
+
 
 if __name__ == '__main__':
     # https://www.mgstage.com/product/product_detail/259LUXU-1033/
     # mgs = MGS('SIRO-4989')
     # mgs = MGS('200GANA-2789')
-    # mgs = MGS('259LUXU-1033')
-    mgs = MGS('ABP-721')
+    mgs = MGS('259LUXU-1033')
 
-    print(mgs.poster_url)
-    print(mgs.fanart_url)
-    print(mgs.movie_url)
+    print(mgs.get_poster_url())
+    print(mgs.get_fanart_url())
+    print(mgs.get_movie_url())
 
-    print(mgs.poster_ext)
-    print(mgs.fanart_ext)
-    print(mgs.movie_ext)
+    print(mgs.get_poster_ext())
+    print(mgs.get_fanart_ext())
+    print(mgs.get_movie_ext())

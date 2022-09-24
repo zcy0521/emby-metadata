@@ -33,11 +33,22 @@ class HMP(object):
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
-    def download_poster(self):
-        return http.download(self.poster_url)
+        # movie
+        sample_url = site_url.rstrip('/') + soup.find('img', src='/images/detail/btn-det-sample.png').parent['href']
+        sample_html = http.get(sample_url)
+        sample_soup = BeautifulSoup(sample_html, features="html.parser")
+        self.movie_url = sample_soup.find('video').find('source')['src']
+        self.movie_name = os.path.basename(self.movie_url)
+        self.movie_ext = os.path.splitext(self.movie_name)[1]
 
-    def download_fanart(self):
-        return http.download(self.fanart_url)
+    def get_poster_url(self):
+        return self.poster_url
+
+    def get_fanart_url(self):
+        return self.fanart_url
+
+    def get_movie_url(self):
+        return self.movie_url
 
     def get_poster_ext(self):
         return self.poster_ext
@@ -45,12 +56,26 @@ class HMP(object):
     def get_fanart_ext(self):
         return self.fanart_ext
 
+    def get_movie_ext(self):
+        return self.movie_ext
+
+    def download_poster(self):
+        return http.download(self.poster_url)
+
+    def download_fanart(self):
+        return http.download(self.fanart_url)
+
+    def download_movie(self):
+        return http.download(self.movie_url)
+
 
 if __name__ == '__main__':
     hmp = HMP('HODV-21402')
 
-    print(hmp.poster_url)
-    print(hmp.fanart_url)
+    print(hmp.get_poster_url())
+    print(hmp.get_fanart_url())
+    print(hmp.get_movie_url())
 
-    print(hmp.poster_ext)
-    print(hmp.fanart_ext)
+    print(hmp.get_poster_ext())
+    print(hmp.get_fanart_ext())
+    print(hmp.get_movie_ext())

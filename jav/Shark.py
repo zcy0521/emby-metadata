@@ -28,11 +28,20 @@ class Shark(object):
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
-    def download_poster(self):
-        return http.download(self.poster_url)
+        # movie
+        movie_url = soup.find('div', class_="works-detail").find('video').find('source')['src']
+        self.movie_url = site_url + movie_url.split('../')[1]
+        self.movie_name = os.path.basename(self.movie_url)
+        self.movie_ext = os.path.splitext(self.movie_name)[1]
 
-    def download_fanart(self):
-        return http.download(self.fanart_url)
+    def get_poster_url(self):
+        return self.poster_url
+
+    def get_fanart_url(self):
+        return self.fanart_url
+
+    def get_movie_url(self):
+        return self.movie_url
 
     def get_poster_ext(self):
         return self.poster_ext
@@ -40,13 +49,27 @@ class Shark(object):
     def get_fanart_ext(self):
         return self.fanart_ext
 
+    def get_movie_ext(self):
+        return self.movie_ext
+
+    def download_poster(self):
+        return http.download(self.poster_url)
+
+    def download_fanart(self):
+        return http.download(self.fanart_url)
+
+    def download_movie(self):
+        return http.download(self.movie_url)
+
 
 if __name__ == '__main__':
     # https://shark2012-av.com/products/index.php?pn=MACB-006
     shark = Shark('MACB-006')
 
-    print(shark.poster_url)
-    print(shark.fanart_url)
+    print(shark.get_poster_url())
+    print(shark.get_fanart_url())
+    print(shark.get_movie_url())
 
-    print(shark.poster_ext)
-    print(shark.fanart_ext)
+    print(shark.get_poster_ext())
+    print(shark.get_fanart_ext())
+    print(shark.get_movie_ext())

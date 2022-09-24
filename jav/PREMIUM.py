@@ -33,11 +33,19 @@ class PREMIUM(object):
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
-    def download_poster(self):
-        return http.download(self.poster_url)
+        # movie
+        self.movie_url = soup.find('div', class_="video").find('video')['src']
+        self.movie_name = os.path.basename(self.movie_url)
+        self.movie_ext = os.path.splitext(self.movie_name)[1]
 
-    def download_fanart(self):
-        return http.download(self.fanart_url)
+    def get_poster_url(self):
+        return self.poster_url
+
+    def get_fanart_url(self):
+        return self.fanart_url
+
+    def get_movie_url(self):
+        return self.movie_url
 
     def get_poster_ext(self):
         return self.poster_ext
@@ -45,13 +53,27 @@ class PREMIUM(object):
     def get_fanart_ext(self):
         return self.fanart_ext
 
+    def get_movie_ext(self):
+        return self.movie_ext
+
+    def download_poster(self):
+        return http.download(self.poster_url)
+
+    def download_fanart(self):
+        return http.download(self.fanart_url)
+
+    def download_movie(self):
+        return http.download(self.movie_url)
+
 
 if __name__ == '__main__':
     # https://www.premium-beauty.com/works/detail/pred164/
     premium = PREMIUM('PRED-164')
 
-    print(premium.poster_url)
-    print(premium.fanart_url)
+    print(premium.get_poster_url())
+    print(premium.get_fanart_url())
+    print(premium.get_movie_url())
 
-    print(premium.poster_ext)
-    print(premium.fanart_ext)
+    print(premium.get_poster_ext())
+    print(premium.get_fanart_ext())
+    print(premium.get_movie_ext())
