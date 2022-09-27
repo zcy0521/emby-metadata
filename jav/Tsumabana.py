@@ -2,26 +2,30 @@
 # -*-coding:utf-8-*-
 import os
 
+import urllib3
 from bs4 import BeautifulSoup
+from urllib3.contrib.socks import SOCKSProxyManager
 
+from jav.FANZA import get_movie_by_detail_url
 from utils import http
 
 # 人妻花園劇場
 site_url = 'http://www.tsumabana.com/'
-post_url = 'http://www.tsumabana.com/images/portfolio/{video_no}.jpg'
 
 
 class Tsumabana(object):
     def __init__(self, video_no):
-        self.video_no = video_no = video_no.lower().replace('-', '')
+        # 番号
+        self.video_no = video_no
 
         # poster
-        self.poster_url = post_url.format(video_no=video_no)
+        post_url = 'http://www.tsumabana.com/images/portfolio/{video_no}.jpg'
+        self.poster_url = post_url.format(video_no=video_no.lower().replace('-', ''))
         self.poster_name = os.path.basename(self.poster_url)
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # 详情页
-        url = 'http://www.tsumabana.com/' + video_no + '.php'
+        url = 'http://www.tsumabana.com/{video_no}.php'.format(video_no=video_no.lower().replace('-', ''))
         html = http.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
@@ -30,8 +34,13 @@ class Tsumabana(object):
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
-        # TODO movie
-        self.movie_url = ''
+        # movie
+        # 获取 dmm 的 redirect url
+        proxy = SOCKSProxyManager('socks5h://localhost:1080/')
+        dmm_url = soup.find('article', class_="post").find_all('p')[-1].find('a')['href']
+        dmm_res = proxy.urlopen('GET', dmm_url, retries=urllib3.Retry(10, redirect=10))
+        dmm_url = dmm_res.geturl()
+        self.movie_url = get_movie_by_detail_url(dmm_url)
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
 
