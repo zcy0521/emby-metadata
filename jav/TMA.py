@@ -11,8 +11,11 @@ site_url = 'https://www.tma.co.jp/'
 
 class TMA(object):
     def __init__(self, video_no):
+        # 番号
+        self.video_no = video_no
+
         # 详情页
-        url = 'https://www.tma.co.jp/products/' + video_no.lower()
+        url = 'https://www.tma.co.jp/products/{video_no}'.format(video_no=video_no.lower())
         html = http.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 

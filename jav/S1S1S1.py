@@ -11,10 +11,11 @@ site_url = 'https://s1s1s1.com/'
 
 class S1S1S1(object):
     def __init__(self, video_no):
-        self.video_no = video_no = video_no.lower().replace('-', '')
+        # 番号
+        self.video_no = video_no
 
         # 搜索列表
-        list_url = 'https://s1s1s1.com/search/list?keyword=' + video_no
+        list_url = 'https://s1s1s1.com/search/list?keyword={video_no}'.format(video_no=video_no.lower().replace('-', ''))
         list_html = http.get(list_url)
         list_soup = BeautifulSoup(list_html, features="html.parser")
 

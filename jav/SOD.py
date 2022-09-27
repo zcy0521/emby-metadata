@@ -9,22 +9,21 @@ from urllib3.contrib.socks import SOCKSProxyManager
 
 from utils import http
 
-proxy = SOCKSProxyManager('socks5h://localhost:1080/')
-
 site_url = 'https://ec.sod.co.jp/'
 
 
 class SOD(object):
     def __init__(self, video_no):
+        # 番号
         self.video_no = video_no
 
-        # 详情页
-        url = 'https://ec.sod.co.jp/prime/videos/?id=' + video_no
-        movie_url = 'https://ec.sod.co.jp/prime/videos/sample.php?id=' + video_no
+        # 详情页url
+        url = 'https://ec.sod.co.jp/prime/videos/?id={video_no}'.format(video_no=video_no)
 
         # 年龄检查
         check_url = 'https://ec.sod.co.jp/prime/_ontime.php'
         check_header = {'Referer': url}
+        proxy = SOCKSProxyManager('socks5h://localhost:1080/')
         check_r = proxy.urlopen('GET', check_url, headers=check_header, redirect=False)
 
         # 详情页
@@ -44,6 +43,7 @@ class SOD(object):
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
         # 视频页
+        movie_url = 'https://ec.sod.co.jp/prime/videos/sample.php?id=' + video_no
         movie_headers = {'Cookie': check_r.headers['Set-Cookie'], 'Referer': movie_url}
         movie_r = proxy.request('GET', movie_url, headers=movie_headers)
         movie_html = movie_r.data.decode('utf-8')

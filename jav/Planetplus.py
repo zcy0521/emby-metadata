@@ -11,8 +11,11 @@ site_url = 'http://planetplus.jp/'
 
 class Planetplus(object):
     def __init__(self, video_no):
+        # 番号
+        self.video_no = video_no
+
         # 搜索列表
-        list_url = 'http://planetplus.jp/wp01/?s=' + video_no
+        list_url = 'http://planetplus.jp/wp01/?s={video_no}'.format(video_no=video_no)
         list_html = http.get(list_url)
         list_soup = BeautifulSoup(list_html, features="html.parser")
 

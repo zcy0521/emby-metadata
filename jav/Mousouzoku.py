@@ -11,10 +11,11 @@ site_url = 'https://www.mousouzoku-av.com/'
 
 class Mousouzoku(object):
     def __init__(self, video_no):
-        self.video_no = video_no = video_no.lower().replace('-', '')
+        # 番号
+        self.video_no = video_no
 
         # 详情页
-        url = 'https://www.mousouzoku-av.com/works/detail/' + video_no + '/'
+        url = 'https://www.mousouzoku-av.com/works/detail/{video_no}/'.format(video_no=video_no.lower().replace('-', ''))
         html = http.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
@@ -31,7 +32,7 @@ class Mousouzoku(object):
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
-        # movie
+        # TODO movie
         print(html)
         print(soup.find('div', class_="bx-sample-movie"))
         self.movie_url = soup.find('div', class_="bx-sample-movie").find('a', class_='js-sample-movie-content')['data-movie-path']

@@ -7,18 +7,17 @@ from bs4 import BeautifulSoup
 from utils import http
 
 site_url = 'https://www.prestige-av.com/'
+age_check_headers = {'cookie': '__age_auth__=true'}
 
 
 class Prestige(object):
     def __init__(self, video_no):
+        # 番号
         self.video_no = video_no
 
-        # 年龄认证Cookie
-        headers = {'cookie': '__age_auth__=true'}
-
         # 详情页
-        url = 'https://www.prestige-av.com/goods/goods_detail.php?sku=' + video_no
-        html = http.get(url, headers)
+        url = 'https://www.prestige-av.com/goods/goods_detail.php?sku={video_no}'.format(video_no=video_no)
+        html = http.get(url, age_check_headers)
         soup = BeautifulSoup(html, features="html.parser")
 
         # poster

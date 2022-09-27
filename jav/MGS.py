@@ -8,18 +8,17 @@ from bs4 import BeautifulSoup
 from utils import http
 
 site_url = 'https://www.mgstage.com/'
+age_check_headers = {'Cookie': 'adc=1'}
 
 
 class MGS(object):
     def __init__(self, video_no):
+        # 番号
         self.video_no = video_no
 
-        # 年龄认证Cookie
-        headers = {'Cookie': 'adc=1'}
-
         # 详情页
-        url = 'https://www.mgstage.com/product/product_detail/' + video_no + '/'
-        html = http.get(url, headers)
+        url = 'https://www.mgstage.com/product/product_detail/{video_no}/'.format(video_no=video_no)
+        html = http.get(url, age_check_headers)
         soup = BeautifulSoup(html, features="html.parser")
 
         # fanart
@@ -35,8 +34,8 @@ class MGS(object):
         # movie
         sample_token = soup.find('div', class_="detail_data").find('a', class_='button_sample')['href'].split(
             '/sampleplayer/sampleplayer.html/')[1]
-        sample_url = 'https://www.mgstage.com/sampleplayer/sampleRespons.php?pid=' + sample_token
-        sample_html = http.get(sample_url, headers)
+        sample_url = 'https://www.mgstage.com/sampleplayer/sampleRespons.php?pid={token}'.format(token=sample_token)
+        sample_html = http.get(sample_url, age_check_headers)
         sample_json = json.loads(sample_html)
         self.movie_url = sample_json['url'].split('.ism')[0] + '.mp4'
         self.movie_name = os.path.basename(self.movie_url)

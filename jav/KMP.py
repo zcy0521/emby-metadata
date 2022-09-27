@@ -8,7 +8,6 @@ from utils import http
 
 # K.M.Produce
 site_url = 'https://www.km-produce.com/'
-post_url = 'https://www.km-produce.com/img/title0/{video_no}.jpg'
 
 # 宇宙企画
 uchu_site_url = 'http://uchu.co.jp/'
@@ -16,15 +15,16 @@ uchu_site_url = 'http://uchu.co.jp/'
 
 class KMP(object):
     def __init__(self, video_no):
-        self.video_no = video_no = video_no.lower()
+        # 番号
+        self.video_no = video_no
 
         # poster
-        self.poster_url = post_url.format(video_no=video_no)
+        self.poster_url = 'https://www.km-produce.com/img/title0/{video_no}.jpg'.format(video_no=video_no.lower())
         self.poster_name = os.path.basename(self.poster_url)
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # 详情页
-        url = 'https://www.km-produce.com/works/' + video_no
+        url = 'https://www.km-produce.com/works/{video_no}'.format(video_no=video_no.lower())
         html = http.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 

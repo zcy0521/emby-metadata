@@ -11,11 +11,13 @@ site_url = 'https://smt.hmp.jp/'
 
 class HMP(object):
     def __init__(self, video_no):
+        # 番号
         self.video_no = video_no
 
         # 搜索列表
         list_url = 'https://smt.hmp.jp/list.php'
-        list_html = http.post(list_url, {'key': video_no})
+        list_param = {'key': video_no}
+        list_html = http.post(list_url, list_param)
         list_soup = BeautifulSoup(list_html, features="html.parser")
 
         # poster

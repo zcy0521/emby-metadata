@@ -11,8 +11,11 @@ site_url = 'https://shark2012-av.com/'
 
 class Shark(object):
     def __init__(self, video_no):
+        # 番号
+        self.video_no = video_no
+
         # 详情页
-        url = 'https://shark2012-av.com/products/index.php?pn=' + video_no
+        url = 'https://shark2012-av.com/products/index.php?pn={video_no}'.format(video_no=video_no)
         html = http.get(url, charset='cp932')
         soup = BeautifulSoup(html, features="html.parser")
 

@@ -11,10 +11,11 @@ site_url = 'https://www.naturalhigh.co.jp/'
 
 class NaturalHigh(object):
     def __init__(self, video_no):
-        self.video_no = video_no = video_no.lower()
+        # 番号
+        self.video_no = video_no
 
         # 视频详情页html
-        url = 'https://www.naturalhigh.co.jp/all/' + video_no + '/'
+        url = 'https://www.naturalhigh.co.jp/all/{video_no}/'.format(video_no=video_no.lower())
         html = http.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
