@@ -4,6 +4,7 @@ import os
 
 from bs4 import BeautifulSoup
 
+from jav import FANZA
 from utils import http
 
 site_url = 'https://www.mousouzoku-av.com/'
@@ -32,10 +33,8 @@ class Mousouzoku(object):
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
-        # TODO movie
-        print(html)
-        print(soup.find('div', class_="bx-sample-movie"))
-        self.movie_url = soup.find('div', class_="bx-sample-movie").find('a', class_='js-sample-movie-content')['data-movie-path']
+        # movie
+        self.movie_url = FANZA.get_movie_by_video_no(video_no)
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
 

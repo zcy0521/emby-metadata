@@ -6,7 +6,7 @@ import urllib3
 from bs4 import BeautifulSoup
 from urllib3.contrib.socks import SOCKSProxyManager
 
-from jav.FANZA import get_movie_by_detail_url, get_movie_by_video_no
+from jav import FANZA
 from utils import http
 
 # 人妻花園劇場
@@ -35,7 +35,7 @@ class Tsumabana(object):
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
         # movie
-        self.movie_url = get_movie_by_video_no(video_no)
+        self.movie_url = FANZA.get_movie_by_video_no(video_no)
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
 
@@ -80,7 +80,7 @@ def get_movie_url(video_no):
     dmm_url = dmm_res.geturl()
 
     # 返回 movie url
-    return get_movie_by_detail_url(dmm_url)
+    return FANZA.get_movie_by_detail_url(dmm_url)
 
 
 if __name__ == '__main__':
