@@ -6,7 +6,7 @@ import urllib3
 from bs4 import BeautifulSoup
 from urllib3.contrib.socks import SOCKSProxyManager
 
-from jav.FANZA import get_movie_by_detail_url
+from jav.FANZA import get_movie_by_detail_url, get_movie_by_video_no
 from utils import http
 
 # 人妻花園劇場
@@ -35,12 +35,7 @@ class Tsumabana(object):
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
         # movie
-        # 获取 dmm 的 redirect url
-        proxy = SOCKSProxyManager('socks5h://localhost:1080/')
-        dmm_url = soup.find('article', class_="post").find_all('p')[-1].find('a')['href']
-        dmm_res = proxy.urlopen('GET', dmm_url, retries=urllib3.Retry(10, redirect=10))
-        dmm_url = dmm_res.geturl()
-        self.movie_url = get_movie_by_detail_url(dmm_url)
+        self.movie_url = get_movie_by_video_no(video_no)
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
 
@@ -72,6 +67,22 @@ class Tsumabana(object):
         return http.download(self.movie_url)
 
 
+def get_movie_url(video_no):
+    # 详情页
+    url = 'http://www.tsumabana.com/{video_no}.php'.format(video_no=video_no.lower().replace('-', ''))
+    html = http.get(url)
+    soup = BeautifulSoup(html, features="html.parser")
+
+    # 获取 dmm 的 redirect url
+    proxy = SOCKSProxyManager('socks5h://localhost:1080/')
+    dmm_url = soup.find('article', class_="post").find_all('p')[-1].find('a')['href']
+    dmm_res = proxy.urlopen('GET', dmm_url, retries=urllib3.Retry(10, redirect=10))
+    dmm_url = dmm_res.geturl()
+
+    # 返回 movie url
+    return get_movie_by_detail_url(dmm_url)
+
+
 if __name__ == '__main__':
     # http://www.tsumabana.com/hzgd116.php
     tsumabana = Tsumabana('HZGD-116')
@@ -83,3 +94,5 @@ if __name__ == '__main__':
     print(tsumabana.get_poster_ext())
     print(tsumabana.get_fanart_ext())
     print(tsumabana.get_movie_ext())
+
+    print(get_movie_url('HZGD-116'))

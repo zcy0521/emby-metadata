@@ -4,6 +4,7 @@ import os
 
 from bs4 import BeautifulSoup
 
+from jav.FANZA import get_movie_by_video_no
 from utils import http
 
 # K.M.Produce
@@ -33,8 +34,8 @@ class KMP(object):
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
-        # TODO movie
-        self.movie_url = ''
+        # movie
+        self.movie_url = get_movie_by_video_no(video_no)
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
 
