@@ -4,7 +4,7 @@ import os
 
 from bs4 import BeautifulSoup
 
-from utils import http
+from utils import http_util
 
 site_url = 'https://www.tma.co.jp/'
 
@@ -16,7 +16,7 @@ class TMA(object):
 
         # 详情页
         url = 'https://www.tma.co.jp/products/{video_no}'.format(video_no=video_no.lower())
-        html = http.get(url)
+        html = http_util.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
         # poster

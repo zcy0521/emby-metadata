@@ -4,7 +4,7 @@ import os
 
 from bs4 import BeautifulSoup
 
-from utils import http
+from utils import http_util
 
 site_url = 'https://shark2012-av.com/'
 
@@ -16,7 +16,7 @@ class Shark(object):
 
         # 详情页
         url = 'https://shark2012-av.com/products/index.php?pn={video_no}'.format(video_no=video_no)
-        html = http.get(url, charset='cp932')
+        html = http_util.get(url, charset='cp932')
         soup = BeautifulSoup(html, features="html.parser")
 
         # poster

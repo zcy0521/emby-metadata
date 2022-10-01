@@ -4,7 +4,7 @@ import os
 
 from bs4 import BeautifulSoup
 
-from utils import http
+from utils import http_util
 
 site_url = 'https://www.hhh-av.com/'
 
@@ -16,7 +16,7 @@ class HHH(object):
 
         # 搜索列表
         list_url = 'https://www.hhh-av.com/search/list/?q={video_no}'.format(video_no=video_no.lower().replace('-', ''))
-        list_html = http.get(list_url)
+        list_html = http_util.get(list_url)
         list_soup = BeautifulSoup(list_html, features="html.parser")
 
         # poster
@@ -26,7 +26,7 @@ class HHH(object):
 
         # 详情页
         url = site_url.rstrip('/') + list_soup.find('ul', class_='lst-works').find('a')['href']
-        html = http.get(url)
+        html = http_util.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
         # fanart

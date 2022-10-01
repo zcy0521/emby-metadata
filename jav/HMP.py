@@ -4,7 +4,7 @@ import os
 
 from bs4 import BeautifulSoup
 
-from utils import http
+from utils import http_util
 
 site_url = 'https://smt.hmp.jp/'
 
@@ -17,7 +17,7 @@ class HMP(object):
         # 搜索列表
         list_url = 'https://smt.hmp.jp/list.php'
         list_param = {'key': video_no}
-        list_html = http.post(list_url, list_param)
+        list_html = http_util.post(list_url, list_param)
         list_soup = BeautifulSoup(list_html, features="html.parser")
 
         # poster
@@ -27,7 +27,7 @@ class HMP(object):
 
         # 详情页
         url = site_url.rstrip('/') + list_soup.find('p', class_="mainImg").find('a')['href']
-        html = http.get(url)
+        html = http_util.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
         # fanart
@@ -37,7 +37,7 @@ class HMP(object):
 
         # movie
         sample_url = site_url.rstrip('/') + soup.find('img', src='/images/detail/btn-det-sample.png').parent['href']
-        sample_html = http.get(sample_url)
+        sample_html = http_util.get(sample_url)
         sample_soup = BeautifulSoup(sample_html, features="html.parser")
         self.movie_url = sample_soup.find('video').find('source')['src']
         self.movie_name = os.path.basename(self.movie_url)

@@ -21,14 +21,18 @@
 </div>
 
 <div>
+{% if not videos %}
+    Empty
+{% else %}
     {% for video in videos %}
         <div style="position: relative; display: inline-block; overflow: hidden;">
-            <img src="{{ video.poster }}" alt="{{ video.number }}" title="{{ video.number }}">
+            <img src="{{ video['poster_url'] }}" alt="{{ video['number'] }}" title="{{ video['number'] }}">
             <span style="position: absolute; width: 100%; bottom: 0; right: 0; background: rgba(0, 0, 0,.5); color: #fff; text-align: center">
                 {{ video.number }}
             </span>
         </div>
     {% endfor %}
+{% endif %}
 </div>
 
 </body>

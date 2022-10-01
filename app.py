@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 
 import metadata2
+from jav import FANZA
 
 app = Flask(__name__)
 
@@ -14,21 +15,15 @@ def index():
 @app.route("/poster")
 def poster():
     video_no = request.args.get('video_no')
-    if video_no is not None:
-        video_no = video_no.upper()
-
-    # 查询编号为空
     if video_no is None:
-        return render_template('poster.html', video_no='', posters=[])
+        return render_template('poster.html', video_no='')
 
-    # 循环处理编号
     videos = []
-    for number in video_no.split(','):
-        video = metadata2.get_jav(number)
-        if video is None:
-            videos.append(Video('', '', '', ''))
-        else:
-            videos.append(Video(number, video.get_poster_url(), '', ''))
+    for number in video_no.upper().split(','):
+        video = metadata2.get_jav(number.strip())
+        if video is not None:
+            video = {'number': video_no, 'poster_url': video.get_poster_url()}
+            videos.append(video)
 
     return render_template('poster.html', video_no=video_no, videos=videos)
 
@@ -36,21 +31,15 @@ def poster():
 @app.route("/fanart")
 def fanart():
     video_no = request.args.get('video_no')
-    if video_no is not None:
-        video_no = video_no.upper()
-
-    # 查询编号为空
     if video_no is None:
-        return render_template('fanart.html', video_no='', posters=[])
+        return render_template('fanart.html', video_no='')
 
-    # 循环处理编号
     videos = []
-    for number in video_no.split(','):
-        video = metadata2.get_jav(number)
-        if video is None:
-            videos.append(Video('', '', '', ''))
-        else:
-            videos.append(Video(number, '', video.get_fanart_url(), ''))
+    for number in video_no.upper().split(','):
+        video = metadata2.get_jav(number.strip())
+        if video is not None:
+            video = {'number': video_no, 'fanart_url': video.get_fanart_url()}
+            videos.append(video)
 
     return render_template('fanart.html', video_no=video_no, videos=videos)
 
@@ -58,23 +47,31 @@ def fanart():
 @app.route("/movie")
 def movie():
     video_no = request.args.get('video_no')
-    if video_no is not None:
-        video_no = video_no.upper()
-
-    # 查询编号为空
     if video_no is None:
-        return render_template('movie.html', video_no='', posters=[])
+        return render_template('movie.html', video_no='')
 
-    # 循环处理编号
     videos = []
-    for number in video_no.split(','):
-        video = metadata2.get_jav(number)
-        if video is None:
-            videos.append(Video('', '', '', ''))
-        else:
-            videos.append(Video(number, '', '', video.get_movie_url()))
+    for number in video_no.upper().split(','):
+        video = metadata2.get_jav(number.strip())
+        if video is not None:
+            video = {'number': video_no, 'movie_url': video.get_movie_url(), 'fanart_url': video.get_fanart_url()}
+            videos.append(video)
 
     return render_template('movie.html', video_no=video_no, videos=videos)
+
+
+@app.route("/fanza")
+def fanza():
+    video_no = request.args.get('video_no')
+    if video_no is None:
+        return render_template('fanza.html', video_no='')
+
+    videos = []
+    for number in video_no.lower().split(','):
+        video = FANZA.get_video(number.strip())
+        videos.append(video)
+
+    return render_template('fanza.html', video_no=video_no, videos=videos)
 
 
 @app.route("/magnet")

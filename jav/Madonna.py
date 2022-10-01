@@ -4,7 +4,7 @@ import os
 
 from bs4 import BeautifulSoup
 
-from utils import http
+from utils import http_util
 
 site_url = 'https://www.madonna-av.com/'
 
@@ -16,7 +16,7 @@ class Madonna(object):
 
         # 搜索列表
         list_url = 'https://madonna-av.com/search/list?keyword={video_no}'.format(video_no=video_no.lower().replace('-', ''))
-        list_html = http.get(list_url)
+        list_html = http_util.get(list_url)
         list_soup = BeautifulSoup(list_html, features="html.parser")
 
         # poster
@@ -26,7 +26,7 @@ class Madonna(object):
 
         # 详情页
         url = list_soup.find('div', class_="swiper-wrapper").find('a')['href']
-        html = http.get(url)
+        html = http_util.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
         # fanart

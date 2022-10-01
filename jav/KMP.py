@@ -5,7 +5,7 @@ import os
 from bs4 import BeautifulSoup
 
 from jav import FANZA
-from utils import http
+from utils import http_util
 
 # K.M.Produce
 site_url = 'https://www.km-produce.com/'
@@ -26,7 +26,7 @@ class KMP(object):
 
         # 详情页
         url = 'https://www.km-produce.com/works/{video_no}'.format(video_no=video_no.lower())
-        html = http.get(url)
+        html = http_util.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
         # fanart

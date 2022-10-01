@@ -7,7 +7,7 @@ from bs4 import BeautifulSoup
 from urllib3.contrib.socks import SOCKSProxyManager
 
 from jav import FANZA
-from utils import http
+from utils import http_util
 
 # 人妻花園劇場
 site_url = 'http://www.tsumabana.com/'
@@ -26,7 +26,7 @@ class Tsumabana(object):
 
         # 详情页
         url = 'http://www.tsumabana.com/{video_no}.php'.format(video_no=video_no.lower().replace('-', ''))
-        html = http.get(url)
+        html = http_util.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
         # fanart
@@ -70,7 +70,7 @@ class Tsumabana(object):
 def get_movie_url(video_no):
     # 详情页
     url = 'http://www.tsumabana.com/{video_no}.php'.format(video_no=video_no.lower().replace('-', ''))
-    html = http.get(url)
+    html = http_util.get(url)
     soup = BeautifulSoup(html, features="html.parser")
 
     # 获取 dmm 的 redirect url

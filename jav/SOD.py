@@ -7,7 +7,7 @@ import os
 from bs4 import BeautifulSoup
 from urllib3.contrib.socks import SOCKSProxyManager
 
-from utils import http
+from utils import http_util
 
 site_url = 'https://ec.sod.co.jp/'
 

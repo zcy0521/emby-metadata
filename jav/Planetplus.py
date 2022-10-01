@@ -5,7 +5,7 @@ import os
 from bs4 import BeautifulSoup
 
 from jav import FANZA
-from utils import http
+from utils import http_util
 
 site_url = 'http://planetplus.jp/'
 
@@ -17,7 +17,7 @@ class Planetplus(object):
 
         # 搜索列表
         list_url = 'http://planetplus.jp/wp01/?s={video_no}'.format(video_no=video_no)
-        list_html = http.get(list_url)
+        list_html = http_util.get(list_url)
         list_soup = BeautifulSoup(list_html, features="html.parser")
 
         # poster
@@ -27,7 +27,7 @@ class Planetplus(object):
 
         # 详情页
         url = list_soup.find('article').find('a')['href']
-        html = http.get(url)
+        html = http_util.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
         # fanart

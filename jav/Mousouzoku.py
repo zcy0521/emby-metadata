@@ -5,7 +5,7 @@ import os
 from bs4 import BeautifulSoup
 
 from jav import FANZA
-from utils import http
+from utils import http_util
 
 site_url = 'https://www.mousouzoku-av.com/'
 
@@ -17,7 +17,7 @@ class Mousouzoku(object):
 
         # 详情页
         url = 'https://www.mousouzoku-av.com/works/detail/{video_no}/'.format(video_no=video_no.lower().replace('-', ''))
-        html = http.get(url)
+        html = http_util.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
         # poster

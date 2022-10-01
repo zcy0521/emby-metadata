@@ -3,7 +3,7 @@ import os
 
 from bs4 import BeautifulSoup
 
-from utils import http
+from utils import http_util
 
 site_url = 'https://www.dmm.co.jp'
 age_check_headers = {'cookie': 'age_check_done=1'}
@@ -17,7 +17,7 @@ class FANZA(object):
         # 详情页
         url = 'https://www.dmm.co.jp/digital/videoa/-/detail/=/cid={video_no}/'.format(
             video_no=video_no.lower().replace('-', '00'))
-        html = http.get(url, age_check_headers)
+        html = http_util.get(url, age_check_headers)
         soup = BeautifulSoup(html, features="html.parser")
 
         # poster
@@ -65,18 +65,18 @@ class FANZA(object):
 
 def get_movie_by_detail_url(detail_url):
     # 请求dmm 年龄认证Cookie
-    detail_html = http.get(detail_url, age_check_headers)
+    detail_html = http_util.get(detail_url, age_check_headers)
     detail_soup = BeautifulSoup(detail_html, features="html.parser")
 
     # ajax_url
     ajax_url = detail_soup.find('div', id='detail-sample-movie').find('a')['onclick']
     ajax_url = site_url + ajax_url.split('\'')[1]
-    ajax_html = http.get(ajax_url, age_check_headers)
+    ajax_html = http_util.get(ajax_url, age_check_headers)
     ajax_soup = BeautifulSoup(ajax_html, features="html.parser")
 
     # iframe_url
     iframe_url = ajax_soup.find('iframe', id='DMMSample_player_now')['src']
-    iframe_html = http.get(iframe_url, age_check_headers)
+    iframe_html = http_util.get(iframe_url, age_check_headers)
     iframe_soup = BeautifulSoup(iframe_html, features="html.parser")
 
     # iframe_script
@@ -87,26 +87,26 @@ def get_movie_by_detail_url(detail_url):
 
 
 def get_movie_by_video_no(video_no):
-    # 查询与
+    # 查询页
     list_url = 'https://www.dmm.co.jp/digital/-/list/search/=/?searchstr={video_no}'.format(
         video_no=video_no.lower().replace('-', '00'))
-    list_html = http.get(list_url, age_check_headers)
+    list_html = http_util.get(list_url, age_check_headers)
     list_soup = BeautifulSoup(list_html, features="html.parser")
 
     # 请求dmm 年龄认证Cookie
     detail_url = list_soup.find('ul', id='list').find_all('li')[0].find('a')['href']
-    detail_html = http.get(detail_url, age_check_headers)
+    detail_html = http_util.get(detail_url, age_check_headers)
     detail_soup = BeautifulSoup(detail_html, features="html.parser")
 
     # ajax_url
     ajax_url = detail_soup.find('div', id='detail-sample-movie').find('a')['onclick']
     ajax_url = site_url + ajax_url.split('\'')[1]
-    ajax_html = http.get(ajax_url, age_check_headers)
+    ajax_html = http_util.get(ajax_url, age_check_headers)
     ajax_soup = BeautifulSoup(ajax_html, features="html.parser")
 
     # iframe_url
     iframe_url = ajax_soup.find('iframe', id='DMMSample_player_now')['src']
-    iframe_html = http.get(iframe_url, age_check_headers)
+    iframe_html = http_util.get(iframe_url, age_check_headers)
     iframe_soup = BeautifulSoup(iframe_html, features="html.parser")
 
     # iframe_script
@@ -114,6 +114,44 @@ def get_movie_by_video_no(video_no):
     iframe_args = iframe_script.split('const args = ')[1].replace(';', '')
     args_json = json.loads(iframe_args)
     return 'https:' + args_json['src']
+
+
+def get_video(video_no):
+    # detail
+    detail_url = 'https://www.dmm.co.jp/digital/videoa/-/detail/=/cid={vidoe_no}/'.format(
+        vidoe_no=video_no.lower().replace('-', '00'))
+    detail_html = http_util.get(detail_url, headers=age_check_headers)
+    detail_soup = BeautifulSoup(detail_html, 'html.parser')
+
+    # poster
+    poster_url = detail_soup.find('div', id='sample-video').find('img')['src']
+    print(poster_url)
+
+    # fanart
+    fanart_url = detail_soup.find('div', id='sample-video').find('a')['href']
+    print(fanart_url)
+
+    # movie ajax
+    ajax_url = detail_soup.find('div', id='detail-sample-movie').find('a', class_='d-btn')['onclick']
+    ajax_url = 'https://www.dmm.co.jp' + ajax_url.split('\'')[1]
+    ajax_html = http_util.get(ajax_url, headers=age_check_headers)
+    ajax_soup = BeautifulSoup(ajax_html, 'html.parser')
+
+    # movie iframe
+    iframe_url = ajax_soup.find('iframe', id='DMMSample_player_now')['src']
+    iframe_html = http_util.get(iframe_url, headers=age_check_headers)
+    # euc-jp
+    iframe_soup = BeautifulSoup(iframe_html, 'html.parser')
+    # print(iframe_soup)
+
+    # movie
+    iframe_script = iframe_soup.find_all('script')[-4].text
+    iframe_args = iframe_script.split('const args = ')[1].replace(';', '')
+    args_json = json.loads(iframe_args)
+    movie_url = 'https:' + args_json['src']
+    print(movie_url)
+
+    return {'number': video_no, 'poster_url': poster_url, 'fanart_url': fanart_url, 'movie_url': movie_url}
 
 
 if __name__ == '__main__':

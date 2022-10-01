@@ -21,11 +21,15 @@
 </div>
 
 <div>
+{% if not videos %}
+    Empty
+{% else %}
     {% for video in videos %}
         <div style="position: relative; display: inline-block; overflow: hidden;">
-            <video src="{{ video.movie }}" title="{{ video.number }}" controls="controls" onloadstart="this.volume=0.15"></video>
+            <video src="{{ video['movie_url'] }}" poster="{{ video['fanart_url'] }}" title="{{ video['number'] }}" controls="controls" onloadstart="this.volume=0.15"></video>
         </div>
     {% endfor %}
+{% endif %}
 </div>
 
 </body>

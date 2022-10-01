@@ -4,7 +4,7 @@ import os
 
 from bs4 import BeautifulSoup
 
-from utils import http
+from utils import http_util
 
 site_url = 'https://www.naturalhigh.co.jp/'
 
@@ -16,7 +16,7 @@ class NaturalHigh(object):
 
         # 视频详情页html
         url = 'https://www.naturalhigh.co.jp/all/{video_no}/'.format(video_no=video_no.lower())
-        html = http.get(url)
+        html = http_util.get(url)
         soup = BeautifulSoup(html, features="html.parser")
 
         # poster

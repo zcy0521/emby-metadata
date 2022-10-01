@@ -5,7 +5,7 @@ from io import BytesIO
 
 from PIL import Image
 
-from utils.http import get
+from utils.http_util import get
 
 posters = {
     # ATTACKERS https://www.attackers.net
