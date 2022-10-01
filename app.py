@@ -62,19 +62,17 @@ def movie():
 
 @app.route("/fanza")
 def fanza():
+    #
     video_no = request.args.get('video_no')
     if video_no is None:
         return render_template('fanza.html', video_no='')
 
-    videos = []
-    for number in video_no.lower().split(','):
-        video = FANZA.get_video(number.strip())
-        videos.append(video)
-
+    videos = FANZA.search_videos(video_no)
+    print('查询完成')
     return render_template('fanza.html', video_no=video_no, videos=videos)
 
 
 @app.route("/magnet")
 def magnet():
     video_no = request.args.get('video_no')
-    return render_template('magnet.html')
+    return render_template('magnet.html', video_no=video_no,)

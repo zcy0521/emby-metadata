@@ -4,21 +4,41 @@
     <meta charset="UTF-8">
     <title>FANZA</title>
     <style>
-        a {
-            position: absolute;
-            z-index: 2;
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(720px, 720px));
+            grid-row-gap: 5px;
+            grid-column-gap: 10px;
         }
 
-        video {
+        .poster {
+            {# 可以显示在 <a class="video"> 标签上方 #}
+            position:absolute;
             z-index: 1;
+        }
+
+        .poster img {
+            position:absolute;
+            {# 隐藏元素且不占用空间 #}
+            display:none;
+        }
+
+        .poster:hover img {
+            display:block;
+        }
+
+        .poster span {
+            color: whitesmoke;
+        }
+
+        .fanart img {
+            height: 404px;
         }
     </style>
 </head>
 <body>
     <div style="margin-bottom: 20px">
         <h2>FANZA</h2>
-        <a style="display: inline-block" href="/">首页</a>
-        <a style="display: inline-block" href="/fanza">清空</a>
     </div>
 
     <div style="margin-bottom: 20px">
@@ -33,11 +53,22 @@
     {% if not videos %}
         Empty
     {% else %}
-        <ul>
+        <ul class="container">
         {% for video in videos %}
-            <li>
-                <a target="_blank" href="{{ video['fanart_url'] }}"><img src="{{ video['poster_url'] }}" title="video['number']" alt="{{ video['number'] }}"></a>
-                <video controls src="{{ video['movie_url'] }}" poster="{{ video['fanart_url'] }}"><img src="{{ video['fanart_url'] }}" alt="{{ video['number'] }}"></video>
+            <li class="item">
+                <a class="poster" target="_blank" href="{{ video['fanart_url'] }}">
+                    <span>{{ video['number'] }}</span>
+                    <img src="{{ video['poster_url'] }}" alt="{{ video['number'] }}">
+                </a>
+                {% if 'movie_url' in video %}
+                    <a class="movie" target="_blank" href="{{ video['url'] }}">
+                        <video src="{{ video['movie_url'] }}" controls onloadstart="this.volume=0.15"></video>
+                    </a>
+                {% else %}
+                    <a class="fanart" target="_blank" href="{{ video['url'] }}">
+                        <img src="{{ video['fanart_url'] }}" alt="{{ video['number'] }}">
+                    </a>
+                {% endif %}
             </li>
         {% endfor %}
         </ul>

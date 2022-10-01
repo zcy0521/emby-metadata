@@ -58,13 +58,13 @@ class Madonna(object):
         return self.movie_ext
 
     def download_poster(self):
-        return http.download(self.poster_url)
+        return http_util.download(self.poster_url)
 
     def download_fanart(self):
-        return http.download(self.fanart_url)
+        return http_util.download(self.fanart_url)
 
     def download_movie(self):
-        return http.download(self.movie_url)
+        return http_util.download(self.movie_url)
 
 
 if __name__ == '__main__':

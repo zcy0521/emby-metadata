@@ -84,15 +84,15 @@ class SOD(object):
     def download_poster(self):
         # 添加referer 绕过 Amazon CloudFront 图片防盗链
         headers = {'referer': 'https://ec.sod.co.jp/'}
-        return http.download(self.poster_url, headers)
+        return http_util.download(self.poster_url, headers)
 
     def download_fanart(self):
         headers = {'referer': 'https://ec.sod.co.jp/'}
-        return http.download(self.fanart_url, headers)
+        return http_util.download(self.fanart_url, headers)
 
     def download_movie(self):
         headers = {'referer': 'https://ec.sod.co.jp/'}
-        return http.download(self.movie_url, headers)
+        return http_util.download(self.movie_url, headers)
 
 
 if __name__ == '__main__':
