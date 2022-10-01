@@ -78,11 +78,3 @@ def fanza():
 def magnet():
     video_no = request.args.get('video_no')
     return render_template('magnet.html')
-
-
-class Video:
-    def __init__(self, number, poster, fanart, movie):
-        self.number = number
-        self.poster = poster
-        self.fanart = fanart
-        self.movie = movie
