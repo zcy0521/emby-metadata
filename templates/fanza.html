@@ -87,7 +87,7 @@
     {% for video in videos %}
         <li class="item">
             {% if 'movie_url' in video %}
-                <video src="{{ video['movie_url'] }}" controls onloadstart="this.volume=0.15"></video>
+                <video src="{{ video['movie_url'] }}" controls onloadstart="this.volume=0.1"></video>
                 <a target="_blank" href="{{ video['url'] }}">
                     <span style="">{{ video['number'] }}</span>
                     <img src="{{ video['fanart_url'] }}" alt="{{ video['number'] }}">
