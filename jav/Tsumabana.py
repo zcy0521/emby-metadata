@@ -25,12 +25,12 @@ class Tsumabana(object):
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # 详情页
-        url = 'http://www.tsumabana.com/{video_no}.php'.format(video_no=video_no.lower().replace('-', ''))
-        html = http_util.get(url)
-        soup = BeautifulSoup(html, features="html.parser")
+        self.detail_url = 'http://www.tsumabana.com/{video_no}.php'.format(video_no=video_no.lower().replace('-', ''))
+        detail_html = http_util.get(self.detail_url)
+        detail_soup = BeautifulSoup(detail_html, features="html.parser")
 
         # fanart
-        self.fanart_url = site_url + soup.find('article', class_="post").find('a')['href']
+        self.fanart_url = site_url + detail_soup.find('article', class_="post").find('a')['href']
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
@@ -38,6 +38,12 @@ class Tsumabana(object):
         self.movie_url = FANZA.get_movie_url(video_no)
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
+
+    def get_video_no(self):
+        return self.video_no
+
+    def get_detail_url(self):
+        return self.detail_url
 
     def get_poster_url(self):
         return self.poster_url

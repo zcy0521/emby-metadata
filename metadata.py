@@ -5,7 +5,7 @@ import sys
 
 from metadata.fanart import download_fanart
 from metadata.poster import download_poster
-from utils.folder import format_folder, series_not_in, get_video_number
+from utils.folder import format_folder, series_not_in, get_video_no
 
 if __name__ == '__main__':
     # 输入待整理文件夹与下载代理
@@ -42,7 +42,7 @@ if __name__ == '__main__':
                 continue
 
             # 获取视频文件编号
-            video_number = get_video_number(file)
+            video_number = get_video_no(file)
             if video_number is None:
                 continue
 

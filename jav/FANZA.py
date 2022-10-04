@@ -21,8 +21,8 @@ class FANZA(object):
         list_soup = BeautifulSoup(list_html, features="html.parser")
 
         # 请求dmm 年龄认证Cookie
-        detail_url = list_soup.find('ul', id='list').find_all('li')[0].find('a')['href']
-        detail_html = http_util.get(detail_url, age_check_headers)
+        self.detail_url = list_soup.find('ul', id='list').find_all('li')[0].find('a')['href']
+        detail_html = http_util.get(self.detail_url, age_check_headers)
         detail_soup = BeautifulSoup(detail_html, features="html.parser")
 
         # poster
@@ -55,6 +55,12 @@ class FANZA(object):
         self.movie_url = 'https:' + args_json['src']
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
+
+    def get_video_no(self):
+        return self.video_no
+
+    def get_detail_url(self):
+        return self.detail_url
 
     def get_poster_url(self):
         return self.poster_url
@@ -114,9 +120,9 @@ def get_movie_url(video_no):
     return 'https:' + args_json['src']
 
 
-def search_videos(video_no):
+def search_videos_by_actress(actress):
     # search
-    search_url = 'https://www.dmm.co.jp/digital/-/list/search/=/?searchstr={video_no}'.format(video_no=video_no)
+    search_url = 'https://www.dmm.co.jp/digital/-/list/search/=/?searchstr={actress}'.format(actress=actress)
     search_html = http_util.get(search_url, headers=age_check_headers)
     search_soup = BeautifulSoup(search_html, 'html.parser')
 
@@ -131,8 +137,34 @@ def search_videos(video_no):
     actress_html = http_util.get(actress_url, headers=age_check_headers)
     actress_soup = BeautifulSoup(actress_html, 'html.parser')
 
+    return search_videos(actress_soup)
+
+
+def search_videos_by_series(series):
+    # search
+    search_url = 'https://www.dmm.co.jp/digital/-/list/search/=/?searchstr={series}'.format(series=series)
+    search_html = http_util.get(search_url, headers=age_check_headers)
+    search_soup = BeautifulSoup(search_html, 'html.parser')
+
+    # item
+    item_url = search_soup.find('ul', id='list').find('li').find('a')['href']
+    item_html = http_util.get(item_url, headers=age_check_headers)
+    item_soup = BeautifulSoup(item_html, 'html.parser')
+
+    # series
+    series_url = \
+    item_soup.find('div', class_='page-detail').find('table').find('table').find_all('tr')[7].find_all('td')[1].find(
+        'a')['href']
+    series_url = site_url + series_url + 'sort=date/'
+    series_html = http_util.get(series_url, headers=age_check_headers)
+    series_soup = BeautifulSoup(series_html, 'html.parser')
+
+    return search_videos(series_soup)
+
+
+def search_videos(soup):
     # li
-    li_list = actress_soup.find('ul', id='list').find_all('li')
+    li_list = soup.find('ul', id='list').find_all('li')
     print('video数量: ' + str(len(li_list)))
 
     # 查询video列表
@@ -183,7 +215,7 @@ def search_videos(video_no):
         print(movie_url)
 
         video = {'number': video_no, 'url': detail_url,
-                 'poster_url': poster_url, 'fanart_url': fanart_url,'movie_url': movie_url}
+                 'poster_url': poster_url, 'fanart_url': fanart_url, 'movie_url': movie_url}
         videos.append(video)
 
     return videos

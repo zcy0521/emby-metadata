@@ -15,27 +15,33 @@ class Shark(object):
         self.video_no = video_no
 
         # 详情页
-        url = 'https://shark2012-av.com/products/index.php?pn={video_no}'.format(video_no=video_no)
-        html = http_util.get(url, charset='cp932')
-        soup = BeautifulSoup(html, features="html.parser")
+        self.detail_url = 'https://shark2012-av.com/products/index.php?pn={video_no}'.format(video_no=video_no)
+        detail_html = http_util.get(self.detail_url, charset='cp932')
+        detail_soup = BeautifulSoup(detail_html, features="html.parser")
 
         # poster
-        poster_url = soup.find('div', class_="works-detail").find('img')['src']
+        poster_url = detail_soup.find('div', class_="works-detail").find('img')['src']
         self.poster_url = site_url + poster_url.split('../')[1]
         self.poster_name = os.path.basename(self.poster_url)
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # fanart
-        fanart_url = soup.find('div', class_="works-detail").find('a')['href']
+        fanart_url = detail_soup.find('div', class_="works-detail").find('a')['href']
         self.fanart_url = site_url + fanart_url.split('../')[1]
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
         # movie
-        movie_url = soup.find('div', class_="works-detail").find('video').find('source')['src']
+        movie_url = detail_soup.find('div', class_="works-detail").find('video').find('source')['src']
         self.movie_url = site_url + movie_url.split('../')[1]
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
+
+    def get_video_no(self):
+        return self.video_no
+
+    def get_detail_url(self):
+        return self.detail_url
 
     def get_poster_url(self):
         return self.poster_url

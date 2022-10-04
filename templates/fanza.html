@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <title>FANZA</title>
     <style>
+        .title {
+            margin-bottom: 20px;
+        }
+
+        .search {
+            margin-bottom: 20px;
+        }
+
+        .search a {
+            display: inline-block
+        }
+
         .container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(720px, 720px));
@@ -11,68 +23,86 @@
             grid-column-gap: 10px;
         }
 
-        .poster {
-            {# 可以显示在 <a class="video"> 标签上方 #}
-            position:absolute;
-            z-index: 1;
+        .item {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+            height: 500px;
         }
 
-        .poster img {
+        .item video {
+            width: 720px;
+        }
+
+        .item img {
+            width: 720px;
+        }
+
+        .item a span {
+            position: absolute;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0,.5);
+            color: #fff;
+            text-align: center
+        }
+
+        .item a img {
             position:absolute;
-            {# 隐藏元素且不占用空间 #}
             display:none;
+            width: 100%;
+            top: 0;
+            left: 0;
         }
 
-        .poster:hover img {
+        .item a:hover img {
             display:block;
-        }
-
-        .poster span {
-            color: whitesmoke;
-        }
-
-        .fanart img {
-            height: 404px;
         }
     </style>
 </head>
 <body>
-    <div style="margin-bottom: 20px">
-        <h2>FANZA</h2>
-    </div>
 
-    <div style="margin-bottom: 20px">
-        <form action="/fanza" method="get">
-            <label for="video_no">番号</label>
-            <input id="video_no" name="video_no" value="{{ video_no }}" style="width: 50%">
-            <button type="submit">查询</button>
-        </form>
-    </div>
+<div class="title">
+    <h2>FANZA</h2>
+</div>
 
-    <div>
-    {% if not videos %}
-        Empty
-    {% else %}
-        <ul class="container">
-        {% for video in videos %}
-            <li class="item">
-                <a class="poster" target="_blank" href="{{ video['fanart_url'] }}">
-                    <span>{{ video['number'] }}</span>
-                    <img src="{{ video['poster_url'] }}" alt="{{ video['number'] }}">
+<div class="search">
+    <form action="/fanza" method="get">
+        <label for="actress">女优</label>
+        <input id="actress" name="actress" value="{{ actress }}">
+
+        <label for="series">系列</label>
+        <input id="series" name="series" value="{{ series }}">
+
+        <button type="submit">查询</button>
+    </form>
+</div>
+
+<div>
+{% if not videos %}
+    Empty
+{% else %}
+    <ul class="container">
+    {% for video in videos %}
+        <li class="item">
+            {% if 'movie_url' in video %}
+                <video src="{{ video['movie_url'] }}" controls onloadstart="this.volume=0.15"></video>
+                <a target="_blank" href="{{ video['url'] }}">
+                    <span style="">{{ video['number'] }}</span>
+                    <img src="{{ video['fanart_url'] }}" alt="{{ video['number'] }}">
                 </a>
-                {% if 'movie_url' in video %}
-                    <a class="movie" target="_blank" href="{{ video['url'] }}">
-                        <video src="{{ video['movie_url'] }}" controls onloadstart="this.volume=0.15"></video>
-                    </a>
-                {% else %}
-                    <a class="fanart" target="_blank" href="{{ video['url'] }}">
-                        <img src="{{ video['fanart_url'] }}" alt="{{ video['number'] }}">
-                    </a>
-                {% endif %}
-            </li>
-        {% endfor %}
-        </ul>
-    {% endif %}
-    </div>
+            {% else %}
+                <img src="{{ video['fanart_url'] }}" alt="{{ video['number'] }}">
+                <a target="_blank" href="{{ video['url'] }}">
+                    <span style="">{{ video['number'] }}</span>
+                </a>
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
+</div>
+
 </body>
 </html>

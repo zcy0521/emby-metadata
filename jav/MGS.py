@@ -17,12 +17,12 @@ class MGS(object):
         self.video_no = video_no
 
         # 详情页
-        url = 'https://www.mgstage.com/product/product_detail/{video_no}/'.format(video_no=video_no)
-        html = http_util.get(url, age_check_headers)
-        soup = BeautifulSoup(html, features="html.parser")
+        self.detail_url = 'https://www.mgstage.com/product/product_detail/{video_no}/'.format(video_no=video_no)
+        detail_html = http_util.get(self.detail_url, age_check_headers)
+        detail_soup = BeautifulSoup(detail_html, features="html.parser")
 
         # fanart
-        self.fanart_url = soup.find('div', class_="detail_data").find('a', class_='link_magnify')['href']
+        self.fanart_url = detail_soup.find('div', class_="detail_data").find('a', class_='link_magnify')['href']
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
@@ -32,7 +32,7 @@ class MGS(object):
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # movie
-        sample_token = soup.find('div', class_="detail_data").find('a', class_='button_sample')['href'].split(
+        sample_token = detail_soup.find('div', class_="detail_data").find('a', class_='button_sample')['href'].split(
             '/sampleplayer/sampleplayer.html/')[1]
         sample_url = 'https://www.mgstage.com/sampleplayer/sampleRespons.php?pid={token}'.format(token=sample_token)
         sample_html = http_util.get(sample_url, age_check_headers)
@@ -40,6 +40,12 @@ class MGS(object):
         self.movie_url = sample_json['url'].split('.ism')[0] + '.mp4'
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
+
+    def get_video_no(self):
+        return self.video_no
+
+    def get_detail_url(self):
+        return self.detail_url
 
     def get_poster_url(self):
         return self.poster_url

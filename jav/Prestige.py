@@ -16,12 +16,12 @@ class Prestige(object):
         self.video_no = video_no
 
         # 详情页
-        url = 'https://www.prestige-av.com/goods/goods_detail.php?sku={video_no}'.format(video_no=video_no)
-        html = http_util.get(url, age_check_headers)
-        soup = BeautifulSoup(html, features="html.parser")
+        self.detail_url = 'https://www.prestige-av.com/goods/goods_detail.php?sku={video_no}'.format(video_no=video_no)
+        detail_html = http_util.get(self.detail_url, age_check_headers)
+        detail_soup = BeautifulSoup(detail_html, features="html.parser")
 
         # poster
-        poster_url = soup.find('div', class_="c-ratio-image").find('img')['src']
+        poster_url = detail_soup.find('div', class_="c-ratio-image").find('img')['src']
         self.poster_url = poster_url.split('?')[0]
         self.poster_name = os.path.basename(self.poster_url)
         self.poster_ext = os.path.splitext(self.poster_name)[1]
@@ -36,6 +36,12 @@ class Prestige(object):
         self.movie_url = movie_url.format(number=video_no)
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
+
+    def get_video_no(self):
+        return self.video_no
+
+    def get_detail_url(self):
+        return self.detail_url
 
     def get_poster_url(self):
         return self.poster_url

@@ -25,19 +25,26 @@ class HHH(object):
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # 详情页
-        url = site_url.rstrip('/') + list_soup.find('ul', class_='lst-works').find('a')['href']
-        html = http_util.get(url)
-        soup = BeautifulSoup(html, features="html.parser")
+        self.detail_url = site_url.rstrip('/') + list_soup.find('ul', class_='lst-works').find('a')['href']
+        detail_html = http_util.get(self.detail_url)
+        detail_soup = BeautifulSoup(detail_html, features="html.parser")
 
         # fanart
-        self.fanart_url = site_url.rstrip('/') + soup.find('div', class_='area-sample').find('img')['src']
+        self.fanart_url = site_url.rstrip('/') + detail_soup.find('div', class_='area-sample').find('img')['src']
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
         # movie
-        self.movie_url = soup.find('div', class_='area-sample').find('a', class_='sample-movie')['data-movie-path']
+        self.movie_url = detail_soup.find('div', class_='area-sample').find('a', class_='sample-movie')[
+            'data-movie-path']
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
+
+    def get_video_no(self):
+        return self.video_no
+
+    def get_detail_url(self):
+        return self.detail_url
 
     def get_poster_url(self):
         return self.poster_url

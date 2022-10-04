@@ -15,26 +15,32 @@ class TMA(object):
         self.video_no = video_no
 
         # 详情页
-        url = 'https://www.tma.co.jp/products/{video_no}'.format(video_no=video_no.lower())
-        html = http_util.get(url)
-        soup = BeautifulSoup(html, features="html.parser")
+        self.detail_url = 'https://www.tma.co.jp/products/{video_no}'.format(video_no=video_no.lower())
+        detail_html = http_util.get(self.detail_url)
+        detail_soup = BeautifulSoup(detail_html, features="html.parser")
 
         # poster
-        poster_url = 'https:' + soup.find('a', class_="product-gallery__image product-gallery__image-1")['href']
+        poster_url = 'https:' + detail_soup.find('a', class_="product-gallery__image product-gallery__image-1")['href']
         self.poster_url = poster_url.split('?')[0]
         self.poster_name = os.path.basename(self.poster_url)
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # fanart
-        fanart_url = 'https:' + soup.find('a', class_="product-gallery__image product-gallery__image-2")['href']
+        fanart_url = 'https:' + detail_soup.find('a', class_="product-gallery__image product-gallery__image-2")['href']
         self.fanart_url = fanart_url.split('?')[0]
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
         # movie
-        self.movie_url = soup.find('div', class_="product-info").find('video')['src']
+        self.movie_url = detail_soup.find('div', class_="product-info").find('video')['src']
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
+
+    def get_video_no(self):
+        return self.video_no
+
+    def get_detail_url(self):
+        return self.detail_url
 
     def get_poster_url(self):
         return self.poster_url

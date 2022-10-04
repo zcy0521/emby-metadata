@@ -1,7 +1,6 @@
 #!/usr/bin/envpython3
 # -*-coding:utf-8-*-
 import base64
-import io
 import os
 
 from bs4 import BeautifulSoup
@@ -18,27 +17,27 @@ class SOD(object):
         self.video_no = video_no
 
         # 详情页url
-        url = 'https://ec.sod.co.jp/prime/videos/?id={video_no}'.format(video_no=video_no)
+        self.detail_url = 'https://ec.sod.co.jp/prime/videos/?id={video_no}'.format(video_no=video_no)
 
         # 年龄检查
         check_url = 'https://ec.sod.co.jp/prime/_ontime.php'
-        check_header = {'Referer': url}
+        check_header = {'Referer': self.detail_url}
         proxy = SOCKSProxyManager('socks5h://localhost:1080/')
         check_r = proxy.urlopen('GET', check_url, headers=check_header, redirect=False)
 
         # 详情页
-        headers = {'Cookie': check_r.headers['Set-Cookie'], 'Referer': url}
-        r = proxy.request('GET', url, headers=headers)
-        html = r.data.decode('utf-8')
-        soup = BeautifulSoup(html, features="html.parser")
+        headers = {'Cookie': check_r.headers['Set-Cookie'], 'Referer': self.detail_url}
+        r = proxy.request('GET', self.detail_url, headers=headers)
+        detail_html = r.data.decode('utf-8')
+        detail_soup = BeautifulSoup(detail_html, features="html.parser")
 
         # poster
-        self.poster_url = soup.find('div', class_="videos_samimg").find('img')['src']
+        self.poster_url = detail_soup.find('div', class_="videos_samimg").find('img')['src']
         self.poster_name = os.path.basename(self.poster_url)
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # fanart
-        self.fanart_url = soup.find('div', class_="videos_samimg").find('a')['href']
+        self.fanart_url = detail_soup.find('div', class_="videos_samimg").find('a')['href']
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
@@ -53,6 +52,12 @@ class SOD(object):
         self.movie_url = movie_soup.find('video').find('source')['src']
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
+
+    def get_video_no(self):
+        return self.video_no
+
+    def get_detail_url(self):
+        return self.detail_url
 
     def get_poster_url(self):
         poster_bytes = self.download_poster()
