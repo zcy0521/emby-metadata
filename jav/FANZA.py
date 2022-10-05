@@ -46,9 +46,9 @@ class FANZA(object):
         iframe_html = http_util.get(iframe_url, age_check_headers)
         iframe_soup = BeautifulSoup(iframe_html, features="html.parser")
 
-        # iframe_script
+        # iframe_script str.rstrip()删除最右侧空格
         iframe_script = iframe_soup.find_all('script')[-4].text
-        iframe_args = iframe_script.split('const args = ')[1].replace(';', '')
+        iframe_args = iframe_script.split('const args = ')[1].rstrip().rstrip(';')
         args_json = json.loads(iframe_args)
 
         # movie
@@ -115,14 +115,14 @@ def get_movie_url(video_no):
 
     # iframe_script
     iframe_script = iframe_soup.find_all('script')[-4].text
-    iframe_args = iframe_script.split('const args = ')[1].replace(';', '')
+    iframe_args = iframe_script.split('const args = ')[1].rstrip().rstrip(';')
     args_json = json.loads(iframe_args)
     return 'https:' + args_json['src']
 
 
-def search_videos_by_actress(actress):
+def search_actress(search_key):
     # search
-    search_url = 'https://www.dmm.co.jp/digital/-/list/search/=/?searchstr={actress}'.format(actress=actress)
+    search_url = 'https://www.dmm.co.jp/digital/-/list/search/=/?searchstr={search_key}'.format(search_key=search_key)
     search_html = http_util.get(search_url, headers=age_check_headers)
     search_soup = BeautifulSoup(search_html, 'html.parser')
 
@@ -133,16 +133,12 @@ def search_videos_by_actress(actress):
 
     # actress
     actress_url = item_soup.find('span', id='performer').find('a')['href']
-    actress_url = site_url + actress_url + 'sort=date/'
-    actress_html = http_util.get(actress_url, headers=age_check_headers)
-    actress_soup = BeautifulSoup(actress_html, 'html.parser')
-
-    return search_videos(actress_soup)
+    return search_videos(actress_url)
 
 
-def search_videos_by_series(series):
+def search_series(search_key):
     # search
-    search_url = 'https://www.dmm.co.jp/digital/-/list/search/=/?searchstr={series}'.format(series=series)
+    search_url = 'https://www.dmm.co.jp/digital/-/list/search/=/?searchstr={search_key}'.format(search_key=search_key)
     search_html = http_util.get(search_url, headers=age_check_headers)
     search_soup = BeautifulSoup(search_html, 'html.parser')
 
@@ -152,19 +148,16 @@ def search_videos_by_series(series):
     item_soup = BeautifulSoup(item_html, 'html.parser')
 
     # series
-    series_url = \
-    item_soup.find('div', class_='page-detail').find('table').find('table').find_all('tr')[7].find_all('td')[1].find(
-        'a')['href']
-    series_url = site_url + series_url + 'sort=date/'
-    series_html = http_util.get(series_url, headers=age_check_headers)
-    series_soup = BeautifulSoup(series_html, 'html.parser')
-
-    return search_videos(series_soup)
+    series_url = item_soup.find('div', class_='page-detail').find('table').find('table').find_all('tr')[7].find_all('td')[1].find('a')['href']
+    return search_videos(series_url)
 
 
-def search_videos(soup):
-    # li
-    li_list = soup.find('ul', id='list').find_all('li')
+def search_videos(search_url):
+    search_url = site_url + search_url + 'sort=date/'
+    search_html = http_util.get(search_url, headers=age_check_headers)
+    search_soup = BeautifulSoup(search_html, 'html.parser')
+
+    li_list = search_soup.find('ul', id='list').find_all('li')
     print('video数量: ' + str(len(li_list)))
 
     # 查询video列表
@@ -176,7 +169,8 @@ def search_videos(soup):
         detail_soup = BeautifulSoup(detail_html, 'html.parser')
 
         # video_no
-        video_no = detail_url.split('cid=')[1].replace('/', '')
+        print(detail_url.split('cid=')[1])
+        video_no = detail_url.split('cid=')[1].rstrip('/')
         print('(' + video_no + ')[' + detail_url + ']')
 
         # poster
@@ -209,7 +203,7 @@ def search_videos(soup):
 
         # movie
         iframe_script = iframe_soup.find_all('script')[-4].text
-        iframe_args = iframe_script.split('const args = ')[1].replace(';', '')
+        iframe_args = iframe_script.split('const args = ')[1].rstrip().rstrip(';')
         args_json = json.loads(iframe_args)
         movie_url = 'https:' + args_json['src']
         print(movie_url)

@@ -4,7 +4,6 @@ import os
 
 import urllib3
 from bs4 import BeautifulSoup
-from urllib3.contrib.socks import SOCKSProxyManager
 
 from jav import FANZA
 from utils import http_util
@@ -80,7 +79,6 @@ def get_movie_url(video_no):
     soup = BeautifulSoup(html, features="html.parser")
 
     # 获取 dmm 的 redirect url
-    proxy = SOCKSProxyManager('socks5h://localhost:1080/')
     dmm_url = soup.find('article', class_="post").find_all('p')[-1].find('a')['href']
     dmm_res = proxy.urlopen('GET', dmm_url, retries=urllib3.Retry(10, redirect=10))
     dmm_url = dmm_res.geturl()

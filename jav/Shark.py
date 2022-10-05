@@ -21,19 +21,19 @@ class Shark(object):
 
         # poster
         poster_url = detail_soup.find('div', class_="works-detail").find('img')['src']
-        self.poster_url = site_url + poster_url.split('../')[1]
+        self.poster_url = site_url.rstrip('/') + poster_url.lstrip('..')
         self.poster_name = os.path.basename(self.poster_url)
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # fanart
         fanart_url = detail_soup.find('div', class_="works-detail").find('a')['href']
-        self.fanart_url = site_url + fanart_url.split('../')[1]
+        self.fanart_url = site_url.rstrip('/') + fanart_url.lstrip('..')
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
         # movie
         movie_url = detail_soup.find('div', class_="works-detail").find('video').find('source')['src']
-        self.movie_url = site_url + movie_url.split('../')[1]
+        self.movie_url = site_url.rstrip('/') + movie_url.lstrip('..')
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
 

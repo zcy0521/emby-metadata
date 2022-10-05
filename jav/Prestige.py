@@ -1,5 +1,6 @@
 #!/usr/bin/envpython3
 # -*-coding:utf-8-*-
+import json
 import os
 
 from bs4 import BeautifulSoup
@@ -7,6 +8,8 @@ from bs4 import BeautifulSoup
 from utils import http_util
 
 site_url = 'https://www.prestige-av.com/'
+
+# 年龄检查cookie
 age_check_headers = {'cookie': '__age_auth__=true'}
 
 
@@ -69,6 +72,86 @@ class Prestige(object):
 
     def download_movie(self):
         return http_util.download(self.movie_url)
+
+
+def search_actress(video_no):
+    # 详情页
+    detail_url = 'https://www.prestige-av.com/goods/goods_detail.php?sku={video_no}'.format(video_no=video_no)
+    detail_html = http_util.get(detail_url, age_check_headers)
+    detail_soup = BeautifulSoup(detail_html, features="html.parser")
+
+    # actress
+    actress_p = detail_soup.body.find(text='出演者').parent.find_next_sibling('p')
+    if actress_p is None:
+        videos = []
+        return videos
+
+    actress_url = actress_p.find('a')['href']
+    actress = actress_url.split('actress=')[1]
+    return search_videos('actress', actress)
+
+
+def search_series(video_no):
+    # 详情页
+    detail_url = 'https://www.prestige-av.com/goods/goods_detail.php?sku={video_no}'.format(video_no=video_no)
+    detail_html = http_util.get(detail_url, age_check_headers)
+    detail_soup = BeautifulSoup(detail_html, features="html.parser")
+
+    # series_p
+    series_a = detail_soup.body.find(text='シリーズ').parent.find_next_sibling('a')
+    if series_a is None:
+        videos = []
+        return videos
+
+    series_url = series_a['href']
+    series = series_url.split('series=')[1]
+    return search_videos('series', series)
+
+
+def search_videos(search_type, search_key):
+    search_url = 'https://www.prestige-av.com/api/search?isEnabledQuery=true&isEnableAggregation=false&{search_type}[]={search_key}&release=false&reservation=false&soldOut=false&order=new&aggregationTermsSize=0&from={index}&size={size}'.format(
+        search_type=search_type, search_key=search_key, index=0, size=20)
+    search_html = http_util.get(search_url, age_check_headers)
+    search_json = json.loads(search_html)
+
+    hits = search_json['hits']['hits']
+    print('video数量: ' + str(len(hits)))
+
+    # 查询video列表
+    videos = []
+    for hit in hits:
+        uuid = hit['_source']['productUuid']
+        item_id = hit['_source']['deliveryItemId']
+
+        # detail
+        detail_url = 'https://www.prestige-av.com/goods/{uuid}?skuId={item_id}'.format(uuid=uuid, item_id=item_id)
+        print(detail_url)
+        detail_html = http_util.get(detail_url, age_check_headers)
+        detail_soup = BeautifulSoup(detail_html, features="html.parser")
+
+        # video_no
+        video_no = item_id
+        print('(' + video_no + ')[' + detail_url + ']')
+
+        # poster
+        poster_url = detail_soup.find('div', class_="c-ratio-image").find('img')['src']
+        poster_url = poster_url.split('?')[0]
+        print(poster_url)
+
+        # fanart
+        fanart_url = poster_url.replace('pf_', 'pb_')
+        print(fanart_url)
+
+        # movie
+        movie_url = 'https://www.prestige-av.com/api/media/movie/{number}.mp4'
+        movie_url = movie_url.format(number=item_id)
+        print(movie_url)
+
+        video = {'number': item_id, 'url': detail_url,
+                 'poster_url': poster_url, 'fanart_url': fanart_url, 'movie_url': movie_url}
+        videos.append(video)
+
+    return videos
 
 
 if __name__ == '__main__':

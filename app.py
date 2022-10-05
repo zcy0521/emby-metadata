@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 
 import metadata2
-from jav import FANZA
+from jav import FANZA, SOD, Prestige, MGS
 
 app = Flask(__name__)
 
@@ -23,7 +23,8 @@ def poster():
     for number in video_no.upper().split(','):
         video = metadata2.get_jav(number.strip())
         if video is not None:
-            video = {'number': video.video_no, 'url': video.detail_url, 'poster_url': video.poster_url, 'fanart_url': video.fanart_url}
+            video = {'number': video.video_no, 'url': video.detail_url, 'poster_url': video.poster_url,
+                     'fanart_url': video.fanart_url}
             videos.append(video)
     return render_template('poster.html', video_no=video_no, videos=videos)
 
@@ -55,7 +56,8 @@ def movie():
     for number in video_no.upper().split(','):
         video = metadata2.get_jav(number.strip())
         if video is not None:
-            video = {'number': video.video_no, 'url': video.detail_url, 'fanart_url': video.fanart_url, 'movie_url': video.movie_url}
+            video = {'number': video.video_no, 'url': video.detail_url, 'fanart_url': video.fanart_url,
+                     'movie_url': video.movie_url}
             videos.append(video)
     return render_template('movie.html', video_no=video_no, videos=videos)
 
@@ -66,15 +68,66 @@ def fanza():
     series = request.args.get('series')
 
     if actress is not None and actress:
-        videos = FANZA.search_videos_by_actress(actress)
+        videos = FANZA.search_actress(actress)
         print('查询完成')
         return render_template('fanza.html', actress=actress, videos=videos)
     elif series is not None and series:
-        videos = FANZA.search_videos_by_series(series)
+        videos = FANZA.search_series(series)
         print('查询完成')
         return render_template('fanza.html', series=series, videos=videos)
 
     return render_template('fanza.html')
+
+
+@app.route("/sod")
+def sod():
+    actress = request.args.get('actress')
+    series = request.args.get('series')
+
+    if actress is not None and actress:
+        videos = SOD.search_actress(actress)
+        print('查询完成')
+        return render_template('sod.html', actress=actress, videos=videos)
+    elif series is not None and series:
+        videos = SOD.search_series(series)
+        print('查询完成')
+        return render_template('sod.html', series=series, videos=videos)
+
+    return render_template('sod.html')
+
+
+@app.route("/prestige")
+def prestige():
+    actress = request.args.get('actress')
+    series = request.args.get('series')
+
+    if actress is not None and actress:
+        videos = Prestige.search_actress(actress)
+        print('查询完成')
+        return render_template('prestige.html', actress=actress, videos=videos)
+    elif series is not None and series:
+        videos = Prestige.search_series(series)
+        print('查询完成')
+        return render_template('prestige.html', series=series, videos=videos)
+
+    return render_template('prestige.html')
+
+
+@app.route("/mgstage")
+def mgstage():
+    actress = request.args.get('actress')
+    series = request.args.get('series')
+
+    if actress is not None and actress:
+        videos = MGS.search_actress(actress)
+        print('查询完成')
+        return render_template('mgstage.html', actress=actress, videos=videos)
+    elif series is not None and series:
+        videos = MGS.search_series(series)
+        print('查询完成')
+        return render_template('mgstage.html', series=series, videos=videos)
+
+    return render_template('mgstage.html')
 
 
 @app.route("/magnet")

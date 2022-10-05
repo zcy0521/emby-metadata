@@ -8,6 +8,8 @@ from bs4 import BeautifulSoup
 from utils import http_util
 
 site_url = 'https://www.mgstage.com/'
+
+# 年龄检查cookie
 age_check_headers = {'Cookie': 'adc=1'}
 
 
@@ -32,12 +34,7 @@ class MGS(object):
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # movie
-        sample_token = detail_soup.find('div', class_="detail_data").find('a', class_='button_sample')['href'].split(
-            '/sampleplayer/sampleplayer.html/')[1]
-        sample_url = 'https://www.mgstage.com/sampleplayer/sampleRespons.php?pid={token}'.format(token=sample_token)
-        sample_html = http_util.get(sample_url, age_check_headers)
-        sample_json = json.loads(sample_html)
-        self.movie_url = sample_json['url'].split('.ism')[0] + '.mp4'
+        self.movie_url = get_movie_url(detail_soup)
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
 
@@ -73,6 +70,86 @@ class MGS(object):
 
     def download_movie(self):
         return http_util.download(self.movie_url)
+
+
+def get_movie_url(detail_soup):
+    sample_token = detail_soup.find('div', class_="detail_data").find('a', class_='button_sample')['href'].split(
+        '/sampleplayer/sampleplayer.html/')[1]
+
+    sample_url = 'https://www.mgstage.com/sampleplayer/sampleRespons.php?pid={token}'.format(token=sample_token)
+    sample_html = http_util.get(sample_url, age_check_headers)
+    sample_json = json.loads(sample_html)
+    return sample_json['url'].split('.ism')[0] + '.mp4'
+
+
+def search_actress(video_no):
+    detail_url = 'https://www.mgstage.com/product/product_detail/{video_no}/'.format(video_no=video_no)
+    detail_html = http_util.get(detail_url, age_check_headers)
+    detail_soup = BeautifulSoup(detail_html, features="html.parser")
+
+    # actress
+    actress_td = detail_soup.body.find(text='出演：').parent.find_next_sibling('td')
+    if actress_td is None:
+        videos = []
+        return videos
+
+    actress_url = actress_td.find('a')['href']
+    return search_videos(actress_url)
+
+
+def search_series(video_no):
+    detail_url = 'https://www.prestige-av.com/goods/goods_detail.php?sku={video_no}'.format(video_no=video_no)
+    detail_html = http_util.get(detail_url, age_check_headers)
+    detail_soup = BeautifulSoup(detail_html, features="html.parser")
+
+    # series_p
+    series_a = detail_soup.body.find(text='メーカー：').parent.find_next_sibling('td')
+    if series_a is None:
+        videos = []
+        return videos
+
+    series_url = series_a['href']
+    return search_videos(series_url)
+
+
+def search_videos(search_url):
+    search_url = site_url.rstrip('/') + search_url + '&sort=new&list_cnt=120'
+    search_html = http_util.get(search_url, headers=age_check_headers)
+    search_soup = BeautifulSoup(search_html, 'html.parser')
+
+    li_list = search_soup.find('div', class_='search_list').find('ul').find_all('li')
+    print('video数量: ' + str(len(li_list)))
+
+    # 查询video列表
+    videos = []
+    for li in reversed(li_list):
+        # detail
+        detail_url = site_url.rstrip('/') + li.find('a')['href']
+        print(detail_url)
+        detail_html = http_util.get(detail_url, age_check_headers)
+        detail_soup = BeautifulSoup(detail_html, features="html.parser")
+
+        # video_no
+        video_no = detail_url.split('product_detail/')[1].lstrip('/')
+        print('(' + video_no + ')[' + detail_url + ']')
+
+        # fanart
+        fanart_url = detail_soup.find('div', class_="detail_data").find('a', class_='link_magnify')['href']
+        print(fanart_url)
+
+        # poster
+        poster_url = fanart_url.replace('pb', 'pf')
+        print(poster_url)
+
+        # movie
+        movie_url = get_movie_url(detail_soup)
+        print(movie_url)
+
+        video = {'number': video_no, 'url': detail_url,
+                 'poster_url': poster_url, 'fanart_url': fanart_url, 'movie_url': movie_url}
+        videos.append(video)
+
+    return videos
 
 
 if __name__ == '__main__':
