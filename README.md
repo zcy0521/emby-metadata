@@ -3,8 +3,7 @@
 ### 安装模块
 
 ```shell
-D:\PycharmProjects\emby-metadata\venv\Scripts\python.exe -m pip install --upgrade pip
-
+python.exe -m pip install --upgrade pip
 pip install beautifulsoup4
 pip install tqdm
 pip install cfscrape
@@ -20,7 +19,7 @@ pip install pysocks
 - 安装flask
 
 ```shell
-D:\PycharmProjects\emby-metadata\venv\Scripts\python.exe -m pip install --upgrade pip
+python.exe -m pip install --upgrade pip
 pip install flask
 ```
 
@@ -54,7 +53,7 @@ Running on [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
 ### FAQ
 
-- 无法加载文件 D:\PycharmProjects\emby-metadata\venv\Scripts\activate.ps1，因为在此系统上禁止运行脚本。
+- 无法加载文件 \venv\Scripts\activate.ps1，因为在此系统上禁止运行脚本。
 
 ```shell
 Windows PowerShell

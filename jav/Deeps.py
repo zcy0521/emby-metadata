@@ -7,30 +7,26 @@ from bs4 import BeautifulSoup
 from jav import FANZA
 from utils import http_util
 
-# K.M.Produce
-site_url = 'https://www.km-produce.com/'
-
-# 宇宙企画
-uchu_site_url = 'http://uchu.co.jp/'
+site_url = 'https://deeps.net/'
 
 
-class KMP(object):
+class Deeps(object):
     def __init__(self, video_no):
         # 番号
         self.video_no = video_no
 
+        # 详情页
+        detail_url = 'https://deeps.net/product/{video_no}/'.format(video_no=video_no.lower())
+        detail_html = http_util.get(detail_url)
+        detail_soup = BeautifulSoup(detail_html, features="html.parser")
+
         # poster
-        self.poster_url = 'https://www.km-produce.com/img/title0/{video_no}.jpg'.format(video_no=video_no.lower())
+        self.poster_url = detail_soup.find('div', id='item').find('figure').find('img', class_='pc')['src']
         self.poster_name = os.path.basename(self.poster_url)
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 
-        # 详情页
-        self.detail_url = 'https://www.km-produce.com/works/{video_no}'.format(video_no=video_no.lower())
-        detail_html = http_util.get(self.detail_url)
-        detail_soup = BeautifulSoup(detail_html, features="html.parser")
-
         # fanart
-        self.fanart_url = site_url.rstrip('/') + detail_soup.find('div', class_="details").find('a')['href']
+        self.fanart_url = detail_soup.find('div', id='item').find('figure').find_all('img', class_='sp')[0]['src']
         self.fanart_name = os.path.basename(self.fanart_url)
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
@@ -41,9 +37,6 @@ class KMP(object):
 
     def get_video_no(self):
         return self.video_no
-
-    def get_detail_url(self):
-        return self.detail_url
 
     def get_poster_url(self):
         return self.poster_url
@@ -74,13 +67,13 @@ class KMP(object):
 
 
 if __name__ == '__main__':
-    # https://www.km-produce.com/works/mdtm-515
-    kmp = KMP('REAL-820')
+    # https://deeps.net/product/dvrt-024/
+    deeps = Deeps('DVRT-024')
 
-    print(kmp.get_poster_url())
-    print(kmp.get_fanart_url())
-    print(kmp.get_movie_url())
+    print(deeps.get_poster_url())
+    print(deeps.get_fanart_url())
+    print(deeps.get_movie_url())
 
-    print(kmp.get_poster_ext())
-    print(kmp.get_fanart_ext())
-    print(kmp.get_movie_ext())
+    print(deeps.get_poster_ext())
+    print(deeps.get_fanart_ext())
+    print(deeps.get_movie_ext())

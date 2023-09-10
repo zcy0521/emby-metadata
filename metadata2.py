@@ -6,16 +6,16 @@ import shutil
 from tqdm import tqdm
 
 class_dict = {
-    'FANZA': {},
-    'MOODYZ': {'MIDD', 'MIDE'},
-    'IdeaPocket': {'IPZ', 'IPX', 'IPIT', 'IDBD', 'SUPD'},
-    'S1S1S1': {'SNIS', 'SSNI', 'OFJE', 'SIVR'},
+    'FANZA': {'GAID', 'FMDL', 'JUKF', 'MADV', 'REXD', 'SQTE', 'KSJK'},
+    'MOODYZ': {'MIDD', 'MIDE', 'MIDV', 'MIMK', 'MIAA'},
+    'IdeaPocket': {'IPZ', 'IPZZ', 'IPX', 'IPIT', 'IPTD', 'IDBD', 'SUPD'},
+    'S1S1S1': {'SNIS', 'SSNI', 'SSIS', 'OFJE', 'SIVR'},
     'PREMIUM': {'PRED'},
-    'Madonna': {'JUY'},
-    'TameikeGoro': {'MEYD'},
-    'Attackers': {'ADN', 'ATID', 'ATKD', 'RBD', 'RBK', 'SHKD', 'SSPD'},
-    'Das': {'DASD'},
-    'SOD': {'HBAD', 'HYPN', 'IESP', 'OKS', 'SDDE', 'SDEN', 'SDMF', 'SDMU', 'SSHN', 'STAR', 'STARS', '3DSVR'},
+    'Madonna': {'JUY', 'JUQ', 'JUL'},
+    'TameikeGoro': {'MBYD', 'MEYD', 'PFES'},
+    'Attackers': {'ADN', 'ATID', 'ATKD', 'RBD', 'RBK', 'SHKD', 'SSPD', 'YUJ'},
+    'Das': {'DASD', 'DASS'},
+    'SOD': {'AVOP', 'HBAD', 'HYPN', 'IESP', 'OKS', 'SDDE', 'SDEN', 'SDMF', 'SDMU', 'SDNM', 'SDNT', 'SDSI', 'SSHN', 'STAR', 'STARS', '3DSVR', 'KMHRS'},
     'NaturalHigh': {'NHDTB', 'SHN'},
     'MGS': {'SIRO', '001HMNF', '020GVG', '039NEO', '169MDTM', '179BAZX', '200GANA', '230ORE', '249OKS', '259LUXU', '263NACR', '276KITAIKE', '277DCV', '290JBJB', '300MAAN', '300MIUM', '300NTK', '302GERK', '315ETQR', '345SIMM', '348NTR', '390JAC', '390JNT', '402MNTJ', '435MFC', '459TEN', '483SGK'},
     'Prestige': {'ABS', 'ABP', 'ABW', 'AOI', 'DOM', 'EDD', 'INU', 'JBS', 'JOB', 'PPT', 'SGA', 'WAT', 'YRH'},
@@ -25,13 +25,29 @@ class_dict = {
     'HMP': {'HODV'},
     'MaxA': {},
     'Momotaro': {},
-    'Mousouzoku': {'BIJN'},
-    'KMP': {'MDTM'},
-    'TMA': {'AOZ'},
+    'Mousouzoku': {'BIJN', 'GMEM', 'USBA'},
+    'KMP': {'MDTM', 'REAL'},
+    'TMA': {'25ID', 'AOZ'},
     'Tsumabana': {'HZGD'},
     'Shark': {'JBJB', 'MACB'},
     'Planetplus': {'NACR'},
-    'WANZ': {'WANZ'},
+    'WANZ': {'WANZ', 'WAAA'},
+    'TAKARA': {'CEMN'},
+    'BECKAKU': {'BKKG'},
+    'CASANOVA': {'CAFR', 'CAMI'},
+    'FALENO': {'FSDSS'},
+    'Kawaii': {'CAWD'},
+    'OPPAI': {'PPPE'},
+    'BeFree': {'BF'},
+    'KiraKira': {'BLK'},
+    'AURORA': {'APAA', 'APAK', 'APGH', 'APNS'},
+    'Hakusuiriki': {'CEAD', 'CEMD'},
+    'Deeps': {'DVRT'},
+    'EBODY': {'EYAN'},
+    'GloryQuest': {'GVH'},
+    'MkoLabo': {'MISM'},
+    'Muku': {'MUDR', 'MUKC'},
+    'Mvg': {'MVSD'},
 }
 
 
@@ -64,7 +80,7 @@ def get_jav(dirname):
 
 
 if __name__ == '__main__':
-    folder_path = 'C:/NSFW'
+    folder_path = 'D:\\NSFW\\'
 
     # 删除文件夹中现有图片
     for (dirpath, dirnames, filenames) in os.walk(folder_path):

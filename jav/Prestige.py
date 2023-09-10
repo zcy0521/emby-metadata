@@ -23,6 +23,8 @@ class Prestige(object):
         detail_html = http_util.get(self.detail_url, age_check_headers)
         detail_soup = BeautifulSoup(detail_html, features="html.parser")
 
+        print(detail_soup)
+
         # poster
         poster_url = detail_soup.find('div', class_="c-ratio-image").find('img')['src']
         self.poster_url = poster_url.split('?')[0]

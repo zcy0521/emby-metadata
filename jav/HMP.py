@@ -36,11 +36,10 @@ class HMP(object):
         self.fanart_ext = os.path.splitext(self.fanart_name)[1]
 
         # movie
-        sample_url = site_url.rstrip('/') + detail_soup.find('img', src='/images/detail/btn-det-sample.png').parent[
-            'href']
+        sample_url = site_url.rstrip('/') + detail_soup.find('img', src='/images/detail/btn-det-sample.png').parent['href']
         sample_html = http_util.get(sample_url)
         sample_soup = BeautifulSoup(sample_html, features="html.parser")
-        self.movie_url = sample_soup.find('video').find('source')['src']
+        self.movie_url = site_url.rstrip('/') + sample_soup.find('video').find('source')['src']
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
 
@@ -79,7 +78,7 @@ class HMP(object):
 
 
 if __name__ == '__main__':
-    hmp = HMP('HODV-21402')
+    hmp = HMP('HODV-21758')
 
     print(hmp.get_poster_url())
     print(hmp.get_fanart_url())

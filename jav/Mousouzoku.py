@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from jav import FANZA
 from utils import http_util
 
+# AVS collector’s
 site_url = 'https://www.mousouzoku-av.com/'
 
 

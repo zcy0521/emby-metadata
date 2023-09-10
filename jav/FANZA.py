@@ -91,14 +91,15 @@ class FANZA(object):
 
 
 def get_movie_url(video_no):
+    video_no = video_no.lower().replace('-', '00')
+
     # 查询页
-    list_url = 'https://www.dmm.co.jp/digital/-/list/search/=/?searchstr={video_no}'.format(
-        video_no=video_no.lower().replace('-', '00'))
+    list_url = 'https://www.dmm.co.jp/digital/-/list/search/=/?searchstr={video_no}'.format(video_no=video_no)
     list_html = http_util.get(list_url, age_check_headers)
     list_soup = BeautifulSoup(list_html, features="html.parser")
 
     # 请求dmm 年龄认证Cookie
-    detail_url = list_soup.find('ul', id='list').find_all('li')[0].find('a')['href']
+    detail_url = list_soup.find('ul', id='list').find('li', attrs={'data-purchase-history-cid': video_no}).find('a')['href']
     detail_html = http_util.get(detail_url, age_check_headers)
     detail_soup = BeautifulSoup(detail_html, features="html.parser")
 

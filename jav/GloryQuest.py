@@ -7,48 +7,44 @@ from bs4 import BeautifulSoup
 from jav import FANZA
 from utils import http_util
 
-site_url = 'https://s1s1s1.com/'
+# グローリークエスト
+site_url = 'https://www.gloryquest.tv/'
 
 
-class S1S1S1(object):
+class GloryQuest(object):
     def __init__(self, video_no):
         # 番号
         self.video_no = video_no
 
         # 搜索列表
-        list_url = 'https://s1s1s1.com/search/list?keyword={video_no}'.format(
-            video_no=video_no.lower().replace('-', ''))
+        list_url = 'https://www.gloryquest.tv/search.php?KeyWord={video_no}'.format(video_no=video_no)
         list_html = http_util.get(list_url)
         list_soup = BeautifulSoup(list_html, features="html.parser")
 
         # poster
-        self.poster_url = list_soup.find('div', class_="swiper-wrapper").find('img')['data-src']
+        poster_url = list_soup.find('ul', id='scene').find('li').find('span', class_='thumb2').find('img')['data-original']
+        self.poster_url = site_url + poster_url.lstrip('/')
         self.poster_name = os.path.basename(self.poster_url)
         self.poster_ext = os.path.splitext(self.poster_name)[1]
 
         # 详情页
-        self.detail_url = list_soup.find('div', class_="swiper-wrapper").find('a')['href']
-        detail_html = http_util.get(self.detail_url)
+        detail_url = 'https://www.gloryquest.tv/item.php?id={video_no}'.format(video_no=video_no)
+        detail_html = http_util.get(detail_url)
         detail_soup = BeautifulSoup(detail_html, features="html.parser")
 
         # fanart
-        self.fanart_url = detail_soup.find('div', class_="swiper-wrapper").find('img')['data-src']
+        fanart_url = detail_soup.find('div', class_='package').find('img')['src']
+        self.fanart_url = site_url + fanart_url.lstrip('/')
         self.fanart_name = os.path.basename(self.fanart_url)
-        self.fanart_ext = os.path.splitext(self.fanart_name)[1]
+        self.fanart_ext = os.path.splitext(self.fanart_name)[1].split('?')[0]
 
         # movie
-        if detail_soup.find('div', class_="video") is not None:
-            self.movie_url = detail_soup.find('div', class_="video").find('video')['src']
-        else:
-            self.movie_url = FANZA.get_movie_url(video_no)
+        self.movie_url = FANZA.get_movie_url(video_no)
         self.movie_name = os.path.basename(self.movie_url)
         self.movie_ext = os.path.splitext(self.movie_name)[1]
 
     def get_video_no(self):
         return self.video_no
-
-    def get_detail_url(self):
-        return self.detail_url
 
     def get_poster_url(self):
         return self.poster_url
@@ -79,15 +75,13 @@ class S1S1S1(object):
 
 
 if __name__ == '__main__':
-    # https://s1s1s1.com/works/detail/ssni939/
-    # SSNI-939 web上有video标签
-    # SSNI-547 web上没有video标签
-    s1s1s1 = S1S1S1('SSNI-547')
+    # https://www.gloryquest.tv/item.php?id=GVH-313
+    glory_quest = GloryQuest('GVH-313')
 
-    print(s1s1s1.get_poster_url())
-    print(s1s1s1.get_fanart_url())
-    print(s1s1s1.get_movie_url())
+    print(glory_quest.get_poster_url())
+    print(glory_quest.get_fanart_url())
+    print(glory_quest.get_movie_url())
 
-    print(s1s1s1.get_poster_ext())
-    print(s1s1s1.get_fanart_ext())
-    print(s1s1s1.get_movie_ext())
+    print(glory_quest.get_poster_ext())
+    print(glory_quest.get_fanart_ext())
+    print(glory_quest.get_movie_ext())
