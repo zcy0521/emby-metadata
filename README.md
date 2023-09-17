@@ -1,27 +1,26 @@
 # emby-metadata
 
-### 安装模块
+## 安装模块
 
 ```shell
-python.exe -m pip install --upgrade pip
-pip install beautifulsoup4
-pip install tqdm
-pip install cfscrape
-pip install pysocks
+conda install tqdm
+conda install beautifulsoup4
+conda install urllib3
 ```
 
-### BeautifulSoup
+## BeautifulSoup
 
 - 文档 https://www.crummy.com/software/BeautifulSoup/bs4/doc.zh/
 
-### Flask
+## Flask
 
-- 安装flask
+### 安装flask
 
 ```shell
-python.exe -m pip install --upgrade pip
-pip install flask
+conda install flask
 ```
+
+### 编写flask应用
 
 - 新建app.py
 
@@ -35,17 +34,30 @@ def index():
     return "<p>Hello, World!</p>"
 ```
 
-- index.html
+- 编写index.html
 
 ```html
 
 ```
 
-- 运行
+### 运行flask应用
+
+- Terminal运行
 
 ```shell
-D:\PycharmProjects\emby-metadata\venv\Scripts\python.exe -m flask run
+python -m flask run --port=5001
 ```
+
+- 配置Flask服务 Configuration
+    - Target type: Custom
+    - Target: app.py
+    - Application: app
+    - Additional options: --port=5001
+    - FLASK_ENV: development
+    - Environment
+        - Python interpreter: Project Default
+        - Add content roots to PYTHONPATH
+        - Add source roots to PYTHONPATH
 
 - 访问
 
@@ -73,3 +85,15 @@ PS C:\WINDOWS\system32> get-ExecutionPolicy
 RemoteSigned
 PS C:\WINDOWS\system32>
 ```
+
+- 以一种访问权限不允许的方式做了一个访问套接字的尝试。
+
+```shell
+# 端口被占用，查找占用5000端口的应用PID，然后在服务中找到PID对应的程序
+> netstat -ano|findstr 5000
+  TCP    127.0.0.1:5000         0.0.0.0:0              LISTENING       5544
+  TCP    [::1]:5000             [::]:0                 LISTENING       5544
+```
+
+> 5000: 被igccservice Intel(R) Graphics Command Center Service占用
+> 6000: 禁止使用

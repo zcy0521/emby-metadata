@@ -134,3 +134,7 @@ def mgstage():
 def magnet():
     video_no = request.args.get('video_no')
     return render_template('magnet.html', video_no=video_no, )
+
+
+if __name__ == '__main__':
+    app.run()
