@@ -3,9 +3,11 @@
 ## 安装模块
 
 ```shell
-conda install tqdm
-conda install beautifulsoup4
-conda install urllib3
+pip install flask
+pip install tqdm
+pip install beautifulsoup4
+pip install urllib3
+pip install pysocks
 ```
 
 ## BeautifulSoup
@@ -13,12 +15,6 @@ conda install urllib3
 - 文档 https://www.crummy.com/software/BeautifulSoup/bs4/doc.zh/
 
 ## Flask
-
-### 安装flask
-
-```shell
-conda install flask
-```
 
 ### 编写flask应用
 
@@ -59,9 +55,7 @@ python -m flask run --port=5001
         - Add content roots to PYTHONPATH
         - Add source roots to PYTHONPATH
 
-- 访问
-
-Running on [http://127.0.0.1:5000](http://127.0.0.1:5000)
+- 访问 [http://127.0.0.1:5001](http://127.0.0.1:5001)
 
 ### FAQ
 
