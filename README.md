@@ -1,63 +1,41 @@
 # emby-metadata
 
-## 安装模块
+## 安装依赖
 
 ```shell
-pip install flask
-pip install tqdm
-pip install beautifulsoup4
-pip install urllib3
-pip install pysocks
+python.exe -m pip install --upgrade pip
+pip install -r requirements.txt
 ```
 
-## BeautifulSoup
+> BeautifulSoup: html解析，[文档](https://www.crummy.com/software/BeautifulSoup/bs4/doc.zh/) 
 
-- 文档 https://www.crummy.com/software/BeautifulSoup/bs4/doc.zh/
+> tqdm: 进度条
 
-## Flask
+## 运行flask
 
-### 编写flask应用
-
-- 新建app.py
-
-```python
-from flask import Flask
-
-app = Flask(__name__)
-
-@app.route("/")
-def index():
-    return "<p>Hello, World!</p>"
-```
-
-- 编写index.html
-
-```html
-
-```
-
-### 运行flask应用
-
-- Terminal运行
+### Terminal运行
 
 ```shell
 python -m flask run --port=5001
 ```
 
-- 配置Flask服务 Configuration
-    - Target type: Custom
-    - Target: app.py
-    - Application: app
-    - Additional options: --port=5001
-    - FLASK_ENV: development
-    - Environment
-        - Python interpreter: Project Default
-        - Add content roots to PYTHONPATH
-        - Add source roots to PYTHONPATH
+### 配置Flask服务 Configuration
 
-- 访问 [http://127.0.0.1:5001](http://127.0.0.1:5001)
+- Target type: Custom
+- Target: app.py
+- Application: app
+- Additional options: --port=5001
+- FLASK_ENV: development
+- Environment
+    - Python interpreter: Project Default
+    - Add content roots to PYTHONPATH
+    - Add source roots to PYTHONPATH
 
-### FAQ
+## 访问app
+
+[http://127.0.0.1:5001](http://127.0.0.1:5001)
+
+## FAQ
 
 - 无法加载文件 \venv\Scripts\activate.ps1，因为在此系统上禁止运行脚本。
 
@@ -91,3 +69,9 @@ PS C:\WINDOWS\system32>
 
 > 5000: 被igccservice Intel(R) Graphics Command Center Service占用
 > 6000: 禁止使用
+
+- 下载提示 `certificate verify failed: unable to get local issuer certificate`
+
+```shell
+pip install pyopenssl
+```

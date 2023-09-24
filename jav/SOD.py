@@ -4,14 +4,9 @@ import base64
 import os
 
 from bs4 import BeautifulSoup
-from urllib3.contrib.socks import SOCKSProxyManager
-
-proxy = SOCKSProxyManager('socks5h://192.168.50.254:1080/')
+from utils.http_util import proxy
 
 site_url = 'https://ec.sod.co.jp/'
-
-# 添加referer 绕过 Amazon CloudFront 图片防盗链
-cloud_front_header = {'referer': 'https://ec.sod.co.jp/'}
 
 
 class SOD(object):
@@ -70,15 +65,19 @@ class SOD(object):
         return self.movie_ext
 
     def download_poster(self):
-        r = proxy.request('GET', self.poster_url, headers=cloud_front_header)
+        # 不加referer，图片下载失败
+        header = {'referer': 'https://ec.sod.co.jp/'}
+        r = proxy.request('GET', self.poster_url, headers=header)
         return r.data
 
     def download_fanart(self):
-        r = proxy.request('GET', self.fanart_url, headers=cloud_front_header)
+        header = {'referer': 'https://ec.sod.co.jp/'}
+        r = proxy.request('GET', self.fanart_url, headers=header)
         return r.data
 
     def download_movie(self):
-        r = proxy.request('GET', self.movie_url, headers=cloud_front_header)
+        header = {'referer': 'https://ec.sod.co.jp/'}
+        r = proxy.request('GET', self.movie_url, headers=header)
         return r.data
 
 
@@ -104,7 +103,8 @@ def base64_image(image_url):
     image_name = os.path.basename(image_url)
     image_ext = os.path.splitext(image_name)[1]
 
-    poster_r = proxy.request('GET', image_url, headers=cloud_front_header)
+    header = {'referer': 'https://ec.sod.co.jp/'}
+    poster_r = proxy.request('GET', image_url, headers=header)
     encoded_bytes = base64.b64encode(poster_r.data)
     encoded_str = encoded_bytes.decode('utf-8')
     return 'data:image/' + image_ext.lstrip('.') + ';base64,' + encoded_str
@@ -114,7 +114,8 @@ def base64_video(video_url):
     video_name = os.path.basename(video_url)
     video_ext = os.path.splitext(video_name)[1]
 
-    poster_r = proxy.request('GET', video_url, headers=cloud_front_header)
+    header = {'referer': 'https://ec.sod.co.jp/'}
+    poster_r = proxy.request('GET', video_url, headers=header)
     encoded_bytes = base64.b64encode(poster_r.data)
     encoded_str = encoded_bytes.decode('utf-8')
     return 'data:video/' + video_ext.lstrip('.') + ';base64,' + encoded_str

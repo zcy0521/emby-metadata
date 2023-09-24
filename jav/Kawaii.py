@@ -3,7 +3,6 @@
 import os
 
 from bs4 import BeautifulSoup
-
 from jav import FANZA
 from utils import http_util
 
@@ -73,15 +72,16 @@ class Kawaii(object):
     def download_movie(self):
         return http_util.download(self.movie_url)
 
-
 if __name__ == '__main__':
-    # https://kawaiikawaii.jp/search/list?keyword=CAWD243
-    faleno = Kawaii('CAWD-243')
+    # https://kawaiikawaii.jp/search/list?keyword=CAWD426
+    kawaii = Kawaii('CAWD-426')
 
-    print(faleno.get_poster_url())
-    print(faleno.get_fanart_url())
-    print(faleno.get_movie_url())
+    print(kawaii.get_poster_url())
+    print(kawaii.get_fanart_url())
+    print(kawaii.get_movie_url())
 
-    print(faleno.get_poster_ext())
-    print(faleno.get_fanart_ext())
-    print(faleno.get_movie_ext())
+    print(kawaii.get_poster_ext())
+    print(kawaii.get_fanart_ext())
+    print(kawaii.get_movie_ext())
+
+    kawaii.download_poster()

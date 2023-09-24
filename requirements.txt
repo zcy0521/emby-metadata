@@ -1,0 +1,6 @@
+flask
+beautifulsoup4
+urllib3
+urllib3[socks]
+tqdm
+pyopenssl

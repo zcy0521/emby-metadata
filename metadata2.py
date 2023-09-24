@@ -80,7 +80,7 @@ def get_jav(dirname):
 
 
 if __name__ == '__main__':
-    folder_path = 'D:\\Media\\NSFW\\花狩まい'
+    folder_path = 'E:\\Media\\NSFW\\花狩まい'
 
     # 删除文件夹中现有图片
     for (dirpath, dirnames, filenames) in os.walk(folder_path):

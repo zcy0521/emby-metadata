@@ -1,5 +1,6 @@
 #!/usr/bin/envpython3
 # -*-coding:utf-8-*-
+import urllib3
 from urllib3.contrib.socks import SOCKSProxyManager
 
 # https://urllib3.readthedocs.io/en/stable/advanced-usage.html#socks-proxies
