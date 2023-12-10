@@ -17,7 +17,7 @@ class_dict = {
     'Das': {'DASD', 'DASS'},
     'SOD': {'AVOP', 'HBAD', 'HYPN', 'IESP', 'OKS', 'SDDE', 'SDEN', 'SDMF', 'SDMU', 'SDNM', 'SDNT', 'SDSI', 'SSHN', 'STAR', 'STARS', '3DSVR', 'KMHRS'},
     'NaturalHigh': {'NHDTB', 'SHN'},
-    'MGS': {'SIRO', '001HMNF', '020GVG', '039NEO', '169MDTM', '179BAZX', '200GANA', '230ORE', '249OKS', '259LUXU', '263NACR', '276KITAIKE', '277DCV', '290JBJB', '300MAAN', '300MIUM', '300NTK', '302GERK', '315ETQR', '345SIMM', '348NTR', '390JAC', '390JNT', '402MNTJ', '435MFC', '459TEN', '483SGK'},
+    'MGS': {'SIRO', '001HMNF', '020GVG', '039NEO', '169MDTM', '179BAZX', '200GANA', '230ORE', '249OKS', '259LUXU', '263NACR', '276KITAIKE', '277DCV', '290JBJB', '300MAAN', '300MIUM', '300NTK', '302GERK', '315ETQR', '345SIMM', '348NTR', '390JAC', '390JNT', '402MNTJ', '413INST', '435MFC', '459TEN', '483SGK'},
     'Prestige': {'ABS', 'ABP', 'ABW', 'AOI', 'DOM', 'EDD', 'INU', 'JBS', 'JOB', 'PPT', 'SGA', 'WAT', 'YRH'},
     'AliceJapan': {},
     'Dogma': {},
@@ -80,7 +80,7 @@ def get_jav(dirname):
 
 
 if __name__ == '__main__':
-    folder_path = 'E:\\Media\\NSFW\\花狩まい'
+    folder_path = 'Z:\\'
 
     # 删除文件夹中现有图片
     for (dirpath, dirnames, filenames) in os.walk(folder_path):

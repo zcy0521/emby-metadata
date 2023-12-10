@@ -156,7 +156,7 @@ if __name__ == '__main__':
     # https://www.mgstage.com/product/product_detail/259LUXU-1033/
     # mgs = MGS('SIRO-4989')
     # mgs = MGS('200GANA-2789')
-    mgs = MGS('259LUXU-1033')
+    mgs = MGS('413INST-168')
 
     print(mgs.get_poster_url())
     print(mgs.get_fanart_url())
