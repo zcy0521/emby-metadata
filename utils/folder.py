@@ -2,6 +2,7 @@
 # -*-coding:utf-8-*-
 import mimetypes
 import os
+import shutil
 from distutils.file_util import move_file
 from pathlib import Path
 
@@ -46,6 +47,36 @@ def is_video(file):
     return False
 
 
+def clear_qnap(folder_path):
+    for (dirpath, dirnames, filenames) in os.walk(folder_path):
+        # 删除@eaDir目录
+        for dirname in dirnames:
+            eaDir_folder = os.path.join(dirpath, dirname, '@eaDir')
+            if os.path.exists(eaDir_folder):
+                shutil.rmtree(eaDir_folder)
+
+        # 删除Thumbs.db文件
+        for filename in filenames:
+            if filename == 'Thumbs.db':
+                file = os.path.join(dirpath, filename)
+                os.remove(file)
+
+
+def clear_synology(folder_path):
+    for (dirpath, dirnames, filenames) in os.walk(folder_path):
+        # 删除thumb_folder目录
+        for dirname in dirnames:
+            thumb_folder = os.path.join(dirpath, dirname, '.@__thumb')
+            if os.path.exists(thumb_folder):
+                shutil.rmtree(thumb_folder)
+
+
 if __name__ == '__main__':
     # 整理 STARS-094 - Chinese.mp4
-    format_folder('Z:\\')
+    clear_qnap('J:\\')
+    clear_qnap('K:\\')
+    clear_qnap('L:\\')
+    clear_qnap('M:\\')
+    clear_qnap('N:\\')
+
+    clear_synology('O:\\')
