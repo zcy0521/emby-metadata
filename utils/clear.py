@@ -36,5 +36,5 @@ if __name__ == '__main__':
     clear_qnap('M:\\')
     clear_qnap('N:\\')
 
-    # 清理
+    # 清理 thumb_folder
     clear_synology('O:\\')
