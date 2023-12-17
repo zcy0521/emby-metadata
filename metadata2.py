@@ -80,7 +80,7 @@ def get_jav(dirname):
 
 
 if __name__ == '__main__':
-    folder_path = 'Z:\\'
+    folder_path = 'D:\\Downloads'
 
     # 删除文件夹中现有图片
     for (dirpath, dirnames, filenames) in os.walk(folder_path):
