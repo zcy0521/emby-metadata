@@ -3,7 +3,8 @@
 
 
 class Dogma(object):
-    site_url = 'http://www.dogma.co.jp/'
+    # 官网
+    SITE_URL = 'http://www.dogma.co.jp/'
 
 
 if __name__ == '__main__':

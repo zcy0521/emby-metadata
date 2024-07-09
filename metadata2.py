@@ -5,49 +5,53 @@ import shutil
 
 from tqdm import tqdm
 
+from utils import http_util
+
 class_dict = {
-    'FANZA': {'GAID', 'FMDL', 'JUKF', 'MADV', 'REXD', 'SQTE', 'KSJK'},
-    'MOODYZ': {'MIDD', 'MIDE', 'MIDV', 'MIMK', 'MIAA'},
-    'IdeaPocket': {'IPZ', 'IPZZ', 'IPX', 'IPIT', 'IPTD', 'IDBD', 'SUPD'},
-    'S1S1S1': {'SNIS', 'SSNI', 'SSIS', 'OFJE', 'SIVR'},
-    'PREMIUM': {'PRED'},
-    'Madonna': {'JUY', 'JUQ', 'JUL'},
-    'TameikeGoro': {'MBYD', 'MEYD', 'PFES'},
-    'Attackers': {'ADN', 'ATID', 'ATKD', 'RBD', 'RBK', 'SHKD', 'SSPD', 'YUJ'},
-    'Das': {'DASD', 'DASS'},
-    'SOD': {'AVOP', 'HBAD', 'HYPN', 'IESP', 'OKS', 'SDDE', 'SDEN', 'SDMF', 'SDMU', 'SDNM', 'SDNT', 'SDSI', 'SSHN', 'STAR', 'STARS', '3DSVR', 'KMHRS'},
-    'NaturalHigh': {'NHDTB', 'SHN'},
-    'MGS': {'SIRO', '001HMNF', '020GVG', '039NEO', '169MDTM', '179BAZX', '200GANA', '230ORE', '249OKS', '259LUXU', '263NACR', '276KITAIKE', '277DCV', '290JBJB', '300MAAN', '300MIUM', '300NTK', '302GERK', '315ETQR', '345SIMM', '348NTR', '390JAC', '390JNT', '402MNTJ', '413INST', '435MFC', '459TEN', '483SGK'},
-    'Prestige': {'ABS', 'ABP', 'ABW', 'AOI', 'DOM', 'EDD', 'INU', 'JBS', 'JOB', 'PPT', 'SGA', 'WAT', 'YRH'},
     'AliceJapan': {},
-    'Dogma': {},
-    'HHH': {'AP', 'HUNTA', 'OYC'},
-    'HMP': {'HODV'},
-    'MaxA': {},
-    'Momotaro': {},
-    'Mousouzoku': {'BIJN', 'GMEM', 'USBA'},
-    'KMP': {'MDTM', 'REAL'},
-    'TMA': {'25ID', 'AOZ'},
-    'Tsumabana': {'HZGD'},
-    'Shark': {'JBJB', 'MACB'},
-    'Planetplus': {'NACR'},
-    'WANZ': {'WANZ', 'WAAA'},
-    'TAKARA': {'CEMN'},
-    'BECKAKU': {'BKKG'},
-    'CASANOVA': {'CAFR', 'CAMI'},
-    'FALENO': {'FSDSS'},
-    'Kawaii': {'CAWD'},
-    'OPPAI': {'PPPE'},
+    'Attackers': {'ADN', 'ATID', 'ATKD', 'RBD', 'RBK', 'SHKD', 'SSPD', 'YUJ'},
+    'AuroraProject': {'APAA', 'APAK', 'APGH', 'APNS'},
+    'Beckaku': {'BKKG'},
     'BeFree': {'BF'},
-    'KiraKira': {'BLK'},
-    'AURORA': {'APAA', 'APAK', 'APGH', 'APNS'},
-    'Hakusuiriki': {'CEAD', 'CEMD'},
+    'Casanova': {'CAFR', 'CAMI'},
+    'CrystalEizou': {},
+    'DasDas': {'DASD', 'DASS'},
     'Deeps': {'DVRT'},
-    'EBODY': {'EYAN'},
+    'Dogma': {},
+    'EBody': {'EYAN'},
+    'Faleno': {'FSDSS'},
+    'Fanza': {'AP', 'GAID', 'FMDL', 'JUKF', 'KSJK', 'MADV', 'REXD', 'SQTE', 'OYC'},
     'GloryQuest': {'GVH'},
+    'Hakusuiriki': {'CEAD', 'CEMD'},
+    'HHH': {'HUNTA'},
+    'HMP': {'HODV'},
+    'IdeaPocket': {'IPX', 'IPZ', 'IPZZ', 'IDBD', 'IPIT', 'IPTD', 'SUPD'},
+    'Kawaii': {'CAWD'},
+    'KiraKira': {'BLK'},
+    'KMP': {'MDTM', 'REAL'},
+    'Madonna': {'JUL', 'JUQ', 'JUY'},
+    'MaxA': {},
+    'MGS': {'SIRO', '001HMNF', '020GVG', '039NEO', '169MDTM', '179BAZX', '200GANA', '230ORE', '249OKS', '259LUXU', '263NACR', '276KITAIKE', '277DCV', '290JBJB', '300MAAN', '300MIUM', '300NTK', '302GERK', '315ETQR', '345SIMM', '348NTR', '390JAC', '390JNT', '402MNTJ', '413INST', '435MFC', '459TEN', '483SGK'},
     'MkoLabo': {'MISM'},
+    'Momotaro': {},
+    'MOODYZ': {'MIAA', 'MIDD', 'MIDE', 'MIDV', 'MIMK'},
+    'Mousouzoku': {'BIJN', 'GMEM', 'USBA'},
     'Muku': {'MUDR', 'MUKC'},
     'Mvg': {'MVSD'},
+    'NaturalHigh': {'NHDTB', 'SHN'},
+    'OPPAI': {'PPPE'},
+    'Planetplus': {'NACR'},
+    'PREMIUM': {'PRED'},
+    'Prestige': {'ABS', 'ABP', 'ABW', 'AOI', 'DOM', 'EDD', 'INU', 'JBS', 'JOB', 'PPT', 'SGA', 'WAT', 'YRH'},
+    'S1S1S1': {'SNIS', 'SSNI', 'SSIS', 'OFJE', 'SIVR'},
+    'Shark': {'JBJB', 'MACB'},
+    # SOD Prime 无法访问，通过FANZA、MGS查询
+    # 'SOD': {'AVOP', 'HBAD', 'HYPN', 'IESP', 'KMHRS', 'OKS', 'SDDE', 'SDEN', 'SDMF', 'SDMU', 'SDNM', 'SDNT', 'SDSI', 'SSHN', 'STAR', 'STARS', '3DSVR'},
+    'TAKARA': {'CEMN'},
+    'TameikeGoro': {'MBYD', 'MEYD', 'PFES'},
+    'TMA': {'25ID', 'AOZ'},
+    'Tsumabana': {'HZGD'},
+    'WANZ': {'WANZ', 'WAAA'},
 }
 
 
@@ -80,7 +84,7 @@ def get_jav(dirname):
 
 
 if __name__ == '__main__':
-    folder_path = 'D:\\Downloads'
+    folder_path = 'Z:\\4K'
 
     # 删除文件夹中现有图片
     for (dirpath, dirnames, filenames) in os.walk(folder_path):
@@ -103,31 +107,37 @@ if __name__ == '__main__':
             if jav is None:
                 continue
 
-            # 保存poster
-            poster_bytes = jav.download_poster()
-            poster_ext = jav.get_poster_ext()
+            # 保存封面
+            poster_url = jav.get_poster_url()
+            poster_bytes = http_util.download(poster_url)
             if poster_bytes is not None:
+                poster_name = os.path.basename(poster_url)
+                poster_ext = os.path.splitext(poster_name)[1]
                 poster_path = os.path.join(dirpath, dirname, 'poster' + poster_ext)
                 with open(poster_path, 'wb') as f:
                     f.write(poster_bytes)
 
-            # 保存fanart
-            fanart_bytes = jav.download_fanart()
-            fanart_ext = jav.get_fanart_ext()
-            if fanart_bytes is not None:
-                fanart_path = os.path.join(dirpath, dirname, 'fanart' + fanart_ext)
-                with open(fanart_path, 'wb') as f:
-                    f.write(fanart_bytes)
+            # 保存背景图 支持多张
+            backdrop_url = jav.get_backdrop_url()
+            backdrop_bytes = http_util.download(backdrop_url)
+            if backdrop_bytes is not None:
+                backdrop_name = os.path.basename(backdrop_url)
+                backdrop_ext = os.path.splitext(backdrop_name)[1]
+                backdrop_path = os.path.join(dirpath, dirname, 'backdrop' + backdrop_ext)
+                with open(backdrop_path, 'wb') as f:
+                    f.write(backdrop_bytes)
 
-            # 保存movie
-            movie_bytes = jav.download_movie()
-            movie_ext = jav.get_movie_ext()
-            if movie_bytes is not None:
+            # 保存预告片
+            trailer_url = jav.get_trailer_url()
+            trailer_bytes = http_util.download(trailer_url)
+            if trailer_bytes is not None:
                 # 创建预告片目录
-                movie_folder = os.path.join(dirpath, dirname,'trailers')
-                if not os.path.exists(movie_folder):
-                    os.makedirs(movie_folder)
+                trailer_folder = os.path.join(dirpath, dirname,'trailers')
+                if not os.path.exists(trailer_folder):
+                    os.makedirs(trailer_folder)
                 # 保存预告片
-                movie_path = os.path.join(movie_folder, dirname + movie_ext)
-                with open(movie_path, 'wb') as f:
-                    f.write(movie_bytes)
+                trailer_name = os.path.basename(trailer_url)
+                trailer_ext = os.path.splitext(trailer_name)[1]
+                trailer_path = os.path.join(dirpath, dirname, 'trailers', 'trailer' + trailer_ext)
+                with open(trailer_path, 'wb') as f:
+                    f.write(trailer_bytes)

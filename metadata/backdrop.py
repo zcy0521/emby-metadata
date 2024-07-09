@@ -7,7 +7,7 @@ from PIL import Image
 
 from utils.http_util import get
 
-fanarts = {
+backdrops = {
     # ATTACKERS https://www.attackers.net
     'ADN': 'https://www.attackers.net/contents/works/adn{item}/adn{item}-pl.jpg',
     'ATID': 'https://www.attackers.net/contents/works/atid{item}/atid{item}-pl.jpg',
@@ -197,12 +197,12 @@ fanarts = {
 }
 
 
-def download_fanart(video_number):
+def download_backdrop(video_number):
     (series, item) = video_number.split('-', 1)
-    if series not in fanarts:
+    if series not in backdrops:
         return None
 
-    fanart_url = fanarts[series].format(item=item)
+    fanart_url = backdrops[series].format(item=item)
     if fanart_url is None:
         print('Video %s fanart_url is None'.format(video_number))
         return None
@@ -212,7 +212,7 @@ def download_fanart(video_number):
 
 
 if __name__ == '__main__':
-    fanart_bytes = download_fanart('SKYHD-120')
+    fanart_bytes = download_backdrop('SKYHD-120')
     if fanart_bytes is not None:
         image = Image.open(BytesIO(fanart_bytes))
         image.show()

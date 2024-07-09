@@ -3,7 +3,7 @@
 import os
 import sys
 
-from metadata.fanart import download_fanart
+from metadata.backdrop import download_fanart
 from metadata.poster import download_poster
 from utils.folder import format_folder, series_not_in, get_video_no
 

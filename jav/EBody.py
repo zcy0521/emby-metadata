@@ -6,16 +6,16 @@ from jav.Fanza import Fanza
 from utils import http_util
 
 
-class MkoLabo(object):
-    # えむっ娘ラボ 官网
-    SITE_URL = 'https://mko-labo.net/'
-    SEARCH_URL = 'https://mko-labo.net/search/list?keyword={video_no}'
+class EBody(object):
+    # 官网
+    SITE_URL = 'https://av-e-body.com/'
+    SEARCH_URL = 'https://av-e-body.com/search/list?keyword={video_no}'
 
     def __init__(self, video_no):
         self.video_no = video_no
 
         # 搜索列表
-        list_url = MkoLabo.SEARCH_URL.format(video_no=video_no.replace('-', ''))
+        list_url = EBody.SEARCH_URL.format(video_no=video_no.replace('-', ''))
         list_html = http_util.get(list_url)
         self.list_soup = BeautifulSoup(list_html, features="html.parser")
 
@@ -36,8 +36,8 @@ class MkoLabo(object):
 
 
 if __name__ == '__main__':
-    # https://mko-labo.net/search/list?keyword=MISM248
-    mak_labo = MkoLabo('MISM-248')
-    print(mak_labo.get_poster_url())
-    print(mak_labo.get_backdrop_url())
-    print(mak_labo.get_trailer_url())
+    # https://av-e-body.com/search/list?keyword=EYAN157
+    ebody = EBody('EYAN-157')
+    print(ebody.get_poster_url())
+    print(ebody.get_backdrop_url())
+    print(ebody.get_trailer_url())

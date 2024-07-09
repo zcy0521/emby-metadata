@@ -4,7 +4,7 @@ import urllib3
 from urllib3.contrib.socks import SOCKSProxyManager
 
 # https://urllib3.readthedocs.io/en/stable/advanced-usage.html#socks-proxies
-proxy = SOCKSProxyManager('socks5h://192.168.50.12:1080/')
+proxy = SOCKSProxyManager('socks5h://127.0.0.1:10800/')
 
 
 def get(url, headers=None, redirect=True, *, charset='utf8'):

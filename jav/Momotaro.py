@@ -3,7 +3,8 @@
 
 
 class Momotaro(object):
-    site_url = 'https://www.indies-av.co.jp/'
+    # 官网
+    SITE_URL = 'https://www.indies-av.co.jp/'
 
 
 if __name__ == '__main__':

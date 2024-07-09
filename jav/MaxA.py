@@ -3,7 +3,8 @@
 
 
 class MaxA(object):
-    site_url = 'https://www.max-a.co.jp/'
+    # 官网
+    SITE_URL = 'https://www.max-a.co.jp/'
 
 
 if __name__ == '__main__':

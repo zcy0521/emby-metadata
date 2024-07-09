@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 
 import metadata2
-from jav import FANZA, SOD, Prestige, MGS
+from jav import Fanza, SOD, Prestige, MGS
 
 app = Flask(__name__)
 
@@ -68,11 +68,11 @@ def fanza():
     series = request.args.get('series')
 
     if actress is not None and actress:
-        videos = FANZA.search_actress(actress)
+        videos = Fanza.search_actress(actress)
         print('查询完成')
         return render_template('fanza.html', actress=actress, videos=videos)
     elif series is not None and series:
-        videos = FANZA.search_series(series)
+        videos = Fanza.search_series(series)
         print('查询完成')
         return render_template('fanza.html', series=series, videos=videos)
 

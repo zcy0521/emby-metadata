@@ -1,155 +1,114 @@
 #!/usr/bin/envpython3
 # -*-coding:utf-8-*-
 import json
-import os
 
 from bs4 import BeautifulSoup
 
 from utils import http_util
 
-site_url = 'https://www.mgstage.com/'
-
-# 年龄检查cookie
-age_check_headers = {'Cookie': 'adc=1'}
-
 
 class MGS(object):
+    # 官网
+    SITE_URL = 'https://www.mgstage.com'
+    DETAIL_URL = 'https://www.mgstage.com/product/product_detail/{video_no}/'
+    VIDEO_URL = 'https://www.mgstage.com/sampleplayer/sampleRespons.php?pid={token}'
+
+    # 年龄检查cookie
+    AGE_CHECK_HEADERS = {'Cookie': 'adc=1'}
+
     def __init__(self, video_no):
-        # 番号
         self.video_no = video_no
 
         # 详情页
-        self.detail_url = 'https://www.mgstage.com/product/product_detail/{video_no}/'.format(video_no=video_no)
-        detail_html = http_util.get(self.detail_url, age_check_headers)
-        detail_soup = BeautifulSoup(detail_html, features="html.parser")
-
-        # fanart
-        self.fanart_url = detail_soup.find('div', class_="detail_data").find('a', class_='link_magnify')['href']
-        self.fanart_name = os.path.basename(self.fanart_url)
-        self.fanart_ext = os.path.splitext(self.fanart_name)[1]
-
-        # poster
-        self.poster_url = self.fanart_url.replace('pb', 'pf')
-        self.poster_name = os.path.basename(self.poster_url)
-        self.poster_ext = os.path.splitext(self.poster_name)[1]
-
-        # movie
-        self.movie_url = get_movie_url(detail_soup)
-        self.movie_name = os.path.basename(self.movie_url)
-        self.movie_ext = os.path.splitext(self.movie_name)[1]
-
-    def get_video_no(self):
-        return self.video_no
-
-    def get_detail_url(self):
-        return self.detail_url
+        detail_url = MGS.DETAIL_URL.format(video_no=video_no)
+        detail_html = http_util.get(detail_url, MGS.AGE_CHECK_HEADERS)
+        self.detail_soup = BeautifulSoup(detail_html, features="html.parser")
 
     def get_poster_url(self):
-        return self.poster_url
+        return self.get_backdrop_url().replace('pb', 'pf')
 
-    def get_fanart_url(self):
-        return self.fanart_url
+    def get_backdrop_url(self):
+        return self.detail_soup.find('div', class_="detail_data").find('a', class_='link_magnify')['href']
 
-    def get_movie_url(self):
-        return self.movie_url
+    def get_trailer_url(self):
+        return MGS.get_video_url(self.detail_soup)
 
-    def get_poster_ext(self):
-        return self.poster_ext
+    @classmethod
+    def get_video_url(cls, detail_soup):
+        token = detail_soup.find('div', class_="detail_data").find('a', class_='button_sample')['href'].split('/sampleplayer/sampleplayer.html/')[1]
+        video_url = cls.VIDEO_URL.format(token=token)
+        video_html = http_util.get(video_url, cls.AGE_CHECK_HEADERS)
+        video_json = json.loads(video_html)
+        return video_json['url'].split('.ism')[0] + '.mp4'
 
-    def get_fanart_ext(self):
-        return self.fanart_ext
-
-    def get_movie_ext(self):
-        return self.movie_ext
-
-    def download_poster(self):
-        return http_util.download(self.poster_url)
-
-    def download_fanart(self):
-        return http_util.download(self.fanart_url)
-
-    def download_movie(self):
-        return http_util.download(self.movie_url)
-
-
-def get_movie_url(detail_soup):
-    sample_token = detail_soup.find('div', class_="detail_data").find('a', class_='button_sample')['href'].split(
-        '/sampleplayer/sampleplayer.html/')[1]
-
-    sample_url = 'https://www.mgstage.com/sampleplayer/sampleRespons.php?pid={token}'.format(token=sample_token)
-    sample_html = http_util.get(sample_url, age_check_headers)
-    sample_json = json.loads(sample_html)
-    return sample_json['url'].split('.ism')[0] + '.mp4'
-
-
-def search_actress(video_no):
-    detail_url = 'https://www.mgstage.com/product/product_detail/{video_no}/'.format(video_no=video_no)
-    detail_html = http_util.get(detail_url, age_check_headers)
-    detail_soup = BeautifulSoup(detail_html, features="html.parser")
-
-    # actress
-    actress_td = detail_soup.body.find(text='出演：').parent.find_next_sibling('td')
-    if actress_td is None:
-        videos = []
-        return videos
-
-    actress_url = actress_td.find('a')['href']
-    return search_videos(actress_url)
-
-
-def search_series(video_no):
-    detail_url = 'https://www.prestige-av.com/goods/goods_detail.php?sku={video_no}'.format(video_no=video_no)
-    detail_html = http_util.get(detail_url, age_check_headers)
-    detail_soup = BeautifulSoup(detail_html, features="html.parser")
-
-    # series_p
-    series_a = detail_soup.body.find(text='メーカー：').parent.find_next_sibling('td')
-    if series_a is None:
-        videos = []
-        return videos
-
-    series_url = series_a['href']
-    return search_videos(series_url)
-
-
-def search_videos(search_url):
-    search_url = site_url.rstrip('/') + search_url + '&sort=new&list_cnt=120'
-    search_html = http_util.get(search_url, headers=age_check_headers)
-    search_soup = BeautifulSoup(search_html, 'html.parser')
-
-    li_list = search_soup.find('div', class_='search_list').find('ul').find_all('li')
-    print('video数量: ' + str(len(li_list)))
-
-    # 查询video列表
-    videos = []
-    for li in reversed(li_list):
-        # detail
-        detail_url = site_url.rstrip('/') + li.find('a')['href']
-        print(detail_url)
-        detail_html = http_util.get(detail_url, age_check_headers)
+    @classmethod
+    def search_actress(cls, video_no):
+        detail_url = cls.DETAIL_URL.format(video_no=video_no)
+        detail_html = http_util.get(detail_url, cls.AGE_CHECK_HEADERS)
         detail_soup = BeautifulSoup(detail_html, features="html.parser")
 
-        # video_no
-        video_no = detail_url.split('product_detail/')[1].lstrip('/')
-        print('(' + video_no + ')[' + detail_url + ']')
+        # actress
+        actress_td = detail_soup.body.find(text='出演：').parent.find_next_sibling('td')
+        if actress_td is None:
+            videos = []
+            return videos
 
-        # fanart
-        fanart_url = detail_soup.find('div', class_="detail_data").find('a', class_='link_magnify')['href']
-        print(fanart_url)
+        actress_url = actress_td.find('a')['href']
+        return cls.search_items(actress_url)
 
-        # poster
-        poster_url = fanart_url.replace('pb', 'pf')
-        print(poster_url)
+    @classmethod
+    def search_series(cls, video_no):
+        detail_url = cls.DETAIL_URL.format(video_no=video_no)
+        detail_html = http_util.get(detail_url, cls.AGE_CHECK_HEADERS)
+        detail_soup = BeautifulSoup(detail_html, features="html.parser")
 
-        # movie
-        movie_url = get_movie_url(detail_soup)
-        print(movie_url)
+        # series_p
+        series_a = detail_soup.body.find(text='メーカー：').parent.find_next_sibling('td')
+        if series_a is None:
+            videos = []
+            return videos
 
-        video = {'number': video_no, 'url': detail_url,
-                 'poster_url': poster_url, 'fanart_url': fanart_url, 'movie_url': movie_url}
-        videos.append(video)
+        series_url = series_a['href']
+        return cls.search_items(series_url)
 
-    return videos
+    @classmethod
+    def search_items(cls, search_url):
+        search_url = cls.SITE_URL + search_url + '&sort=new&list_cnt=120'
+        search_html = http_util.get(search_url, headers=cls.AGE_CHECK_HEADERS)
+        search_soup = BeautifulSoup(search_html, 'html.parser')
+
+        li_list = search_soup.find('div', class_='search_list').find('ul').find_all('li')
+        print('video数量: ' + str(len(li_list)))
+
+        # 查询video列表
+        videos = []
+        for li in reversed(li_list):
+            # detail
+            detail_url = cls.SITE_URL + li.find('a')['href']
+            print(detail_url)
+            detail_html = http_util.get(detail_url, cls.AGE_CHECK_HEADERS)
+            detail_soup = BeautifulSoup(detail_html, features="html.parser")
+
+            # video_no
+            video_no = detail_url.split('product_detail/')[1].lstrip('/')
+            print('(' + video_no + ')[' + detail_url + ']')
+
+            # backdrop
+            backdrop_url = detail_soup.find('div', class_="detail_data").find('a', class_='link_magnify')['href']
+            print(backdrop_url)
+
+            # poster
+            poster_url = backdrop_url.replace('pb', 'pf')
+            print(poster_url)
+
+            # trailer
+            trailer_url = cls.get_video_url(detail_soup)
+            print(trailer_url)
+
+            video = {'number': video_no, 'url': detail_url, 'poster_url': poster_url, 'backdrop_url': backdrop_url, 'trailer_url': trailer_url}
+            videos.append(video)
+
+        return videos
 
 
 if __name__ == '__main__':
@@ -157,11 +116,12 @@ if __name__ == '__main__':
     # mgs = MGS('SIRO-4989')
     # mgs = MGS('200GANA-2789')
     mgs = MGS('413INST-168')
-
     print(mgs.get_poster_url())
-    print(mgs.get_fanart_url())
-    print(mgs.get_movie_url())
+    print(mgs.get_backdrop_url())
+    print(mgs.get_trailer_url())
 
-    print(mgs.get_poster_ext())
-    print(mgs.get_fanart_ext())
-    print(mgs.get_movie_ext())
+    # https://www.mgstage.com/product/product_detail/107STARS-212
+    sod = MGS('107STARS-212')
+    print(sod.get_poster_url())
+    print(sod.get_backdrop_url())
+    print(sod.get_trailer_url())
