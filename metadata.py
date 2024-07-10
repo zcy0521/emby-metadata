@@ -3,9 +3,7 @@
 import os
 import sys
 
-import backdrop
-import poster
-from utils import folder
+from utils import folder, backdrop, poster
 
 if __name__ == '__main__':
     # 输入待整理文件夹与下载代理
