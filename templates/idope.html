@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>movie</title>
+    <title>iDope.se</title>
     <style>
         .title {
             margin-bottom: 20px;
@@ -18,7 +18,7 @@
 
         .container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(720px, 720px));
+            grid-template-columns: repeat(auto-fit, minmax(400px, 400px));
             grid-row-gap: 5px;
             grid-column-gap: 10px;
         }
@@ -27,14 +27,13 @@
             position: relative;
             display: inline-block;
             overflow: hidden;
-            height: 500px;
         }
 
-        .item video {
-            width: 720px;
+        .item img {
+            width: 400px;
         }
 
-        .item a span {
+        .item span {
             position: absolute;
             width: 100%;
             top: 0;
@@ -43,30 +42,18 @@
             color: #fff;
             text-align: center
         }
-
-        .item a img {
-            position:absolute;
-            display:none;
-            width: 100%;
-            top: 0;
-            left: 0;
-        }
-
-        .item a:hover img {
-            display:block;
-        }
     </style>
 </head>
 <body>
 
 <div class="title">
-    <h2>视频</h2>
+    <h2>磁力连接</h2>
     <a href="/">首页</a>
-    <a href="/movie">清空</a>
+    <a href="/idope">清空</a>
 </div>
 
 <div class="search">
-    <form action="/movie" method="get">
+    <form action="/idope" method="get">
         <label for="video_no">番号</label>
         <input id="video_no" name="video_no" value="{{ video_no }}">
         <button type="submit">查询</button>
@@ -74,18 +61,12 @@
 </div>
 
 <div>
-{% if not videos %}
+{% if not items %}
     Empty
 {% else %}
     <ul class="container">
-    {% for video in videos %}
-        <li class="item">
-            <video src="{{ video['movie_url'] }}" controls onloadstart="this.volume=0.1"></video>
-            <a target="_blank" href="{{ video['url'] }}">
-                <span style="">{{ video['number'] }}</span>
-                <img src="{{ video['fanart_url'] }}" alt="{{ video['number'] }}">
-            </a>
-        </li>
+    {% for item in items %}
+        <li class="item">...</li>
     {% endfor %}
     </ul>
 {% endif %}

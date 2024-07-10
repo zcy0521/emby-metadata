@@ -102,7 +102,7 @@ if __name__ == '__main__':
 
     # 按文件夹整理
     for (dirpath, dirnames, filenames) in os.walk(folder_path):
-        for dirname in tqdm(dirnames):
+        for dirname in dirnames:
             jav = get_jav(dirname)
             if jav is None:
                 continue

@@ -5,7 +5,7 @@ from io import BytesIO
 
 from PIL import Image
 
-from utils.http_util import get
+from utils import http_util
 
 posters = {
     # ATTACKERS https://www.attackers.net
@@ -124,6 +124,7 @@ posters = {
     'BLO': 'https://image.mgstage.com/images/prestige/blo/{item}/pf_o1_blo-{item}.jpg',
     'CHN': 'https://image.mgstage.com/images/prestige/chn/{item}/pf_o1_chn-{item}.jpg',
     'EVO': 'https://image.mgstage.com/images/prestige/evo/{item}/pf_o1_evo-{item}.jpg',
+    'INU': 'https://image.mgstage.com/images/prestige/inu/{item}/pf_o1_inu-{item}.jpg',
     'JBS': 'https://image.mgstage.com/images/prestige/jbs/{item}/pf_o1_jbs-{item}.jpg',
     'JOB': 'https://image.mgstage.com/images/prestige/job/{item}/pf_o1_job-{item}.jpg',
     'MEK': 'https://image.mgstage.com/images/prestige/mek/{item}/pf_o1_mek-{item}.jpg',
@@ -207,8 +208,7 @@ def download_poster(video_number):
         print('Video %s poster_url is None'.format(video_number))
         return None
 
-    response = get(poster_url)
-    return response.content
+    return http_util.download(poster_url)
 
 
 if __name__ == '__main__':

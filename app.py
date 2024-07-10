@@ -1,7 +1,10 @@
 from flask import Flask, render_template, request
 
 import metadata2
-from jav import Fanza, SOD, Prestige, MGS
+from jav.Fanza import Fanza
+from jav.MGS import MGS
+from jav.Prestige import Prestige
+
 
 app = Flask(__name__)
 
@@ -19,47 +22,42 @@ def poster():
     if video_no is None:
         return render_template('poster.html')
 
-    videos = []
+    items = []
     for number in video_no.upper().split(','):
-        video = metadata2.get_jav(number.strip())
-        if video is not None:
-            video = {'number': video.video_no, 'url': video.detail_url, 'poster_url': video.poster_url,
-                     'fanart_url': video.fanart_url}
-            videos.append(video)
-    return render_template('poster.html', video_no=video_no, videos=videos)
+        item = metadata2.get_jav(number.strip())
+        if item is not None:
+            items.append(item)
+    return render_template('poster.html', video_no=video_no, items=items)
 
 
-@app.route("/fanart")
+@app.route("/backdrop")
 def fanart():
     video_no = request.args.get('video_no')
 
     if video_no is None:
-        return render_template('fanart.html')
+        return render_template('backdrop.html')
 
-    videos = []
+    items = []
     for number in video_no.upper().split(','):
-        video = metadata2.get_jav(number.strip())
-        if video is not None:
-            video = {'number': video.video_no, 'url': video.detail_url, 'fanart_url': video.fanart_url}
-            videos.append(video)
-    return render_template('fanart.html', video_no=video_no, videos=videos)
+        item = metadata2.get_jav(number.strip())
+        if item is not None:
+            items.append(item)
+    return render_template('backdrop.html', video_no=video_no, items=items)
 
 
-@app.route("/movie")
+@app.route("/trailer")
 def movie():
     video_no = request.args.get('video_no')
 
     if video_no is None:
-        return render_template('movie.html')
+        return render_template('trailer.html')
 
-    videos = []
+    items = []
     for number in video_no.upper().split(','):
-        video = metadata2.get_jav(number.strip())
-        if video is not None:
-            video = {'number': video.video_no, 'url': video.detail_url, 'fanart_url': video.fanart_url,
-                     'movie_url': video.movie_url}
-            videos.append(video)
-    return render_template('movie.html', video_no=video_no, videos=videos)
+        item = metadata2.get_jav(number.strip())
+        if item is not None:
+            items.append(item)
+    return render_template('trailer.html', video_no=video_no, items=items)
 
 
 @app.route("/fanza")
@@ -68,32 +66,15 @@ def fanza():
     series = request.args.get('series')
 
     if actress is not None and actress:
-        videos = Fanza.search_actress(actress)
-        print('查询完成')
-        return render_template('fanza.html', actress=actress, videos=videos)
+        items = Fanza.search_actress(actress)
+        print(f'{actress} 查询完成')
+        return render_template('fanza.html', actress=actress, items=items)
     elif series is not None and series:
-        videos = Fanza.search_series(series)
-        print('查询完成')
-        return render_template('fanza.html', series=series, videos=videos)
+        items = Fanza.search_series(series)
+        print(f'{series} 查询完成')
+        return render_template('fanza.html', series=series, items=items)
 
     return render_template('fanza.html')
-
-
-@app.route("/sod")
-def sod():
-    actress = request.args.get('actress')
-    series = request.args.get('series')
-
-    if actress is not None and actress:
-        videos = SOD.search_actress(actress)
-        print('查询完成')
-        return render_template('sod.html', actress=actress, videos=videos)
-    elif series is not None and series:
-        videos = SOD.search_series(series)
-        print('查询完成')
-        return render_template('sod.html', series=series, videos=videos)
-
-    return render_template('sod.html')
 
 
 @app.route("/prestige")
@@ -102,38 +83,43 @@ def prestige():
     series = request.args.get('series')
 
     if actress is not None and actress:
-        videos = Prestige.search_actress(actress)
+        items = Prestige.search_actress(actress)
         print('查询完成')
-        return render_template('prestige.html', actress=actress, videos=videos)
+        return render_template('prestige.html', actress=actress, items=items)
     elif series is not None and series:
-        videos = Prestige.search_series(series)
+        items = Prestige.search_series(series)
         print('查询完成')
-        return render_template('prestige.html', series=series, videos=videos)
+        return render_template('prestige.html', series=series, items=items)
 
     return render_template('prestige.html')
 
 
-@app.route("/mgstage")
-def mgstage():
+@app.route("/mgs")
+def mgs():
     actress = request.args.get('actress')
     series = request.args.get('series')
 
     if actress is not None and actress:
-        videos = MGS.search_actress(actress)
+        items = MGS.search_actress(actress)
         print('查询完成')
-        return render_template('mgstage.html', actress=actress, videos=videos)
+        return render_template('mgs.html', actress=actress, items=items)
     elif series is not None and series:
-        videos = MGS.search_series(series)
+        items = MGS.search_series(series)
         print('查询完成')
-        return render_template('mgstage.html', series=series, videos=videos)
+        return render_template('mgs.html', series=series, items=items)
 
-    return render_template('mgstage.html')
+    return render_template('mgs.html')
 
 
-@app.route("/magnet")
+@app.route("/idope")
 def magnet():
     video_no = request.args.get('video_no')
-    return render_template('magnet.html', video_no=video_no, )
+
+    if video_no is None:
+        return render_template('idope.html')
+
+    items = []
+    return render_template('idope.html', video_no=video_no, items=items)
 
 
 if __name__ == '__main__':

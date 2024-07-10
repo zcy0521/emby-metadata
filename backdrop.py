@@ -5,7 +5,7 @@ from io import BytesIO
 
 from PIL import Image
 
-from utils.http_util import get
+from utils import http_util
 
 backdrops = {
     # ATTACKERS https://www.attackers.net
@@ -124,6 +124,7 @@ backdrops = {
     'BLO': 'https://image.mgstage.com/images/prestige/blo/{item}/pb_e_blo-{item}.jpg',
     'CHN': 'https://image.mgstage.com/images/prestige/chn/{item}/pb_e_chn-{item}.jpg',
     'EVO': 'https://image.mgstage.com/images/prestige/evo/{item}/pb_e_evo-{item}.jpg',
+    'INU': 'https://image.mgstage.com/images/prestige/inu/{item}/pb_e_inu-{item}.jpg',
     'JBS': 'https://image.mgstage.com/images/prestige/jbs/{item}/pb_e_jbs-{item}.jpg',
     'JOB': 'https://image.mgstage.com/images/prestige/job/{item}/pb_e_job-{item}.jpg',
     'MEK': 'https://image.mgstage.com/images/prestige/mek/{item}/pb_e_mek-{item}.jpg',
@@ -202,22 +203,21 @@ def download_backdrop(video_number):
     if series not in backdrops:
         return None
 
-    fanart_url = backdrops[series].format(item=item)
-    if fanart_url is None:
-        print('Video %s fanart_url is None'.format(video_number))
+    backdrop_url = backdrops[series].format(item=item)
+    if backdrop_url is None:
+        print('Video %s backdrop_url is None'.format(video_number))
         return None
 
-    response = get(fanart_url)
-    return response.content
+    return http_util.download(backdrop_url)
 
 
 if __name__ == '__main__':
-    fanart_bytes = download_backdrop('SKYHD-120')
-    if fanart_bytes is not None:
-        image = Image.open(BytesIO(fanart_bytes))
+    backdrop_bytes = download_backdrop('SKYHD-120')
+    if backdrop_bytes is not None:
+        image = Image.open(BytesIO(backdrop_bytes))
         image.show()
 
         download_folder = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Downloads')
-        fanart_path = os.path.join(download_folder, 'fanart.jpg')
-        with open(fanart_path, 'wb') as f:
-            f.write(fanart_bytes)
+        backdrop_path = os.path.join(download_folder, 'backdrop.jpg')
+        with open(backdrop_path, 'wb') as f:
+            f.write(backdrop_bytes)

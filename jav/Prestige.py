@@ -10,7 +10,6 @@ from utils import http_util
 class Prestige(object):
     # 官网
     SITE_URL = 'https://www.prestige-av.com/'
-    SEARCH_URL = 'https://www.prestige-av.com/api/search?isEnabledQuery=true&isEnableAggregation=false&{search_type}[]={search_key}&release=false&reservation=false&soldOut=false&order=new&aggregationTermsSize=0&from={index}&size={size}'
     DETAIL_URL = 'https://www.prestige-av.com/goods/goods_detail.php?sku={video_no}'
     VIDEO_URL = 'https://www.prestige-av.com/api/media/movie/{number}.mp4'
 
@@ -21,8 +20,8 @@ class Prestige(object):
         self.video_no = video_no
 
         # 详情页
-        detail_url = Prestige.DETAIL_URL.format(video_no=video_no)
-        detail_html = http_util.get(detail_url, Prestige.AGE_CHECK_HEADERS)
+        self.detail_url = Prestige.DETAIL_URL.format(video_no=video_no)
+        detail_html = http_util.get(self.detail_url, Prestige.AGE_CHECK_HEADERS)
         self.detail_soup = BeautifulSoup(detail_html, features="html.parser")
 
     def get_poster_url(self):
@@ -38,15 +37,15 @@ class Prestige(object):
     @classmethod
     def search_actress(cls, video_no):
         # 详情页
-        detail_url = cls.DETAIL_URL.format(video_no=video_no)
+        detail_url = cls.DETAIL_URL.format(video_no=video_no.upper())
         detail_html = http_util.get(detail_url, cls.AGE_CHECK_HEADERS)
         detail_soup = BeautifulSoup(detail_html, features="html.parser")
 
         # actress
         actress_p = detail_soup.body.find(text='出演者').parent.find_next_sibling('p')
         if actress_p is None:
-            videos = []
-            return videos
+            items = []
+            return items
 
         actress_url = actress_p.find('a')['href']
         actress = actress_url.split('actress=')[1]
@@ -55,15 +54,15 @@ class Prestige(object):
     @classmethod
     def search_series(cls, video_no):
         # 详情页
-        detail_url = cls.DETAIL_URL.format(video_no=video_no)
+        detail_url = cls.DETAIL_URL.format(video_no=video_no.upper())
         detail_html = http_util.get(detail_url, cls.AGE_CHECK_HEADERS)
         detail_soup = BeautifulSoup(detail_html, features="html.parser")
 
         # series_p
         series_a = detail_soup.body.find(text='シリーズ').parent.find_next_sibling('a')
         if series_a is None:
-            videos = []
-            return videos
+            items = []
+            return items
 
         series_url = series_a['href']
         series = series_url.split('series=')[1]
@@ -71,7 +70,7 @@ class Prestige(object):
 
     @classmethod
     def search_items(cls, search_type, search_key):
-        search_url = cls.SEARCH_URL.format(search_type=search_type, search_key=search_key, index=0, size=20)
+        search_url = 'https://www.prestige-av.com/api/search?isEnabledQuery=true&isEnableAggregation=false&{search_type}[]={search_key}&release=false&reservation=false&soldOut=false&order=new&aggregationTermsSize=0&from={index}&size={size}'.format(search_type=search_type, search_key=search_key, index=0, size=20)
         search_html = http_util.get(search_url, cls.AGE_CHECK_HEADERS)
         search_json = json.loads(search_html)
 
@@ -84,30 +83,22 @@ class Prestige(object):
             uuid = hit['_source']['productUuid']
             item_id = hit['_source']['deliveryItemId']
 
-            # detail
-            detail_url = cls.DETAIL_URL.format(uuid=uuid, item_id=item_id)
-            print(detail_url)
-            detail_html = http_util.get(detail_url, cls.AGE_CHECK_HEADERS)
-            detail_soup = BeautifulSoup(detail_html, features="html.parser")
+            # 页面详情页
+            goods_url = 'https://www.prestige-av.com/goods/{uuid}?skuId={item_id}'.format(uuid=uuid, item_id=item_id)
+            goods_html = http_util.get(goods_url, cls.AGE_CHECK_HEADERS)
+            goods_soup = BeautifulSoup(goods_html, features="html.parser")
 
-            # video_no
-            video_no = item_id
-            print('(' + video_no + ')[' + detail_url + ']')
-
-            # poster
-            poster_url = detail_soup.find('div', class_="c-ratio-image").find('img')['src']
+            # 封面
+            poster_url = goods_soup.find('div', class_="c-ratio-image").find('img')['src']
             poster_url = poster_url.split('?')[0]
-            print(poster_url)
 
-            # backdrop
+            # 背景图
             backdrop_url = poster_url.replace('pf_', 'pb_')
-            print(backdrop_url)
 
-            # trailer
+            # 预告片
             trailer_url = cls.VIDEO_URL.format(number=item_id)
-            print(trailer_url)
 
-            item = {'number': item_id, 'url': detail_url, 'poster_url': poster_url, 'backdrop_url': backdrop_url, 'trailer_url': trailer_url}
+            item = {'video_no': item_id, 'detail_url': goods_url, 'poster_url': poster_url, 'backdrop_url': backdrop_url, 'trailer_url': trailer_url}
             items.append(item)
 
         return items

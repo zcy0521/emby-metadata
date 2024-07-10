@@ -69,31 +69,31 @@
 
 <div class="search">
     <form action="/prestige" method="get">
-        <label for="actress">女优</label>
+        <label for="actress">按女优名查询</label>
         <input id="actress" name="actress" value="{{ actress }}">
-        <label for="series">系列</label>
+        <label for="series">按系列查询</label>
         <input id="series" name="series" value="{{ series }}">
         <button type="submit">查询</button>
     </form>
 </div>
 
 <div>
-{% if not videos %}
+{% if not items %}
     Empty
 {% else %}
     <ul class="container">
-    {% for video in videos %}
+    {% for item in items %}
         <li class="item">
-            {% if 'movie_url' in video %}
-                <video src="{{ video['movie_url'] }}" controls onloadstart="this.volume=0.1"></video>
-                <a target="_blank" href="{{ video['url'] }}">
-                    <span style="">{{ video['number'] }}</span>
-                    <img src="{{ video['fanart_url'] }}" alt="{{ video['number'] }}">
+            {% if 'trailer_url' in item %}
+                <video src="{{ item['trailer_url'] }}" controls onloadstart="this.volume=0.1"></video>
+                <a target="_blank" href="{{ item['detail_url'] }}">
+                    <span style="">{{ item['video_no'] }}</span>
+                    <img src="{{ item['backdrop_url'] }}" alt="{{ item['video_no'] }}">
                 </a>
             {% else %}
-                <img src="{{ video['fanart_url'] }}" alt="{{ video['number'] }}">
-                <a target="_blank" href="{{ video['url'] }}">
-                    <span style="">{{ video['number'] }}</span>
+                <img src="{{ item['backdrop_url'] }}" alt="{{ item['video_no'] }}">
+                <a target="_blank" href="{{ item['detail_url'] }}">
+                    <span style="">{{ item['video_no'] }}</span>
                 </a>
             {% endif %}
         </li>

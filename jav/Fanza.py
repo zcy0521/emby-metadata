@@ -1,6 +1,7 @@
 #!/usr/bin/envpython3
 # -*-coding:utf-8-*-
 import json
+import sys
 
 from bs4 import BeautifulSoup
 
@@ -10,7 +11,7 @@ from utils import http_util
 class Fanza(object):
     # 官网
     SITE_URL = 'https://www.dmm.co.jp'
-    SEARCH_URL = 'https://www.dmm.co.jp/digital/-/list/search/=/?searchstr={video_no}'
+    SEARCH_URL = 'https://www.dmm.co.jp/digital/-/list/search/=/?searchstr={search_key}'
 
     AGE_CHECK_HEADERS = {'cookie': 'age_check_done=1'}
 
@@ -18,13 +19,13 @@ class Fanza(object):
         self.video_no = video_no
 
         # 查询列表页
-        list_url = Fanza.SEARCH_URL.format(video_no=video_no.lower().replace('-', '00'))
+        list_url = Fanza.SEARCH_URL.format(search_key=video_no.lower().replace('-', '00'))
         list_html = http_util.get(list_url, Fanza.AGE_CHECK_HEADERS)
         self.list_soup = BeautifulSoup(list_html, features="html.parser")
 
         # 详情页
-        detail_url = self.list_soup.find('ul', id='list').find_all('li')[0].find('a')['href']
-        detail_html = http_util.get(detail_url, Fanza.AGE_CHECK_HEADERS)
+        self.detail_url = self.list_soup.find('ul', id='list').find_all('li')[0].find('a')['href']
+        detail_html = http_util.get(self.detail_url, Fanza.AGE_CHECK_HEADERS)
         self.detail_soup = BeautifulSoup(detail_html, features="html.parser")
 
     def get_poster_url(self):
@@ -66,7 +67,7 @@ class Fanza(object):
         search_soup = BeautifulSoup(search_html, 'html.parser')
 
         # item
-        item_url = search_soup.find('ul', id='list').find('li').find('a')['href']
+        item_url = search_soup.find('ul', id='list').find_all('li')[0].find('a')['href']
         item_html = http_util.get(item_url, headers=cls.AGE_CHECK_HEADERS)
         item_soup = BeautifulSoup(item_html, 'html.parser')
 
@@ -83,7 +84,7 @@ class Fanza(object):
         search_soup = BeautifulSoup(search_html, 'html.parser')
 
         # item
-        item_url = search_soup.find('ul', id='list').find('li').find('a')['href']
+        item_url = search_soup.find('ul', id='list').find_all('li')[0].find('a')['href']
         item_html = http_util.get(item_url, headers=cls.AGE_CHECK_HEADERS)
         item_soup = BeautifulSoup(item_html, 'html.parser')
 
@@ -91,10 +92,9 @@ class Fanza(object):
         series_url = item_soup.find('div', class_='page-detail').find('table').find('table').find_all('tr')[7].find_all('td')[1].find('a')['href']
         return cls.search_items(series_url)
 
-
     @classmethod
     def search_items(cls, search_url):
-        search_url = cls.SITE_URL + search_url + 'sort=date/'
+        search_url = cls.SITE_URL + search_url + '&sort=date'
         search_html = http_util.get(search_url, headers=cls.AGE_CHECK_HEADERS)
         search_soup = BeautifulSoup(search_html, 'html.parser')
 
@@ -110,23 +110,20 @@ class Fanza(object):
             detail_soup = BeautifulSoup(detail_html, 'html.parser')
 
             # video_no
-            print(detail_url.split('cid=')[1])
             video_no = detail_url.split('cid=')[1].rstrip('/')
-            print('(' + video_no + ')[' + detail_url + ']')
 
             # poster
             poster_url = detail_soup.find('div', id='sample-video').find('img')['src']
-            print(poster_url)
 
             # backdrop
             backdrop_url = detail_soup.find('div', id='sample-video').find('a')['href']
-            print(backdrop_url)
 
-            # trailer ajax
+            # trailer
             trailer_url = cls.get_video_url(detail_soup)
-            print(trailer_url)
-
-            item = {'number': video_no, 'url': detail_url, 'poster_url': poster_url, 'backdrop_url': backdrop_url, 'trailer_url': trailer_url}
+            if trailer_url:
+                item = {'video_no': video_no, 'detail_url': detail_url, 'poster_url': poster_url, 'backdrop_url': backdrop_url, 'trailer_url': trailer_url}
+            else:
+                item = {'video_no': video_no, 'detail_url': detail_url, 'poster_url': poster_url, 'backdrop_url': backdrop_url}
             items.append(item)
 
         return items

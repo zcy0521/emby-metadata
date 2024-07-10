@@ -3,57 +3,50 @@
 import os
 import sys
 
-from metadata.backdrop import download_fanart
-from metadata.poster import download_poster
-from utils.folder import format_folder, series_not_in, get_video_no
+import backdrop
+import poster
+from utils import folder
 
 if __name__ == '__main__':
     # 输入待整理文件夹与下载代理
-    folder_path = "T:\\Downloads"
-    proxy_ip = None
+    folder_path = "D:\\Test"
 
     # 整理视频文件夹
-    format_folder(folder_path)
+    folder.format_folder(folder_path)
 
-    # 查找不在的系列
-    series = series_not_in(folder_path)
-    if series:
-        print(series) and sys.exit()
-
-    # metadata
-    for (dirpath, dirnames, filenames) in os.walk(folder_path):
-        for filename in filenames:
+    # 按文件夹整理
+    for (dir_path, dirnames, filenames) in os.walk(folder_path):
+        for dirname in dirnames:
             # 已有封面
-            poster_path = os.path.join(dirpath, 'poster.jpg')
+            poster_path = os.path.join(dir_path, dirname, 'poster.jpg')
             if os.path.exists(poster_path):
                 continue
 
             # 已有背景图
-            fanart_path = os.path.join(dirpath, 'fanart.jpg')
-            if os.path.exists(fanart_path):
+            backdrop_path = os.path.join(dir_path, dirname, 'backdrop.jpg')
+            if os.path.exists(backdrop_path):
                 continue
 
-            # 文件
-            file = os.path.join(dirpath, filename)
+            # 文件夹名即视频番号
+            video_no = dirname
 
-            # 预告视频所在文件夹
-            dirname = os.path.basename(os.path.dirname(file))
-            if dirname == 'trailers':
-                continue
-
-            # 获取视频文件编号
-            video_number = get_video_no(file)
-            if video_number is None:
-                continue
+            # 如果存在未包含的系列编号，则打印编号并退出
+            series = video_no.split('-', 1)[0]
+            if series not in poster.posters:
+                print(f"番号前缀 {series} 封面url不存在！")
+                sys.exit()
+            if series not in backdrop.backdrops:
+                print(f"番号前缀 {series} 背景图url不存在！")
+                sys.exit()
 
             # 下载封面
-            poster_bytes = download_poster(video_number)
+            poster_bytes = poster.download_poster(video_no)
             if poster_bytes is not None:
                 with open(poster_path, 'wb') as f:
                     f.write(poster_bytes)
 
             # 下载背景图
-            fanart_bytes = download_fanart(video_number)
-            if fanart_bytes is not None:
-                with open(fanart_path, 'wb') as f:
-                    f.write(fanart_bytes)
+            backdrop_bytes = backdrop.download_backdrop(video_no)
+            if backdrop_bytes is not None:
+                with open(backdrop_path, 'wb') as f:
+                    f.write(backdrop_bytes)

@@ -61,15 +61,15 @@
 </div>
 
 <div>
-{% if not videos %}
+{% if not items %}
     Empty
 {% else %}
     <ul class="container">
-    {% for video in videos %}
+    {% for item in items %}
         <li class="item">
-            <img src="{{ video['poster_url'] }}" alt="{{ video['number'] }}">
-            <a target="_blank" href="{{ video['url'] }}">
-                <span style="">{{ video['number'] }}</span>
+            <img src="{{ item.get_poster_url() }}" alt="{{ item['video_no'] }}">
+            <a target="_blank" href="{{ item['detail_url'] }}">
+                <span style="">{{ item['video_no'] }}</span>
             </a>
         </li>
     {% endfor %}

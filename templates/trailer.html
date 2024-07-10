@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MGS</title>
+    <title>movie</title>
     <style>
         .title {
             margin-bottom: 20px;
@@ -34,10 +34,6 @@
             width: 720px;
         }
 
-        .item img {
-            width: 720px;
-        }
-
         .item a span {
             position: absolute;
             width: 100%;
@@ -64,38 +60,31 @@
 <body>
 
 <div class="title">
-    <h2>MGS</h2>
+    <h2>视频</h2>
+    <a href="/">首页</a>
+    <a href="/movie">清空</a>
 </div>
 
 <div class="search">
-    <form action="/mgstage" method="get">
-        <label for="actress">女优</label>
-        <input id="actress" name="actress" value="{{ actress }}">
-        <label for="series">系列</label>
-        <input id="series" name="series" value="{{ series }}">
+    <form action="/trailer" method="get">
+        <label for="video_no">番号</label>
+        <input id="video_no" name="video_no" value="{{ video_no }}">
         <button type="submit">查询</button>
     </form>
 </div>
 
 <div>
-{% if not videos %}
+{% if not items %}
     Empty
 {% else %}
     <ul class="container">
-    {% for video in videos %}
+    {% for item in items %}
         <li class="item">
-            {% if 'movie_url' in video %}
-                <video src="{{ video['movie_url'] }}" controls onloadstart="this.volume=0.1"></video>
-                <a target="_blank" href="{{ video['url'] }}">
-                    <span style="">{{ video['number'] }}</span>
-                    <img src="{{ video['fanart_url'] }}" alt="{{ video['number'] }}">
-                </a>
-            {% else %}
-                <img src="{{ video['fanart_url'] }}" alt="{{ video['number'] }}">
-                <a target="_blank" href="{{ video['url'] }}">
-                    <span style="">{{ video['number'] }}</span>
-                </a>
-            {% endif %}
+            <video src="{{ item.get_trailer_url() }}" controls onloadstart="this.volume=0.1"></video>
+            <a target="_blank" href="{{ item['detail_url'] }}">
+                <span style="">{{ item['video_no'] }}</span>
+                <img src="{{ item.get_backdrop_url() }}" alt="{{ item['video_no'] }}">
+            </a>
         </li>
     {% endfor %}
     </ul>

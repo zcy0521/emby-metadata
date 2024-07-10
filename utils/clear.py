@@ -29,12 +29,8 @@ def clear_synology(folder_path):
 
 
 if __name__ == '__main__':
-    # 清理 @eaDir Thumbs.db
-    clear_qnap('J:\\')
-    clear_qnap('K:\\')
-    clear_qnap('L:\\')
-    clear_qnap('M:\\')
-    clear_qnap('N:\\')
-
     # 清理 thumb_folder
-    clear_synology('O:\\')
+    clear_synology('S:\\')
+
+    # 清理 @eaDir Thumbs.db
+    clear_qnap('Q:\\')
