@@ -125,4 +125,4 @@ if __name__ == '__main__':
 
     # https://kodi.wiki/view/NFO_files/Movies
     # https://kodi.wiki/view/NFO_files/Templates
-    attackers.create_nfo('D:\\JetBrains\\PycharmProjects\\emby-metadata\\nfo')
+    attackers.create_nfo('..\\nfo')
